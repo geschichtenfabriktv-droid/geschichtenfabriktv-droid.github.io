@@ -754,3 +754,5 @@ body.editing .fly-card{display:grid}
   .bk-steps span{display:none}.bk-fields{grid-template-columns:1fr}
 }
 .editing .bk-scene{display:none}
+
+.portal-1 .portal-sticky{transform:none;filter:none;border-radius:0;will-change:auto}

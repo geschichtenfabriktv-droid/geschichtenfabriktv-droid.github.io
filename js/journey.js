@@ -144,7 +144,7 @@ void main(){
         pts: $$('.pt', el).map((p) => { const [a, b] = p.dataset.show.split(',').map(Number); return { p, a, b, letters: $$('.ch>span', p), desc: $(':scope > span', p) }; }),
         tod0: (el.dataset.tod || '0.3,0.5').split(',').map(Number), tod: 0.3, scrubs: $$('.scrub', el), prog: 0, pos: 0, posSm: 0, vis: false, near: false, res: false, active: false, dirty: true, over: el.classList.contains('over')
       };
-      if (!reduce) { P.gl = makeGL(P); if (P.gl) el.classList.add('gl'); }
+      if (!reduce && !el.hasAttribute('data-nogl')) { P.gl = makeGL(P); if (P.gl) el.classList.add('gl'); }
       if (el.id === 'kapitel') { const w = P.pts.filter((o) => o.p.classList.contains('pword')); const c = document.createElement('div'); c.className = 'pdots'; c.setAttribute('aria-hidden', 'true'); c.innerHTML = w.map(() => '<i></i>').join(''); P.sticky.appendChild(c); P.dots = [...c.children]; }
       return P;
     });
@@ -219,7 +219,7 @@ void main(){
       const total = Math.max(1, P.el.offsetHeight - (P.over ? vh * 2.3 : vh));
       const prog = clamp(-r.top / total); P.prog = prog;
       P.pos = prog * (P.imgs.length - 1); P.tod = lerp(P.tod0[0], P.tod0[1], prog);
-      if (!P.gl || !P.drawn) domFallback(P, prog);
+      if (P.imgs.length > 1 && (!P.gl || !P.drawn)) domFallback(P, prog);
       if (P.over && P.el.nextElementSibling) { const nt = P.el.nextElementSibling.getBoundingClientRect().top; P.sticky.style.setProperty('--c', clamp((vh - nt) / vh).toFixed(3)); }
       P.pts.forEach((o) => textStep(o, prog)); dotsUpdate(P);
       P.scrubs.forEach((m) => {
@@ -455,6 +455,8 @@ void main(){
   }
 
   /* Hero: Der Flug läuft als Hintergrund – langsamer Gleitflug Tejeda ⇄ Roque Nublo, Licht wandert mit */
+  const DBG = /[?&]debug/.test(location.search); let dbgEl = null;
+  function dbg(k, v) { if (!DBG) return; if (!dbgEl) { dbgEl = document.createElement('pre'); dbgEl.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:#000c;color:#9f9;font:11px/1.4 monospace;padding:8px;max-width:90vw;white-space:pre-wrap;pointer-events:none'; dbgEl.__s = {}; document.body.appendChild(dbgEl); } dbgEl.__s[k] = v; dbgEl.textContent = Object.entries(dbgEl.__s).map(([a, b]) => a + ': ' + b).join(String.fromCharCode(10)); }
   function initHero() {
     const P = portals.find((p) => p.el.id === 'hero'); if (!P || !G || !G.webgl()) { console.warn('[Hero-Flug] nicht gestartet', { portal: !!P, geo: !!G, webgl: G && G.webgl() }); return; }
     const host = document.createElement('div'); host.className = 'hero-map'; host.setAttribute('data-noedit', ''); host.setAttribute('aria-hidden', 'true');
@@ -466,7 +468,7 @@ void main(){
   }
   function heroUpdate(vh) {
     if (!hero || !hero.ready) return; const P = hero.P;
-    if (P.vis) { hero.o = 1 - G.sm(0.9, 1, P.prog); hero.u = P.prog; hero.host.style.opacity = hero.o.toFixed(3); }
+    if (P.vis) { hero.o = 1; hero.u = P.prog; hero.host.style.opacity = hero.o.toFixed(3); }
     if (isEditing()) return;
     if (P.far && hero.map) { try { hero.map.remove(); } catch (e) {} hero.map = null; hero.t.map = null; hero.t.styled = false; hero.shown = false; hero.loading = false; hero.inn.classList.remove('on'); return; }
     if ((P.near || P.vis || P.prog === 0) && !hero.map && !hero.loading) { hero.loading = true; G.load().then(heroCreate).catch(() => { hero.loading = false; }); }
@@ -478,7 +480,8 @@ void main(){
     m.once('style.load', () => { hero.t.styled = true; G.paintTod(hero.t, 0.12, true); G.paintUI(hero.host, 0.12); });
     const reveal = () => { if (hero.shown) return; hero.shown = true; hero.inn.classList.add('on'); };
     m.once('idle', reveal); m.once('load', () => setTimeout(reveal, 1200)); setTimeout(reveal, 9000);
-    m.on('error', (e) => console.warn('[Hero-Flug]', e && e.error && e.error.message));
+    m.on('error', (e) => { console.warn('[Hero-Flug]', e && e.error && e.error.message); dbg('hero-error', String(e && e.error && e.error.message).slice(0, 160)); });
+    dbg('hero', 'map erstellt'); m.once('style.load', () => dbg('hero', 'style.load')); m.once('load', () => dbg('hero', 'load')); m.once('idle', () => dbg('hero', 'idle'));
   }
   /* Hero-Route: Anflug über die Caldera, dann Tejeda → Roque Nublo → Roque Bentayga – gesteuert vom Scrollen */
   const HS = [{ c: [-15.6139, 27.9974], z: 12.3, p: 60, b: 160 }, STOPS[1], STOPS[4], STOPS[5]];
