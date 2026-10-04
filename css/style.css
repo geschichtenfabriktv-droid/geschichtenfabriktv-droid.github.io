@@ -770,7 +770,7 @@ html{overflow-x:clip}
 @media(max-width:700px){
   .booking-grid,.bk-grid{grid-template-columns:minmax(0,1fr)}
   .btn{white-space:normal;text-align:center;line-height:1.3;padding-top:14px;padding-bottom:14px}
-  p,li,h3,.btn{overflow-wrap:break-word;hyphens:auto}
+  p,li,h3,.btn{overflow-wrap:break-word;hyphens:manual}
   .btn span{overflow-wrap:normal}
   .booking-card{padding:20px 16px;border-radius:26px}
   .tabs .tab{font-size:14px;padding:12px 6px}
@@ -788,3 +788,8 @@ html{overflow-x:clip}
 }
 @media(max-width:400px){.brand{font-size:16px;gap:8px}.brand svg{width:26px}.menu-btn{padding:0 14px;gap:8px;height:40px;font-size:13px}.site-header{padding-left:var(--gut);padding-right:var(--gut)}}
 @media(max-width:340px){.menu-label{display:none}.menu-btn{padding:0 13px}}
+/* Porträt-Platzhalter: warmer Verlauf mit Initiale statt schwarzer Fläche */
+.ph-placeholder{background:radial-gradient(120% 90% at 30% 20%,#c4623a 0%,#6b3a26 45%,#241a14 100%)}
+.ph-placeholder::before{display:none}
+.ph-placeholder img{display:none}
+@media(max-width:700px){.ph-portrait{aspect-ratio:16/10}.ph-initial{font-size:96px}.person .ph{margin-bottom:20px}}
