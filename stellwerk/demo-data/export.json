@@ -1,0 +1,767 @@
+{
+  "exportedAt": "2026-10-05T16:37:20.243Z",
+  "id": "cmuvh39ug00007duskuh8z57c",
+  "email": "demo-7aii5ipr@demo.invalid",
+  "name": "Alex Beispiel",
+  "plan": "FREE",
+  "isDemo": true,
+  "createdAt": "2026-10-05T16:37:17.849Z",
+  "lastSeenAt": "2026-10-05T16:37:17.849Z",
+  "profile": {
+    "id": "cmuvh39uh00017dusxrm6x5rw",
+    "userId": "cmuvh39ug00007duskuh8z57c",
+    "onboardingDone": true,
+    "activeMode": "EMPLOYED",
+    "firstName": "Alex",
+    "lastName": "Beispiel",
+    "headline": "Mediengestalterin Digital und Print",
+    "contactEmail": "alex.beispiel@example.org",
+    "phone": "0221 000000",
+    "street": "Musterstraße 1",
+    "postalCode": "50667",
+    "city": "Köln",
+    "state": "NW",
+    "lat": 50.9375,
+    "lon": 6.9603,
+    "website": "",
+    "linkedin": "",
+    "birthDate": "",
+    "aboutMe": "Ich mag Projekte, bei denen Gestaltung und Organisation zusammenkommen. In der Agentur habe ich gelernt, unter Zeitdruck ruhig zu bleiben und trotzdem sauber zu arbeiten.",
+    "disclose": "Ich bin offen für hybride Modelle und kann mit vier Wochen Frist starten.",
+    "avoid": "Keine Angaben zu Familienstand.",
+    "cv": {
+      "tools": [
+        "Premiere Pro",
+        "Canva",
+        "Asana"
+      ],
+      "skills": [
+        "Adobe InDesign",
+        "Photoshop",
+        "Illustrator",
+        "After Effects",
+        "Figma",
+        "Druckvorstufe",
+        "Social Media",
+        "Corporate Design"
+      ],
+      "summary": "Mediengestalterin mit fünf Jahren Agenturerfahrung in Print, Social und Bewegtbild. Arbeitet sauber im Detail und behält Termine im Blick.",
+      "education": [
+        {
+          "to": "2019",
+          "from": "2016",
+          "note": "Abschluss mit Note 1,9",
+          "place": "Köln",
+          "title": "Ausbildung Mediengestalterin Digital und Print",
+          "school": "Berufskolleg Beispielstadt"
+        }
+      ],
+      "interests": [
+        "Fotografie",
+        "Typografie",
+        "Radfahren"
+      ],
+      "languages": [
+        {
+          "name": "Deutsch",
+          "level": "Muttersprache"
+        },
+        {
+          "name": "Englisch",
+          "level": "C1"
+        }
+      ],
+      "experience": [
+        {
+          "to": "",
+          "from": "03/2022",
+          "role": "Mediengestalterin Digital und Print",
+          "place": "Köln",
+          "bullets": [
+            "Kampagnen für drei Handelskunden von der ersten Skizze bis zur Druckfreigabe betreut",
+            "Social-Media-Formate in Reels und Stories umgesetzt und Vorlagen für das Team gebaut",
+            "Druckdaten mit Druckereien abgestimmt und Reklamationen auf null gesenkt"
+          ],
+          "company": "Beispielagentur Rheinblick"
+        },
+        {
+          "to": "02/2022",
+          "from": "08/2019",
+          "role": "Junior Grafikdesignerin",
+          "place": "Bonn",
+          "bullets": [
+            "Layout für ein monatliches Kundenmagazin mit 48 Seiten",
+            "Bildbearbeitung und Freisteller für Online-Shop"
+          ],
+          "company": "Musterverlag"
+        }
+      ],
+      "certificates": [
+        "Motion Design Grundlagen (Online-Kurs)"
+      ],
+      "drivingLicense": "Klasse B"
+    },
+    "employedPrefs": {
+      "keywords": [
+        "Mediengestalter",
+        "Grafikdesign",
+        "Motion Design"
+      ],
+      "radiusKm": 40,
+      "tempAgency": "include",
+      "workingTimes": [
+        "vz",
+        "tz"
+      ],
+      "minSalaryMonthly": 3200
+    },
+    "freelancePrefs": {
+      "dayRate": 480,
+      "keywords": [
+        "Motion Design",
+        "Grafikdesign"
+      ],
+      "radiusKm": 80,
+      "availableFrom": "sofort"
+    },
+    "displayPrefs": {},
+    "taxPrefs": {
+      "age": 29,
+      "state": "NW",
+      "taxClass": 1
+    },
+    "docPrefs": {},
+    "sendPrefs": {
+      "mode": "MANUAL"
+    },
+    "settingsVersion": 1,
+    "approvalsRemaining": 3,
+    "smtpHost": "",
+    "smtpPort": 587,
+    "smtpSecure": false,
+    "smtpUser": "",
+    "smtpPassEnc": "",
+    "senderName": "",
+    "senderEmail": "",
+    "signature": "",
+    "aiConsent": false,
+    "lastSearchAt": null,
+    "lastBriefingAt": "2026-10-05T16:37:20.223Z",
+    "updatedAt": "2026-10-05T16:37:20.224Z"
+  },
+  "documents": [],
+  "jobs": [
+    {
+      "id": "cmuvh39v300027dus19gf0jtk",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "EMPLOYED",
+      "source": "example",
+      "externalId": "ex-1",
+      "title": "Mediengestalter Digital und Print (m/w/d)",
+      "company": "Nordlicht Werbeagentur GmbH (Beispiel)",
+      "companyUrl": "",
+      "city": "Köln",
+      "postalCode": "50672",
+      "region": "",
+      "lat": 50.94,
+      "lon": 6.94,
+      "distanceKm": 1.4,
+      "travelCarMin": 10,
+      "travelTransitMin": 17,
+      "url": "https://www.arbeitsagentur.de/jobsuche/",
+      "applyUrl": "",
+      "applyEmail": "bewerbung@nordlicht-beispiel.de",
+      "description": "Wir suchen ab sofort Verstärkung für unser Kreativteam. Deine Aufgaben: Gestaltung von Kampagnen in InDesign und Photoshop, Social-Media-Formate, Abstimmung mit Druckereien. Vollzeit, 40 Stunden pro Woche, Gehalt 3.300 – 3.700 € brutto pro Monat. Ihre Ansprechpartnerin ist Frau Lena Sommer, bewerbung@nordlicht-beispiel.de",
+      "employmentType": "",
+      "workingTime": "Vollzeit",
+      "hoursPerWeek": 40,
+      "remote": false,
+      "tempAgency": false,
+      "urgent": true,
+      "salaryMin": 6928,
+      "salaryMax": 6928,
+      "salaryPeriod": "MONTH",
+      "salaryEstimated": false,
+      "contactName": "Frau Lena Sommer",
+      "contactSalutation": "Sehr geehrte Frau Sommer",
+      "contactEmail": "bewerbung@nordlicht-beispiel.de",
+      "contactPhone": "",
+      "contactSource": "Anzeigentext",
+      "scamScore": 0,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt",
+          "Firmen-E-Mail-Adresse",
+          "Gehalt im plausiblen Bereich"
+        ],
+        "reasons": []
+      },
+      "matchScore": 85,
+      "matchReasons": [
+        "Titel passt zu „Mediengestalter“",
+        "Deine Stärken gefragt: Photoshop",
+        "1 km entfernt",
+        "Gehalt erreicht deinen Wunsch",
+        "Ganz neu"
+      ],
+      "publishedAt": "2026-10-04T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "SEEN",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300037dusngc8oku1",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "EMPLOYED",
+      "source": "example",
+      "externalId": "ex-2",
+      "title": "Grafikdesigner Corporate Design (m/w/d)",
+      "company": "Hansa Medienhaus (Beispiel)",
+      "companyUrl": "",
+      "city": "Düsseldorf",
+      "postalCode": "40213",
+      "region": "",
+      "lat": 51.225,
+      "lon": 6.776,
+      "distanceKm": 34.5,
+      "travelCarMin": 52,
+      "travelTransitMin": 89,
+      "url": "https://www.arbeitsagentur.de/jobsuche/",
+      "applyUrl": "",
+      "applyEmail": "",
+      "description": "Für unsere Inhouse-Kreation suchen wir eine Person mit Erfahrung in Corporate Design, Figma und Illustrator. Teilzeit oder Vollzeit möglich, Homeoffice an zwei Tagen. Kontakt: Herr Jonas Albers.",
+      "employmentType": "",
+      "workingTime": "Vollzeit · Teilzeit · Homeoffice möglich",
+      "hoursPerWeek": 40,
+      "remote": true,
+      "tempAgency": false,
+      "urgent": false,
+      "salaryMin": 3100,
+      "salaryMax": 3950,
+      "salaryPeriod": "MONTH",
+      "salaryEstimated": true,
+      "contactName": "Herr Jonas Albers",
+      "contactSalutation": "Sehr geehrter Herr Albers",
+      "contactEmail": "",
+      "contactPhone": "",
+      "contactSource": "Anzeigentext",
+      "scamScore": 8,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt"
+        ],
+        "reasons": [
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 93,
+      "matchReasons": [
+        "Titel passt zu „Grafikdesign“",
+        "Deine Stärken gefragt: Illustrator, Figma, Corporate Design",
+        "35 km entfernt",
+        "Gehalt erreicht deinen Wunsch"
+      ],
+      "publishedAt": "2026-10-02T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "APPLIED",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300047dusuhi8tyfd",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "EMPLOYED",
+      "source": "example",
+      "externalId": "ex-3",
+      "title": "Mediengestalter (m/w/d) im Kundeneinsatz",
+      "company": "Beispiel Personalservice GmbH",
+      "companyUrl": "",
+      "city": "Leverkusen",
+      "postalCode": "51373",
+      "region": "",
+      "lat": 51.03,
+      "lon": 6.98,
+      "distanceKm": 10.4,
+      "travelCarMin": 25,
+      "travelTransitMin": 52,
+      "url": "https://www.arbeitsagentur.de/jobsuche/",
+      "applyUrl": "",
+      "applyEmail": "",
+      "description": "Arbeitnehmerüberlassung: Für unseren Kunden in Leverkusen suchen wir kurzfristig eine Mediengestalterin. Übertarifliche Bezahlung nach GVP, Vollzeit.",
+      "employmentType": "",
+      "workingTime": "Vollzeit",
+      "hoursPerWeek": 40,
+      "remote": false,
+      "tempAgency": true,
+      "urgent": true,
+      "salaryMin": 2950,
+      "salaryMax": 3750,
+      "salaryPeriod": "MONTH",
+      "salaryEstimated": true,
+      "contactName": "",
+      "contactSalutation": "",
+      "contactEmail": "",
+      "contactPhone": "",
+      "contactSource": "",
+      "scamScore": 8,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt"
+        ],
+        "reasons": [
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 79,
+      "matchReasons": [
+        "Titel passt zu „Mediengestalter“",
+        "10 km entfernt",
+        "Gehalt erreicht deinen Wunsch",
+        "Ganz neu"
+      ],
+      "publishedAt": "2026-10-03T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "SEEN",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300057dusathalin5",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "EMPLOYED",
+      "source": "example",
+      "externalId": "ex-4",
+      "title": "Motion Designer Social Media (m/w/d)",
+      "company": "Kanal Acht Studios (Beispiel)",
+      "companyUrl": "",
+      "city": "Köln",
+      "postalCode": "50823",
+      "region": "",
+      "lat": 50.955,
+      "lon": 6.92,
+      "distanceKm": 3.4,
+      "travelCarMin": 16,
+      "travelTransitMin": 28,
+      "url": "https://www.arbeitsagentur.de/jobsuche/",
+      "applyUrl": "",
+      "applyEmail": "jobs@kanalacht-beispiel.de",
+      "description": "Du schneidest und animierst Kurzvideos in After Effects und Premiere Pro für Marken. Vollzeit, Gehalt nach Erfahrung. Bewerbung an jobs@kanalacht-beispiel.de",
+      "employmentType": "",
+      "workingTime": "Vollzeit",
+      "hoursPerWeek": 40,
+      "remote": false,
+      "tempAgency": false,
+      "urgent": false,
+      "salaryMin": 3100,
+      "salaryMax": 3950,
+      "salaryPeriod": "MONTH",
+      "salaryEstimated": true,
+      "contactName": "",
+      "contactSalutation": "",
+      "contactEmail": "jobs@kanalacht-beispiel.de",
+      "contactPhone": "",
+      "contactSource": "",
+      "scamScore": 8,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt",
+          "Firmen-E-Mail-Adresse"
+        ],
+        "reasons": [
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 91,
+      "matchReasons": [
+        "Titel passt zu „Motion Design“",
+        "Deine Stärken gefragt: After Effects, Social Media",
+        "3 km entfernt",
+        "Gehalt erreicht deinen Wunsch",
+        "Ganz neu"
+      ],
+      "publishedAt": "2026-10-05T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "APPLIED",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300067dusmvkuf35s",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "EMPLOYED",
+      "source": "example",
+      "externalId": "ex-5",
+      "title": "Druckvorstufe / Reprografie (m/w/d)",
+      "company": "Rheindruck Beispiel KG",
+      "companyUrl": "",
+      "city": "Bergisch Gladbach",
+      "postalCode": "51465",
+      "region": "",
+      "lat": 50.99,
+      "lon": 7.13,
+      "distanceKm": 13.2,
+      "travelCarMin": 31,
+      "travelTransitMin": 61,
+      "url": "https://www.arbeitsagentur.de/jobsuche/",
+      "applyUrl": "",
+      "applyEmail": "",
+      "description": "Prüfung und Aufbereitung von Druckdaten, Farbmanagement, Schichtarbeit im Wechsel. 38 Stunden pro Woche. Ansprechpartner: Herr Dr. Karl Weber.",
+      "employmentType": "",
+      "workingTime": "Schicht/Nacht/Wochenende",
+      "hoursPerWeek": 38,
+      "remote": false,
+      "tempAgency": false,
+      "urgent": false,
+      "salaryMin": 6253,
+      "salaryMax": 6253,
+      "salaryPeriod": "MONTH",
+      "salaryEstimated": false,
+      "contactName": "Herr Dr. Karl Weber",
+      "contactSalutation": "Sehr geehrter Herr Dr. Weber",
+      "contactEmail": "",
+      "contactPhone": "",
+      "contactSource": "Anzeigentext",
+      "scamScore": 8,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt",
+          "Gehalt im plausiblen Bereich"
+        ],
+        "reasons": [
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 51,
+      "matchReasons": [
+        "Deine Stärken gefragt: Druckvorstufe",
+        "13 km entfernt",
+        "Gehalt erreicht deinen Wunsch"
+      ],
+      "publishedAt": "2026-09-29T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "SEEN",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300077dusshfl6dh8",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "EMPLOYED",
+      "source": "example",
+      "externalId": "ex-6",
+      "title": "Heimarbeit: Pakete annehmen und weiterleiten – bis zu 3.000 € pro Woche",
+      "company": "",
+      "companyUrl": "",
+      "city": "Köln",
+      "postalCode": "50667",
+      "region": "",
+      "lat": 50.9375,
+      "lon": 6.9603,
+      "distanceKm": 0,
+      "travelCarMin": 6,
+      "travelTransitMin": 10,
+      "url": "https://www.arbeitsagentur.de/jobsuche/",
+      "applyUrl": "",
+      "applyEmail": "",
+      "description": "Keine Erfahrung nötig! Pakete annehmen und weiterleiten, Kontakt nur über WhatsApp. Vorab Startgebühr 49 €.",
+      "employmentType": "",
+      "workingTime": "",
+      "hoursPerWeek": null,
+      "remote": false,
+      "tempAgency": false,
+      "urgent": false,
+      "salaryMin": 2300,
+      "salaryMax": 2950,
+      "salaryPeriod": "MONTH",
+      "salaryEstimated": true,
+      "contactName": "",
+      "contactSalutation": "",
+      "contactEmail": "",
+      "contactPhone": "",
+      "contactSource": "",
+      "scamScore": 100,
+      "scamLevel": "warn",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft"
+        ],
+        "reasons": [
+          "Verlangt Zahlungen von Bewerbern (Vorkasse/Gebühren)",
+          "Kontakt nur über Messenger",
+          "Unrealistische Verdienstversprechen",
+          "Kein Arbeitgeber genannt",
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 2,
+      "matchReasons": [
+        "0 km entfernt",
+        "Ganz neu"
+      ],
+      "publishedAt": "2026-10-05T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "HIDDEN",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300087dus8hw5dkhc",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "FREELANCE",
+      "source": "example",
+      "externalId": "ex-7",
+      "title": "Freelance Motion Designer für Produktlaunch (remote)",
+      "company": "Brightside Digital (Beispiel)",
+      "companyUrl": "",
+      "city": "Remote",
+      "postalCode": "",
+      "region": "",
+      "lat": null,
+      "lon": null,
+      "distanceKm": null,
+      "travelCarMin": null,
+      "travelTransitMin": null,
+      "url": "https://www.freelancermap.de/",
+      "applyUrl": "",
+      "applyEmail": "",
+      "description": "Projekt über 6 Wochen, Start ab sofort, 100 % remote. After Effects, Social-Formate. Tagessatz 450 – 550 € pro Tag.",
+      "employmentType": "",
+      "workingTime": "Homeoffice möglich",
+      "hoursPerWeek": null,
+      "remote": true,
+      "tempAgency": false,
+      "urgent": true,
+      "salaryMin": 450,
+      "salaryMax": 550,
+      "salaryPeriod": "DAY",
+      "salaryEstimated": false,
+      "contactName": "",
+      "contactSalutation": "",
+      "contactEmail": "",
+      "contactPhone": "",
+      "contactSource": "",
+      "scamScore": 8,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt"
+        ],
+        "reasons": [
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 76,
+      "matchReasons": [
+        "Titel passt zu „Motion Design“",
+        "Deine Stärken gefragt: After Effects",
+        "Remote möglich",
+        "Ganz neu"
+      ],
+      "publishedAt": "2026-10-05T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "NEW",
+      "isExample": true,
+      "discovered": false
+    },
+    {
+      "id": "cmuvh39v300097dustwoudjv8",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "mode": "FREELANCE",
+      "source": "example",
+      "externalId": "ex-8",
+      "title": "Grafikdesign Freelance: Messeauftritt",
+      "company": "Messebau Westfalen (Beispiel)",
+      "companyUrl": "",
+      "city": "Dortmund",
+      "postalCode": "44135",
+      "region": "",
+      "lat": 51.514,
+      "lon": 7.465,
+      "distanceKm": 73.1,
+      "travelCarMin": 79,
+      "travelTransitMin": 122,
+      "url": "https://www.freelancermap.de/",
+      "applyUrl": "",
+      "applyEmail": "",
+      "description": "Gestaltung Messestand, Flyer und Rollups. 12 Projekttage, teilweise vor Ort. Ansprechpartnerin Frau Mira Engel.",
+      "employmentType": "",
+      "workingTime": "",
+      "hoursPerWeek": null,
+      "remote": false,
+      "tempAgency": false,
+      "urgent": false,
+      "salaryMin": 430,
+      "salaryMax": 580,
+      "salaryPeriod": "DAY",
+      "salaryEstimated": true,
+      "contactName": "Frau Mira Engel",
+      "contactSalutation": "Sehr geehrte Frau Engel",
+      "contactEmail": "",
+      "contactPhone": "",
+      "contactSource": "Anzeigentext",
+      "scamScore": 8,
+      "scamLevel": "ok",
+      "scamReasons": {
+        "checks": [
+          "Textmuster bekannter Betrugsmaschen geprüft",
+          "Arbeitgeber genannt"
+        ],
+        "reasons": [
+          "Sehr kurze Anzeige mit wenig Angaben"
+        ]
+      },
+      "matchScore": 64,
+      "matchReasons": [
+        "Titel passt zu „Grafikdesign“",
+        "Ganz neu"
+      ],
+      "publishedAt": "2026-10-03T16:37:17.619Z",
+      "firstSeenAt": "2026-10-05T16:37:17.871Z",
+      "status": "NEW",
+      "isExample": true,
+      "discovered": false
+    }
+  ],
+  "applications": [
+    {
+      "id": "cmuvh3a8a000d7dusspsev864",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "jobId": "cmuvh39v300037dusngc8oku1",
+      "mode": "EMPLOYED",
+      "status": "NEEDS_APPROVAL",
+      "jobTitle": "Grafikdesigner Corporate Design (m/w/d)",
+      "company": "Hansa Medienhaus (Beispiel)",
+      "recipientName": "Herr Jonas Albers",
+      "recipientEmail": "",
+      "salutation": "Sehr geehrter Herr Albers",
+      "subject": "Bewerbung als Grafikdesigner Corporate Design",
+      "emailBody": "Sehr geehrter Herr Albers,\n\nanbei sende ich Ihnen meine Bewerbung als Grafikdesigner Corporate Design. Im Anhang finden Sie mein Anschreiben, meinen Lebenslauf und meine Zeugnisse.\n\nIch freue mich, von Ihnen zu hören.\n\nMit freundlichen Grüßen\nAlex Beispiel\n0221 000000 · alex.beispiel@example.org",
+      "coverLetter": "Sie suchen eine Verstärkung als Grafikdesigner Corporate Design in Düsseldorf. In meiner aktuellen Tätigkeit als Mediengestalterin Digital und Print habe ich Kampagnen für drei Handelskunden von der ersten Skizze bis zur Druckfreigabe betreut, und genau daran möchte ich bei Ihnen anknüpfen.\n\nIllustrator, Figma, Corporate Design: Das sind Themen, in denen ich sicher bin. Außerdem habe ich Social-Media-Formate in Reels und Stories umgesetzt und Vorlagen für das Team gebaut.\n\nIch mag Projekte, bei denen Gestaltung und Organisation zusammenkommen. In der Agentur habe ich gelernt, unter Zeitdruck ruhig zu bleiben und trotzdem sauber zu arbeiten.\n\nIch bin offen für hybride Modelle und kann mit vier Wochen Frist starten.\n\nWenn ich Sie überzeugen konnte, freue ich mich auf ein Gespräch, in dem wir die Details klären.",
+      "cvData": {
+        "skills": [
+          "Illustrator",
+          "Figma",
+          "Corporate Design",
+          "Adobe InDesign",
+          "Photoshop",
+          "After Effects",
+          "Druckvorstufe",
+          "Social Media",
+          "Premiere Pro",
+          "Canva",
+          "Asana"
+        ],
+        "summary": "Mediengestalterin mit fünf Jahren Agenturerfahrung in Print, Social und Bewegtbild. Arbeitet sauber im Detail und behält Termine im Blick."
+      },
+      "attachments": [
+        {
+          "kind": "cover",
+          "name": "Anschreiben"
+        },
+        {
+          "kind": "cv",
+          "name": "Lebenslauf"
+        }
+      ],
+      "combinePdf": true,
+      "style": "MODERN",
+      "generatedBy": "TEMPLATE",
+      "settingsVersion": 1,
+      "approvedManually": false,
+      "approvedAt": null,
+      "sentAt": null,
+      "messageId": "",
+      "error": "",
+      "notes": "",
+      "followUpAt": null,
+      "createdAt": "2026-10-05T16:37:18.347Z",
+      "updatedAt": "2026-10-05T16:37:18.347Z",
+      "events": [
+        {
+          "id": "cmuvh3a8a000e7dus33p2b726",
+          "applicationId": "cmuvh3a8a000d7dusspsev864",
+          "type": "created",
+          "message": "Entwurf erstellt",
+          "createdAt": "2026-10-05T16:37:18.347Z"
+        }
+      ]
+    },
+    {
+      "id": "cmuvh3a91000g7dushm1hmddz",
+      "userId": "cmuvh39ug00007duskuh8z57c",
+      "jobId": "cmuvh39v300057dusathalin5",
+      "mode": "EMPLOYED",
+      "status": "NEEDS_APPROVAL",
+      "jobTitle": "Motion Designer Social Media (m/w/d)",
+      "company": "Kanal Acht Studios (Beispiel)",
+      "recipientName": "",
+      "recipientEmail": "jobs@kanalacht-beispiel.de",
+      "salutation": "Sehr geehrte Damen und Herren",
+      "subject": "Bewerbung als Motion Designer Social Media",
+      "emailBody": "Sehr geehrte Damen und Herren,\n\nanbei sende ich Ihnen meine Bewerbung als Motion Designer Social Media. Im Anhang finden Sie mein Anschreiben, meinen Lebenslauf und meine Zeugnisse.\n\nIch freue mich, von Ihnen zu hören.\n\nMit freundlichen Grüßen\nAlex Beispiel\n0221 000000 · alex.beispiel@example.org",
+      "coverLetter": "Sie suchen eine Verstärkung als Motion Designer Social Media in Köln. In meiner aktuellen Tätigkeit als Mediengestalterin Digital und Print habe ich Kampagnen für drei Handelskunden von der ersten Skizze bis zur Druckfreigabe betreut, und genau daran möchte ich bei Ihnen anknüpfen.\n\nAfter Effects, Social Media, Premiere Pro: Das sind Themen, in denen ich sicher bin. Außerdem habe ich Social-Media-Formate in Reels und Stories umgesetzt und Vorlagen für das Team gebaut.\n\nIch mag Projekte, bei denen Gestaltung und Organisation zusammenkommen. In der Agentur habe ich gelernt, unter Zeitdruck ruhig zu bleiben und trotzdem sauber zu arbeiten.\n\nIch bin offen für hybride Modelle und kann mit vier Wochen Frist starten.\n\nÜber eine Einladung zu einem persönlichen Gespräch freue ich mich. Gern auch kurzfristig per Telefon.",
+      "cvData": {
+        "skills": [
+          "After Effects",
+          "Social Media",
+          "Premiere Pro",
+          "Adobe InDesign",
+          "Photoshop",
+          "Illustrator",
+          "Figma",
+          "Druckvorstufe",
+          "Corporate Design",
+          "Canva",
+          "Asana"
+        ],
+        "summary": "Mediengestalterin mit fünf Jahren Agenturerfahrung in Print, Social und Bewegtbild. Arbeitet sauber im Detail und behält Termine im Blick."
+      },
+      "attachments": [
+        {
+          "kind": "cover",
+          "name": "Anschreiben"
+        },
+        {
+          "kind": "cv",
+          "name": "Lebenslauf"
+        }
+      ],
+      "combinePdf": true,
+      "style": "MODERN",
+      "generatedBy": "TEMPLATE",
+      "settingsVersion": 1,
+      "approvedManually": false,
+      "approvedAt": null,
+      "sentAt": null,
+      "messageId": "",
+      "error": "",
+      "notes": "",
+      "followUpAt": null,
+      "createdAt": "2026-10-05T16:37:18.373Z",
+      "updatedAt": "2026-10-05T16:37:18.373Z",
+      "events": [
+        {
+          "id": "cmuvh3a91000h7dusf5n847v9",
+          "applicationId": "cmuvh3a91000g7dushm1hmddz",
+          "type": "created",
+          "message": "Entwurf erstellt",
+          "createdAt": "2026-10-05T16:37:18.373Z"
+        }
+      ]
+    }
+  ],
+  "searchRuns": [],
+  "consents": []
+}
