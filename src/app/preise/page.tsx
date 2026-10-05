@@ -8,6 +8,7 @@ import { ADDONS, GUARANTEE_DAYS, PLANS } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Preise & Tarife",
+  alternates: { canonical: "preise/" },
   description: "Arbitrage Radar ab 29 € im Monat: Starter, Pro mit Autopilot und Business mit Insolvenz-Finder. Monatlich kündbar, 14 Tage Geld-zurück-Garantie.",
 };
 

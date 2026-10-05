@@ -3,6 +3,7 @@ import { DemoShell } from "@/components/shell/demo-shell";
 
 export const metadata: Metadata = {
   title: "Test-Dashboard",
+  alternates: { canonical: "demo/" },
   description: "Arbitrage Radar kostenlos ansehen: die besten Arbitrage-Chancen je Kategorie mit Gewinnwahrscheinlichkeit, ohne Anmeldung.",
 };
 

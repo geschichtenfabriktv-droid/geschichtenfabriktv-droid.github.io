@@ -1,12 +1,9 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL as site } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const site = (
-  process.env.APP_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://geschichtenfabriktv-droid.github.io")
-).replace(/\/$/, "");
 
 /** Nur Verkaufsseiten; Rechtstexte bewusst nicht enthalten. */
 const sitemap = (): MetadataRoute.Sitemap =>

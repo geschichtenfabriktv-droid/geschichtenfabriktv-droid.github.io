@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/site/reveal";
 import { PricingCards } from "@/components/site/pricing-cards";
@@ -8,6 +9,8 @@ import { IconArrowRight, IconArrowUpRight, IconBolt, IconCalendar, IconCheck, Ic
 import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { getAnalyzedDeals, getAnalyzedLots, summarizeCategories } from "@/lib/data/repository";
 import { eur, signedEur } from "@/lib/format";
+
+export const metadata: Metadata = { alternates: { canonical: "./" } };
 
 const SOURCES = ["eBay", "Amazon", "StockX", "Cardmarket", "Kleinanzeigen", "Vinted", "Händler-Feeds", "Keepa", "Insolvenzbekanntmachungen", "Verwerter-Auktionen"];
 

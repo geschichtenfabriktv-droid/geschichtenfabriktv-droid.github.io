@@ -7,7 +7,8 @@ Keepa) per OAuth.
 
 - **Vorschau (statisch):** https://geschichtenfabriktv-droid.github.io/arbitrage/ – Webseite, Preise,
   Test-Dashboard (3 Chancen je Kategorie) und Rechtstexte. Konto und Kauf sind dort deaktiviert.
-- **Live-Version:** Next.js-Server auf Vercel (Region Frankfurt) mit Postgres.
+- **Live-Version:** https://arbitrageradar.de – Next.js-Server auf Vercel (Region Frankfurt) mit Postgres.
+  `www.arbitrageradar.de` leitet per `vercel.json` dauerhaft auf die Hauptdomain um.
 
 ## Zwei Betriebsarten
 
@@ -34,7 +35,7 @@ Jahresabo = 10 Monatspreise. 14 Tage Geld-zurück-Garantie. Definiert in `src/li
 2. Postgres in der EU anlegen (z. B. Neon, Region Frankfurt) und `DATABASE_URL` setzen. Tabellen werden beim Start angelegt.
 3. Umgebungsvariablen als Secrets setzen (siehe `.env.example`):
    - `AUTH_SECRET` (`openssl rand -base64 48`), `ENCRYPTION_KEY` (`openssl rand -base64 32`)
-   - `MOLLIE_API_KEY` (erst `test_…`, dann `live_…`), `APP_URL` (z. B. `https://arbitrage-radar.de`)
+   - `MOLLIE_API_KEY` (erst `test_…`, dann `live_…`); `APP_URL` ist in Produktion automatisch `https://arbitrageradar.de`
    - `IMPRESSUM_NAME`, `IMPRESSUM_STREET`, `IMPRESSUM_CITY`, `IMPRESSUM_COUNTRY`, `IMPRESSUM_EMAIL`
      (optional `IMPRESSUM_PHONE`, `IMPRESSUM_VAT_ID`) – nie ins Repository schreiben
    - optional `RESEND_API_KEY` und `MAIL_FROM` für E-Mails

@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL as site } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const site = (process.env.APP_URL ?? "").replace(/\/$/, "");
 
 /** Rechtstexte (mit Anbieterangaben) und private Bereiche sind für Suchmaschinen gesperrt. */
 const robots = (): MetadataRoute.Robots => ({
@@ -16,7 +16,8 @@ const robots = (): MetadataRoute.Robots => ({
       ),
     },
   ],
-  ...(site ? { sitemap: `${site}${base}/sitemap.xml` } : {}),
+  sitemap: `${site}${base}/sitemap.xml`,
+  host: site,
 });
 
 export default robots;

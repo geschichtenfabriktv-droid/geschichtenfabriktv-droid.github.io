@@ -3,10 +3,12 @@ import "@fontsource-variable/inter";
 import "@fontsource/instrument-serif/400.css";
 import "@fontsource/instrument-serif/400-italic.css";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`${SITE_URL}${basePath}/`),
   title: {
     default: "Arbitrage Radar · Gewinne finden, bevor der Markt sie sieht",
     template: "%s · Arbitrage Radar",
@@ -18,6 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "Arbitrage Radar",
+    url: "./",
     title: "Arbitrage Radar · Gewinne finden, bevor der Markt sie sieht",
     description: "Arbitrage-Chancen, Vorbestellungen und Insolvenzmassen mit Gewinnwahrscheinlichkeit. Kaufen und Einstellen auf Knopfdruck.",
   },

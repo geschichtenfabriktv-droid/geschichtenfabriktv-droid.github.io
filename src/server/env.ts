@@ -1,4 +1,5 @@
 import "server-only";
+import { PRIMARY_DOMAIN, PRIMARY_URL } from "@/lib/site";
 
 function optional(name: string): string | undefined {
   const v = process.env[name];
@@ -14,7 +15,12 @@ function required(name: string, devFallback?: string): string {
 
 export const env = {
   get appUrl() {
-    return (optional("APP_URL") ?? (optional("VERCEL_PROJECT_PRODUCTION_URL") ? `https://${optional("VERCEL_PROJECT_PRODUCTION_URL")}` : "http://localhost:3000")).replace(/\/$/, "");
+    const explicit = optional("APP_URL");
+    if (explicit) return explicit.replace(/\/$/, "");
+    // Produktion läuft auf der Hauptdomain; Vorschau-Deployments auf ihrer eigenen Vercel-Adresse.
+    if (optional("VERCEL_ENV") === "production") return PRIMARY_URL;
+    if (optional("VERCEL_URL")) return `https://${optional("VERCEL_URL")}`;
+    return "http://localhost:3000";
   },
   get databaseUrl() {
     return optional("DATABASE_URL");
@@ -32,7 +38,7 @@ export const env = {
     return optional("RESEND_API_KEY");
   },
   get mailFrom() {
-    return optional("MAIL_FROM") ?? "Arbitrage Radar <noreply@example.com>";
+    return optional("MAIL_FROM") ?? `Arbitrage Radar <noreply@${PRIMARY_DOMAIN}>`;
   },
   ebay: {
     get clientId() {
