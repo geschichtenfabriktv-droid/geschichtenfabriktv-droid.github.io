@@ -10,6 +10,7 @@ import { ScanStatus } from "@/components/shell/scan-status";
 import { IconArrowRight, IconSearch } from "@/components/ui/icons";
 import { CardSkeleton } from "@/components/ui/skeleton";
 import { usePortfolio } from "@/lib/client/portfolio-store";
+import { useDashboard } from "@/lib/client/dashboard-mode";
 import { useMarket } from "@/lib/client/use-market";
 import { getCategory, isCategoryId } from "@/lib/domain/categories";
 import type { AnalyzedDeal, CategoryId } from "@/lib/domain/types";
@@ -26,7 +27,8 @@ const SORTS: Record<SortKey, { label: string; compare: (a: AnalyzedDeal, b: Anal
 const MIN_PROB = [0, 0.45, 0.7] as const;
 
 export function DealExplorer() {
-  const { market, scanning, refresh } = useMarket();
+  const routes = useDashboard();
+  const { market, scanning, refresh, error } = useMarket(routes.mode);
   const { settings } = usePortfolio();
   const params = useSearchParams();
   const router = useRouter();
@@ -42,7 +44,7 @@ export function DealExplorer() {
 
   const select = (id: CategoryId | "alle") => {
     if (id === "insolvenz") {
-      router.push("/app/insolvenzen/");
+      router.push(routes.lots);
       return;
     }
     const next = new URLSearchParams(params.toString());
@@ -73,7 +75,7 @@ export function DealExplorer() {
 
       {category !== "alle" && <p className="-mt-5 mb-6 max-w-2xl text-[15px] text-ink-2">{getCategory(category).claim}.</p>}
 
-      <div className="mb-6 space-y-3 lg:sticky lg:top-0 lg:z-20 lg:-mx-10 lg:border-b lg:border-line lg:bg-canvas/90 lg:px-10 lg:py-3 lg:backdrop-blur-xl">
+      <div className={`mb-6 space-y-3 lg:sticky ${routes.mode === "demo" ? "lg:top-[72px]" : "lg:top-0"} lg:z-20 lg:-mx-10 lg:border-b lg:border-line lg:bg-canvas/90 lg:px-10 lg:py-3 lg:backdrop-blur-xl`}>
         {market && <CategoryChips categories={market.categories} active={category} total={market.deals.length} onSelect={select} />}
         <div className="flex flex-col gap-2 md:flex-row md:items-center">
           <label className="relative flex-1">
@@ -130,6 +132,15 @@ export function DealExplorer() {
         </div>
       </div>
 
+      {error && <p className="mb-4 text-sm text-bad">{error}</p>}
+      {market && market.locked.deals > 0 && (
+        <Link href="/konto/" className="mb-4 flex items-center justify-between gap-3 rounded-2xl bg-white p-4 text-sm ring-1 ring-line hover:ring-ink">
+          <span>
+            <strong>{market.locked.deals} weitere Chancen</strong> in Kategorien, die dein Tarif nicht enthält.
+          </span>
+          <span className="shrink-0 font-medium underline underline-offset-4">Tarif erweitern</span>
+        </Link>
+      )}
       {!market ? (
         <CardSkeleton />
       ) : results.length === 0 ? (
@@ -144,14 +155,14 @@ export function DealExplorer() {
           </p>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {results.map((d, i) => (
-              <DealCard key={d.id} deal={d} now={market.scannedAt} index={i} />
+              <DealCard key={d.id} deal={d} now={market.scannedAt} index={i} href={routes.deal(d.id)} />
             ))}
           </div>
         </>
       )}
 
       <Link
-        href="/app/insolvenzen/"
+        href={routes.lots}
         className="group mt-10 flex items-center justify-between gap-4 rounded-[var(--radius-card)] bg-ink p-6 text-white transition hover:bg-ink/90"
       >
         <span>

@@ -66,7 +66,7 @@ export function PortfolioView() {
                 <article key={o.id} className="flex flex-col gap-4 rounded-2xl bg-white p-5 ring-1 ring-line md:flex-row md:items-center">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge tone={o.status === "eingetroffen" ? "good" : "neutral"}>{o.mode === "gebot" ? "Bietagent" : ORDER_LABEL[o.status]}</Badge>
+                      <Badge tone={o.status === "eingetroffen" ? "good" : "neutral"}>{o.mode === "gebot" ? "Bietlimit" : ORDER_LABEL[o.status]}</Badge>
                       <span className="text-[12px] text-muted">{new Date(o.createdAt).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })}</span>
                     </div>
                     <h3 className="mt-2 truncate font-semibold">{o.title}</h3>

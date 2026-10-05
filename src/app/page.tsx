@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Reveal } from "@/components/site/reveal";
-import { SiteNav } from "@/components/site/site-nav";
+import { PricingCards } from "@/components/site/pricing-cards";
+import { SiteLayout } from "@/components/site/site-layout";
 import { Badge } from "@/components/ui/badge";
-import { Brand } from "@/components/ui/brand";
 import { LinkButton } from "@/components/ui/button";
 import { IconArrowRight, IconArrowUpRight, IconBolt, IconCalendar, IconCheck, IconGavel, IconRadar, IconShield } from "@/components/ui/icons";
 import { ProbabilityBar } from "@/components/ui/probability-bar";
@@ -47,11 +47,19 @@ const FAQ = [
   },
   {
     q: "Wird wirklich automatisch gekauft und verkauft?",
-    a: "Die Abläufe für Kaufen, Einstellen und Bieten sind fertig gebaut. Echte Bestellungen und Inserate laufen, sobald die Konten für Marktplätze und Zahlung verbunden sind. Bis dahin arbeitet das Dashboard im Demo-Modus mit modellierten Marktdaten.",
+    a: "Du verbindest dein eigenes eBay- oder Amazon-Verkäuferkonto über die offizielle Freigabe des Marktplatzes, ohne uns dein Passwort zu geben. Danach stellt Arbitrage Radar Angebote in deinem Namen ein und hält den Preis über deinem Break-even. Eingekauft wird mit einem Klick beim Händler; jede Aktion löst du selbst aus oder gibst sie für den Autopiloten frei.",
   },
   {
     q: "Was sind Insolvenzmassen?",
     a: "Vermögen insolventer Unternehmen, das der Insolvenzverwalter verwertet: Warenlager, Maschinen, Fahrzeuge, IT oder Markenrechte. Häufig wird es deutlich unter dem Gutachterwert versteigert.",
+  },
+  {
+    q: "Was kostet Arbitrage Radar und wie kündige ich?",
+    a: "Ab 29 € im Monat oder 24,17 € im Monat bei jährlicher Zahlung. Du kannst jederzeit zum Ende der Laufzeit kündigen, im Kundenkonto oder über „Verträge hier kündigen“ im Footer. In den ersten 14 Tagen gibt es dein Geld ohne Angabe von Gründen zurück.",
+  },
+  {
+    q: "Sind meine Daten sicher?",
+    a: "Server und Datenbank stehen in der EU. Zugangsschlüssel deiner Marktplätze werden verschlüsselt gespeichert, nur für die von dir freigegebenen Zwecke genutzt und beim Trennen sofort gelöscht. Deine Daten kannst du jederzeit exportieren oder dein Konto vollständig löschen.",
   },
   {
     q: "Funktioniert es auf dem Smartphone?",
@@ -70,8 +78,7 @@ export default async function Home() {
   );
 
   return (
-    <div className="overflow-x-clip bg-white">
-      <SiteNav />
+    <SiteLayout>
 
       {/* Hero */}
       <section className="relative">
@@ -88,13 +95,18 @@ export default async function Home() {
               wahrscheinlich sie sich lohnt. Kaufen und Einstellen auf Knopfdruck.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <LinkButton href="/app/" size="lg">
-                Dashboard öffnen <IconArrowRight size={17} />
+              <LinkButton href="/demo/" size="lg">
+                Kostenlos ansehen <IconArrowRight size={17} />
               </LinkButton>
-              <a href="#analyse" className="inline-flex h-13 items-center justify-center gap-2 rounded-full px-7 text-[15px] font-medium text-ink ring-1 ring-line-strong transition hover:bg-canvas">
-                So wird bewertet
-              </a>
+              <LinkButton href="/preise/" variant="secondary" size="lg">
+                Tarife ansehen
+              </LinkButton>
             </div>
+            <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-muted">
+              <span className="inline-flex items-center gap-1.5"><IconCheck size={14} className="text-good" /> Test-Dashboard ohne Anmeldung</span>
+              <span className="inline-flex items-center gap-1.5"><IconCheck size={14} className="text-good" /> 14 Tage Geld zurück</span>
+              <span className="inline-flex items-center gap-1.5"><IconCheck size={14} className="text-good" /> Monatlich kündbar</span>
+            </p>
           </div>
 
           {/* Produktbühne */}
@@ -238,15 +250,15 @@ export default async function Home() {
                 Sortiert, wie du denkst. <span className="italic text-muted">Ein Klick genügt.</span>
               </h2>
             </div>
-            <LinkButton href="/app/chancen/" variant="secondary">
-              Alle Chancen
+            <LinkButton href="/demo/" variant="secondary">
+              Im Test-Dashboard ansehen
             </LinkButton>
           </Reveal>
           <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((c, i) => (
               <Reveal key={c.id} delay={(i % 3) * 70}>
                 <Link
-                  href={c.id === "insolvenz" ? "/app/insolvenzen/" : `/app/chancen/?kategorie=${c.id}`}
+                  href={c.id === "insolvenz" ? "/demo/insolvenzen/" : `/demo/?kategorie=${c.id}`}
                   className={`group flex h-full flex-col rounded-[24px] p-6 ring-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)] ${
                     c.id === "insolvenz" ? "bg-ink text-white ring-ink" : "bg-white ring-line"
                   }`}
@@ -308,6 +320,26 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Preise */}
+      <section id="preise" className="scroll-mt-20 border-t border-line bg-canvas">
+        <div className="mx-auto max-w-[1320px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
+          <Reveal className="text-center">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Preise</p>
+            <h2 className="mx-auto mt-4 max-w-3xl font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">
+              Ein guter Deal <span className="italic text-muted">zahlt den Monat.</span>
+            </h2>
+          </Reveal>
+          <div className="mt-12">
+            <PricingCards />
+          </div>
+          <p className="mt-8 text-center">
+            <Link href="/preise/" className="text-sm font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+              Alle Funktionen und Add-ons vergleichen
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section id="faq" className="scroll-mt-20">
         <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-10 lg:py-36">
@@ -332,24 +364,23 @@ export default async function Home() {
       </section>
 
       {/* Abschluss */}
-      <section className="px-4 pb-6 sm:px-6 lg:px-10">
+      <section className="px-4 pb-16 sm:px-6 lg:px-10">
         <div className="mx-auto max-w-[1320px] overflow-hidden rounded-[32px] bg-ink px-6 py-20 text-center text-white md:py-28">
           <h2 className="mx-auto max-w-4xl font-display text-[48px] leading-[0.98] tracking-tight md:text-[88px]">
             Der nächste Deal <span className="italic text-white/50">läuft schon.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-lg text-[16px] text-white/65">Öffne das Dashboard und sieh dir an, was der Scanner heute gefunden hat.</p>
-          <LinkButton href="/app/" variant="inverse" size="lg" className="mt-10">
-            Dashboard öffnen <IconArrowRight size={17} />
-          </LinkButton>
+          <p className="mx-auto mt-6 max-w-lg text-[16px] text-white/65">Sieh dir kostenlos an, was der Scanner heute gefunden hat, und starte, wenn du überzeugt bist.</p>
+          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+            <LinkButton href="/demo/" variant="inverse" size="lg">
+              Test-Dashboard öffnen <IconArrowRight size={17} />
+            </LinkButton>
+            <LinkButton href="/preise/" size="lg" className="!bg-white/10 hover:!bg-white/20">
+              Tarif wählen
+            </LinkButton>
+          </div>
         </div>
       </section>
 
-      <footer className="mx-auto flex max-w-[1320px] flex-col gap-6 px-4 py-12 text-[13px] text-muted sm:px-6 md:flex-row md:items-center md:justify-between lg:px-10">
-        <Brand />
-        <p className="max-w-xl md:text-right">
-          Demo-Version mit modellierten Marktdaten. Keine Anlage- oder Rechtsberatung; Gewinnwahrscheinlichkeiten sind Schätzungen, keine Garantien.
-        </p>
-      </footer>
-    </div>
+    </SiteLayout>
   );
 }

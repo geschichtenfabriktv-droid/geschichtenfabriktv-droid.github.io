@@ -8,6 +8,7 @@ import { ScanStatus } from "@/components/shell/scan-status";
 import { IconArrowRight } from "@/components/ui/icons";
 import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { CardSkeleton } from "@/components/ui/skeleton";
+import { useDashboard } from "@/lib/client/dashboard-mode";
 import { useMarket } from "@/lib/client/use-market";
 import { eur, number, percent } from "@/lib/format";
 
@@ -17,12 +18,14 @@ function greeting(d: Date) {
 }
 
 export function Overview() {
-  const { market, scanning, refresh } = useMarket();
+  const routes = useDashboard();
+  const { market, scanning, refresh, error } = useMarket(routes.mode);
 
   if (!market) {
     return (
       <>
-        <PageHeader eyebrow="Übersicht" title="Märkte werden gescannt …" />
+        <PageHeader eyebrow="Übersicht" title={error ? "Daten nicht verfügbar" : "Märkte werden gescannt …"} />
+        {error && <p className="mb-6 text-sm text-bad">{error}</p>}
         <CardSkeleton />
       </>
     );
@@ -69,7 +72,7 @@ export function Overview() {
           <h2 id="kat" className="text-xl font-semibold tracking-tight">
             Kategorien
           </h2>
-          <Link href="/app/chancen/" className="text-sm font-medium text-ink-2 hover:text-ink">
+          <Link href={routes.list} className="text-sm font-medium text-ink-2 hover:text-ink">
             Alle Chancen
           </Link>
         </div>
@@ -77,7 +80,7 @@ export function Overview() {
           {categories.map((c, i) => (
             <Link
               key={c.id}
-              href={c.id === "insolvenz" ? "/app/insolvenzen/" : `/app/chancen/?kategorie=${c.id}`}
+              href={c.id === "insolvenz" ? routes.lots : `${routes.list}?kategorie=${c.id}`}
               className="group flex flex-col rounded-[var(--radius-card)] bg-white p-4 ring-1 sm:p-5 ring-line transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)] animate-rise"
               style={{ animationDelay: `${i * 35}ms` }}
             >
@@ -109,13 +112,13 @@ export function Overview() {
           <h2 id="top" className="text-xl font-semibold tracking-tight">
             Top-Chancen jetzt
           </h2>
-          <Link href="/app/chancen/" className="text-sm font-medium text-ink-2 hover:text-ink">
+          <Link href={routes.list} className="text-sm font-medium text-ink-2 hover:text-ink">
             Alle ansehen
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {deals.slice(0, 6).map((d, i) => (
-            <DealCard key={d.id} deal={d} now={scannedAt} index={i} />
+            <DealCard key={d.id} deal={d} now={scannedAt} index={i} href={routes.deal(d.id)} />
           ))}
         </div>
       </section>
@@ -125,13 +128,13 @@ export function Overview() {
           <h2 id="ins" className="text-xl font-semibold tracking-tight">
             Insolvenzmassen
           </h2>
-          <Link href="/app/insolvenzen/" className="text-sm font-medium text-ink-2 hover:text-ink">
+          <Link href={routes.lots} className="text-sm font-medium text-ink-2 hover:text-ink">
             Alle Verfahren
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {lots.slice(0, 3).map((l, i) => (
-            <LotCard key={l.id} lot={l} now={scannedAt} index={i} />
+            <LotCard key={l.id} lot={l} now={scannedAt} index={i} href={routes.lot(l.id)} />
           ))}
         </div>
       </section>

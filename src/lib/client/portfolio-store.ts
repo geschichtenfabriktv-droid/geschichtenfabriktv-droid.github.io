@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { api, BACKEND } from "./api";
 
 export type OrderStatus = "bestellt" | "unterwegs" | "eingetroffen";
 export type ListingStatus = "aktiv" | "verkauft" | "pausiert";
@@ -60,7 +61,11 @@ let state: PortfolioState = EMPTY;
 let loaded = false;
 const listeners = new Set<() => void>();
 
+const serverBacked = () => BACKEND && typeof window !== "undefined" && window.location.pathname.includes("/app");
+
 function load(): PortfolioState {
+  // Mit Konto nie Browser-Daten übernehmen (geteilte Geräte): Quelle ist allein der Server.
+  if (serverBacked()) return EMPTY;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return EMPTY;
@@ -75,21 +80,49 @@ function load(): PortfolioState {
   }
 }
 
+let serverSyncStarted = false;
+let serverLoaded = false;
+let saveTimer: ReturnType<typeof setTimeout> | null = null;
+
+/** Mit Konto liegt das Portfolio auf dem Server; der Browser-Speicher dient nur als schneller Start. */
+function startServerSync() {
+  if (serverSyncStarted || !serverBacked()) return;
+  serverSyncStarted = true;
+  api<{ portfolio: PortfolioState | null }>("/api/portfolio/")
+    .then(({ portfolio }) => {
+      serverLoaded = true;
+      if (portfolio) {
+        state = { orders: portfolio.orders ?? [], listings: portfolio.listings ?? [], settings: { ...DEFAULT_SETTINGS, ...(portfolio.settings ?? {}) } };
+        listeners.forEach((l) => l());
+      }
+    })
+    .catch(() => {
+      serverSyncStarted = false;
+    });
+}
+
 function ensureLoaded() {
   if (!loaded && typeof window !== "undefined") {
     state = load();
     loaded = true;
   }
+  if (typeof window !== "undefined") startServerSync();
 }
 
 function commit(next: PortfolioState) {
   state = next;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    if (!serverBacked()) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   } catch {
     // Speicher nicht verfügbar (z. B. privater Modus): Zustand bleibt für diese Sitzung erhalten.
   }
   listeners.forEach((l) => l());
+  if (serverLoaded && serverBacked()) {
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      void api("/api/portfolio/", { method: "PUT", body: { portfolio: state } }).catch(() => undefined);
+    }, 400);
+  }
 }
 
 function subscribe(listener: () => void) {

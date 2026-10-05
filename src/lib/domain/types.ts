@@ -62,6 +62,8 @@ export interface Deal {
     trend30d: number;
     history: PricePoint[];
     comparables: Comparable[];
+    /** true, wenn Median/Streuung/Angebote aus Live-Daten stammen */
+    live?: boolean;
   };
   /** Nur bei Vorbestellungen: Erscheinungstermin (ISO). */
   releaseDate?: string;

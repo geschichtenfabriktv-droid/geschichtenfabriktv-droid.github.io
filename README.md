@@ -1,55 +1,82 @@
 # Arbitrage Radar
 
-Webseite und Dashboard-Web-App, die Arbitrage-Chancen, Vorbestellungen mit Wiederverkaufspotenzial
-und Insolvenzmassen findet, den Markt analysiert und für jede Chance die Gewinnwahrscheinlichkeit
-(Leiste von Rot bis Grün, in Prozent) anzeigt. Kaufen, Einstellen und Bieten laufen auf Knopfdruck.
+Verkaufbare Web-App (SaaS): findet Arbitrage-Chancen, Vorbestellungen mit Wiederverkaufspotenzial und
+Insolvenzmassen, analysiert den Markt und zeigt für jede Chance die Gewinnwahrscheinlichkeit (Leiste von
+Rot bis Grün, in Prozent). Kundenkonten, Abos über Mollie und eigene Marktplatz-Konten (eBay, Amazon,
+Keepa) per OAuth.
 
-**Live:** https://geschichtenfabriktv-droid.github.io/arbitrage/ · Dashboard: `/arbitrage/app/`
+- **Vorschau (statisch):** https://geschichtenfabriktv-droid.github.io/arbitrage/ – Webseite, Preise,
+  Test-Dashboard (3 Chancen je Kategorie) und Rechtstexte. Konto und Kauf sind dort deaktiviert.
+- **Live-Version:** Next.js-Server auf Vercel (Region Frankfurt) mit Postgres.
 
-## Stand
+## Zwei Betriebsarten
 
-- Webseite (`/`) und Dashboard (`/app/…`) sind fertig und für Smartphone und Desktop optimiert,
-  inklusive Web-App-Manifest („Zum Home-Bildschirm“).
-- Dashboard: Übersicht, Kategorien (anklickbar), Chancen mit Filter/Suche/Sortierung, Detailanalyse mit
-  Preisverlauf, Faktoren und Vergleichsverkäufen, Insolvenzmassen mit Bietagent, Portfolio, Einstellungen.
-- **Demo-Modus:** Die Marktdaten sind modelliert (`src/lib/data/demo-catalog.ts`). Bestellungen,
-  Inserate und Gebote werden nur im Browser gespeichert, es wird nichts real gekauft oder verkauft.
+| | Server (Standard) | `STATIC_EXPORT=1` |
+|---|---|---|
+| Wo | Vercel, Region `fra1` | GitHub Pages unter `/arbitrage` |
+| Inhalt | alles: Konto, Checkout, Dashboard `/app`, API | Webseite, Preise, `/demo`, Rechtstexte |
+| Dateien | `*.srv.ts(x)` werden mitgebaut | `*.srv.ts(x)` werden ignoriert |
+
+## Tarife
+
+| Tarif | Monat | Jahr | Enthält |
+|---|---|---|---|
+| Starter | 29 € | 290 € | 7 Kategorien, 1 Marktplatz |
+| Pro | 79 € | 790 € | + Vorbestellungen, Autopilot, Preisautomatik, 3 Marktplätze |
+| Business | 199 € | 1.990 € | + Insolvenz-Finder, API, 5 Nutzer, unbegrenzt Marktplätze |
+
+Add-ons monatlich: Insolvenz-Finder 49 €, zusätzlicher Marktplatz 9 €, Sofort-Alarm 12 €, Team-Zugang 19 €.
+Jahresabo = 10 Monatspreise. 14 Tage Geld-zurück-Garantie. Definiert in `src/lib/pricing.ts`.
+
+## Einrichtung (Live-Version)
+
+1. Vercel-Projekt aus diesem Repository (Branch `arbitrage-source`) anlegen, Region ist per `vercel.json` Frankfurt.
+2. Postgres in der EU anlegen (z. B. Neon, Region Frankfurt) und `DATABASE_URL` setzen. Tabellen werden beim Start angelegt.
+3. Umgebungsvariablen als Secrets setzen (siehe `.env.example`):
+   - `AUTH_SECRET` (`openssl rand -base64 48`), `ENCRYPTION_KEY` (`openssl rand -base64 32`)
+   - `MOLLIE_API_KEY` (erst `test_…`, dann `live_…`), `APP_URL` (z. B. `https://arbitrage-radar.de`)
+   - `IMPRESSUM_NAME`, `IMPRESSUM_STREET`, `IMPRESSUM_CITY`, `IMPRESSUM_COUNTRY`, `IMPRESSUM_EMAIL`
+     (optional `IMPRESSUM_PHONE`, `IMPRESSUM_VAT_ID`) – nie ins Repository schreiben
+   - optional `RESEND_API_KEY` und `MAIL_FROM` für E-Mails
+4. eBay: im eBay Developer Program eine App anlegen, `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `EBAY_RUNAME`
+   setzen. Als „Accept URL“ der RuName `APP_URL/api/verbindungen/ebay/callback/` eintragen. Damit werden
+   auch Live-Marktpreise (Browse API) aktiv.
+5. Amazon: als SP-API-Entwickler registrieren, App anlegen, `AMAZON_SP_APP_ID`, `AMAZON_LWA_CLIENT_ID`,
+   `AMAZON_LWA_CLIENT_SECRET` setzen; Redirect `APP_URL/api/verbindungen/amazon/callback/`.
+6. Mollie-Webhook braucht nichts weiter: die URL wird pro Zahlung mitgeschickt.
+
+## Datenschutz
+
+- Anbieterdaten nur im Impressum und den Rechtstexten; diese sind per `noindex`, `X-Robots-Tag` und
+  `robots.txt` von Suchmaschinen ausgeschlossen, nicht in der Sitemap und werden kodiert eingebettet.
+- Passwörter mit scrypt gehasht, Marktplatz-Token mit AES-256-GCM verschlüsselt, nur serverseitig genutzt.
+- Datenexport (JSON) und Kontolöschung im Kundenkonto; Kündigungsbutton nach § 312k BGB unter `/kuendigen`.
+- Rechtstexte sind Vorlagen und müssen anwaltlich geprüft werden.
 
 ## Architektur
 
 ```
-src/lib/domain      Typen und Kategorien
-src/lib/engine      Analyse: Break-even, Zielpreis, Gewinnwahrscheinlichkeit (getestet)
-src/lib/data        DataSource-Schnittstelle, Demo-Quelle, Repository
-src/lib/client      Browser-Zustand (Portfolio, Einstellungen) und Markt-Hook
-src/app             Seiten (Next.js App Router, statischer Export) und JSON-API unter /api/*.json
-src/components      UI-Bausteine (Wahrscheinlichkeitsleiste, Karten, Chart, Sheets, Navigation)
+src/lib/pricing.ts    Tarife, Add-ons, Freischaltung von Funktionen
+src/lib/engine        Analyse: Break-even, Zielpreis, Gewinnwahrscheinlichkeit
+src/lib/data          DataSource, modellierter Katalog
+src/server            Datenbank, Auth, Mollie, Abrechnung, Verbindungen (OAuth), Live-Marktdaten
+src/app/api           API-Routen (*.srv.ts)
+src/app/app           Dashboard für Abonnenten (*.srv.tsx)
+src/app/demo          Test-Dashboard
+src/app/konto         Kundenkonto: Abo, Verbindungen, Daten
 ```
 
-### Gewinnwahrscheinlichkeit
-
-Verkaufspreise werden als Normalverteilung um den Marktmedian modelliert, korrigiert um den Trend bis
-zum erwarteten Verkauf (bei Vorbestellungen bis nach Release, mit wachsender Unsicherheit). Die
-Wahrscheinlichkeit ist P(Verkaufspreis ≥ Break-even + 5 % Mindestgewinn) × (0,6 + 0,4 × Abverkaufsquote 30 Tage),
-begrenzt auf 1–97 %. Bei Insolvenzmassen: P(Erlös ≥ 110 % der Kosten inkl. Aufgeld und Logistik),
-gewichtet mit der Liquidität; das empfohlene Maximalgebot lässt 20 % Marge.
-
-### Live-Daten anbinden
-
-Eine neue Quelle implementiert `DataSource` (`src/lib/data/source.ts`) und wird in
-`getDataSource` (`src/lib/data/repository.ts`) eingesetzt. Für echten Handel werden Zugänge benötigt:
-eBay Sell/Browse API, Amazon SP-API, Keepa, Affiliate-Feeds (Awin, Tradedoubler), StockX/Cardmarket,
-insolvenzbekanntmachungen.de und Verwerter-Auktionen sowie ein Zahlungsdienst. Für Kauf- und
-Verkaufsaufträge mit echten Zugangsdaten ist ein Server nötig (z. B. Next.js auf Vercel statt
-statischem Export).
+Gewinnwahrscheinlichkeit = P(Verkaufspreis ≥ Break-even + Mindestgewinn) × (0,6 + 0,4 × Abverkaufsquote),
+begrenzt auf 1–97 %. Mit eBay-Zugang ersetzen Live-Angebotspreise (Median, Streuung, Angebotszahl) die
+Modellwerte.
 
 ## Entwicklung
 
 ```bash
 npm install
-npm run dev          # http://localhost:3000/arbitrage
+npm run dev                      # http://localhost:3000, eingebettete Datenbank (PGlite)
 npm run typecheck && npm run lint && npm test
-npm run build        # statischer Export nach out/
-BASE_PATH= npm run build   # Export für eine Domain-Wurzel (z. B. Vercel)
-scripts/deploy-pages.sh ../geschichtenfabriktv-droid.github.io
+npm run build                    # Server-Build
+STATIC_EXPORT=1 npm run build    # statischer Export nach out/
+IMPRESSUM_NAME=… scripts/deploy-pages.sh ../geschichtenfabriktv-droid.github.io
 ```

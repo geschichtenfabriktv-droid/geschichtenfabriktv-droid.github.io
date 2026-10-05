@@ -10,17 +10,48 @@ import { Button } from "@/components/ui/button";
 import { IconArrowLeft, IconBolt, IconCart, IconTag } from "@/components/ui/icons";
 import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { CardSkeleton } from "@/components/ui/skeleton";
+import { UpsellCard } from "@/components/market/upsell";
+import { useDashboard } from "@/lib/client/dashboard-mode";
+import { useSessionUser } from "@/lib/client/user-context";
 import { useMarket } from "@/lib/client/use-market";
+import { hasFeature } from "@/lib/pricing";
+import { useRouter } from "next/navigation";
 import { getCategory } from "@/lib/domain/categories";
 import { dateDe, eur, number, percent, relativeTime, signedEur, signedPercent } from "@/lib/format";
 
 export function DealDetail({ id }: { id: string }) {
-  const { market } = useMarket();
-  const [mode, setMode] = useState<TradeMode | null>(null);
+  const routes = useDashboard();
+  const user = useSessionUser();
+  const router = useRouter();
+  const { market } = useMarket(routes.mode);
+  const [mode, setModeRaw] = useState<TradeMode | null>(null);
+  const demo = routes.mode === "demo";
+  const canAutopilot = demo || hasFeature(user?.plan, user?.addons ?? [], "autopilot");
+  const setMode = (m: TradeMode | null) => {
+    if (m && demo) {
+      router.push("/preise/");
+      return;
+    }
+    if (m === "autopilot" && !canAutopilot) {
+      router.push("/konto/?hinweis=autopilot");
+      return;
+    }
+    setModeRaw(m);
+  };
 
   if (!market) return <CardSkeleton count={2} />;
   const deal = market.deals.find((d) => d.id === id);
-  if (!deal) return <p className="text-muted">Diese Chance ist nicht mehr verfügbar.</p>;
+  if (!deal)
+    return (
+      <div className="mx-auto max-w-xl py-10">
+        <UpsellCard
+          title={demo ? "Diese Chance ist im Tarif enthalten" : "Diese Chance ist nicht mehr verfügbar"}
+          text={demo ? "Im Test-Dashboard siehst du die drei besten Chancen je Kategorie. Mit einem Tarif bekommst du alle Treffer, Live-Preise und die Aktionen." : "Der Markt hat sich bewegt. Sieh dir die aktuellen Chancen an."}
+          href={demo ? "/preise/" : routes.list}
+          cta={demo ? "Tarife ansehen" : "Zu den Chancen"}
+        />
+      </div>
+    );
   const a = deal.analysis;
   const m = deal.market;
   const category = getCategory(deal.categoryId);
@@ -35,7 +66,7 @@ export function DealDetail({ id }: { id: string }) {
 
   return (
     <>
-      <Link href={`/app/chancen/?kategorie=${deal.categoryId}`} className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-ink-2 hover:text-ink">
+      <Link href={`${routes.list}?kategorie=${deal.categoryId}`} className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-ink-2 hover:text-ink">
         <IconArrowLeft size={16} /> {category.name}
       </Link>
 
@@ -152,7 +183,7 @@ export function DealDetail({ id }: { id: string }) {
 
             <div className="mt-6 grid gap-2">
               <Button size="lg" onClick={() => setMode("autopilot")}>
-                <IconBolt size={17} /> Autopilot: kaufen & einstellen
+                <IconBolt size={17} /> {canAutopilot ? "Autopilot: kaufen & einstellen" : "Autopilot ab Tarif Pro"}
               </Button>
               <div className="grid grid-cols-2 gap-2">
                 <Button variant="secondary" onClick={() => setMode("kauf")}>
@@ -163,14 +194,17 @@ export function DealDetail({ id }: { id: string }) {
                 </Button>
               </div>
             </div>
-            <p className="mt-3 text-center text-[11px] text-muted">Empfohlener Verkaufspreis {eur(a.recommendedPrice)}</p>
+            <p className="mt-3 text-center text-[11px] text-muted">
+              {demo ? "Test-Dashboard: Aktionen sind im Tarif freigeschaltet." : `Empfohlener Verkaufspreis ${eur(a.recommendedPrice)}`}
+            </p>
+            {m.live && <p className="mt-1 text-center text-[11px] font-medium text-good">Live-Marktpreise von eBay.de</p>}
           </div>
         </aside>
       </div>
 
       {/* Schnellaktionen auf dem Smartphone, immer erreichbar über der Tab-Leiste */}
       <div className="h-20 lg:hidden" aria-hidden />
-      <div className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 border-t border-line bg-white/95 px-4 py-3 backdrop-blur-xl lg:hidden">
+      <div className={`fixed inset-x-0 ${demo ? "bottom-0 pb-[max(env(safe-area-inset-bottom),12px)]" : "bottom-[calc(4rem+env(safe-area-inset-bottom))]"} z-20 border-t border-line bg-white/95 px-4 py-3 backdrop-blur-xl lg:hidden`}>
         <div className="mx-auto flex max-w-lg items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="tabular text-sm font-semibold">

@@ -6,11 +6,11 @@ import { getCategory } from "@/lib/domain/categories";
 import type { AnalyzedDeal } from "@/lib/domain/types";
 import { dateDe, eur, relativeTime, signedEur, percent } from "@/lib/format";
 
-export function DealCard({ deal, now, index = 0 }: { deal: AnalyzedDeal; now: Date; index?: number }) {
+export function DealCard({ deal, now, index = 0, href }: { deal: AnalyzedDeal; now: Date; index?: number; href: string }) {
   const a = deal.analysis;
   return (
     <Link
-      href={`/app/chancen/${deal.id}/`}
+      href={href}
       className="group relative flex flex-col rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)] hover:ring-line-strong animate-rise"
       style={{ animationDelay: `${Math.min(index, 12) * 40}ms` }}
     >

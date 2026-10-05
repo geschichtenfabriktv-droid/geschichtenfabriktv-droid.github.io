@@ -14,6 +14,13 @@ export const metadata: Metadata = {
   description:
     "Arbitrage Radar erkennt Preisgefälle, Vorbestell-Chancen und Insolvenzmassen, analysiert den Markt und zeigt die Gewinnwahrscheinlichkeit. Kaufen und Einstellen auf Knopfdruck.",
   applicationName: "Arbitrage Radar",
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    siteName: "Arbitrage Radar",
+    title: "Arbitrage Radar · Gewinne finden, bevor der Markt sie sieht",
+    description: "Arbitrage-Chancen, Vorbestellungen und Insolvenzmassen mit Gewinnwahrscheinlichkeit. Kaufen und Einstellen auf Knopfdruck.",
+  },
   manifest: `${basePath}/manifest.webmanifest`,
   icons: { icon: `${basePath}/icon.svg`, apple: `${basePath}/apple-touch-icon.png` },
   appleWebApp: { capable: true, title: "Arbitrage", statusBarStyle: "default" },

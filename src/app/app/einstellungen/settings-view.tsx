@@ -2,22 +2,12 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/shell/app-shell";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, LinkButton } from "@/components/ui/button";
 import { IconPlug } from "@/components/ui/icons";
 import { portfolio, usePortfolio } from "@/lib/client/portfolio-store";
 import { eur, parseAmount } from "@/lib/format";
+import { PROVIDERS } from "@/lib/providers";
 
-const CONNECTIONS = [
-  { name: "eBay", purpose: "Verkaufen, Inserate und Preisautomatik", api: "eBay Sell & Browse API" },
-  { name: "Amazon", purpose: "Verkaufen über FBA/FBM, Preisvergleich", api: "Amazon Selling Partner API" },
-  { name: "Keepa", purpose: "Preisverläufe und Verkaufsränge von Amazon", api: "Keepa API" },
-  { name: "Händler-Feeds", purpose: "Angebote von Elektronik-, Mode- und Spielwarenhändlern", api: "Awin, Tradedoubler, CJ" },
-  { name: "StockX & Cardmarket", purpose: "Sneaker-, Sammler- und Trading-Card-Preise", api: "Partner-APIs" },
-  { name: "Insolvenzbekanntmachungen", purpose: "Neue Verfahren nach Region und Branche", api: "insolvenzbekanntmachungen.de" },
-  { name: "Verwerter-Auktionen", purpose: "Lose, Gebote und Auktionsende", api: "Surplex, Netbid, Industrial Auctions" },
-  { name: "Zahlung", purpose: "Einkauf auf Knopfdruck mit hinterlegtem Zahlungsmittel", api: "Stripe / PayPal" },
-] as const;
 
 const PLATFORMS = ["eBay", "Amazon", "Kleinanzeigen", "StockX", "Cardmarket", "Vinted"];
 
@@ -34,7 +24,7 @@ export function SettingsView() {
 
   return (
     <>
-      <PageHeader eyebrow="Konto" title="Einstellungen" />
+      <PageHeader eyebrow="Strategie" title="Einstellungen" />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <section className="min-w-0 rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line md:p-6">
@@ -111,38 +101,36 @@ export function SettingsView() {
         </section>
 
         <section className="min-w-0 rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line md:p-6">
-          <h2 className="text-lg font-semibold tracking-tight">Verbindungen</h2>
-          <p className="mt-1 text-[13px] text-muted">Für den Live-Betrieb werden Zugänge zu diesen Diensten benötigt. Bis dahin arbeitet das Dashboard mit Demo-Daten.</p>
+          <h2 className="text-lg font-semibold tracking-tight">Marktplätze verbinden</h2>
+          <p className="mt-1 text-[13px] text-muted">Verbinde dein eigenes eBay- oder Amazon-Konto über die offizielle Freigabe des Marktplatzes. Dein Passwort bleibt bei dir.</p>
           <ul className="mt-5 divide-y divide-line">
-            {CONNECTIONS.map((c) => (
-              <li key={c.name} className="flex items-center gap-3 py-3.5">
+            {PROVIDERS.map((c) => (
+              <li key={c.id} className="flex items-center gap-3 py-3">
                 <span className="grid size-9 shrink-0 place-items-center rounded-full bg-canvas text-ink-2" aria-hidden>
                   <IconPlug size={16} />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold">{c.name}</p>
-                  <p className="truncate text-[12px] text-muted">
-                    {c.purpose} · {c.api}
-                  </p>
+                  <p className="truncate text-[12px] text-muted">{c.purpose}</p>
                 </div>
-                <Badge tone="outline" className="shrink-0">
-                  Nicht verbunden
-                </Badge>
               </li>
             ))}
           </ul>
+          <LinkButton href="/konto/verbindungen/" className="mt-4 w-full">
+            Verbindungen verwalten
+          </LinkButton>
         </section>
       </div>
 
       <section className="mt-6 flex flex-col items-start justify-between gap-4 rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line md:flex-row md:items-center md:p-6">
         <div>
-          <h2 className="font-semibold">Demo zurücksetzen</h2>
-          <p className="text-[13px] text-muted">Löscht Bestellungen, Inserate und Einstellungen in diesem Browser.</p>
+          <h2 className="font-semibold">Portfolio zurücksetzen</h2>
+          <p className="text-[13px] text-muted">Löscht alle Bestellungen, Inserate und Strategie-Einstellungen in deinem Portfolio.</p>
         </div>
         <Button
           variant="secondary"
           onClick={() => {
-            if (window.confirm("Alle Demo-Bestellungen, Inserate und Einstellungen löschen?")) portfolio.reset();
+            if (window.confirm("Alle Bestellungen, Inserate und Einstellungen im Portfolio löschen?")) portfolio.reset();
           }}
         >
           Zurücksetzen

@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Brand } from "@/components/ui/brand";
-import { IconBox, IconGavel, IconGrid, IconSettings, IconSpark } from "@/components/ui/icons";
+import { IconBox, IconGavel, IconGrid, IconSettings, IconSpark, IconUser } from "@/components/ui/icons";
+import { useSessionUser } from "@/lib/client/user-context";
+import { getPlan } from "@/lib/pricing";
 import { usePortfolio } from "@/lib/client/portfolio-store";
 
 const NAV = [
@@ -12,12 +14,14 @@ const NAV = [
   { href: "/app/chancen/", label: "Arbitrage-Chancen", short: "Chancen", icon: IconSpark },
   { href: "/app/insolvenzen/", label: "Insolvenzmassen", short: "Insolvenz", icon: IconGavel },
   { href: "/app/portfolio/", label: "Portfolio", short: "Portfolio", icon: IconBox, badge: true },
-  { href: "/app/einstellungen/", label: "Einstellungen", short: "Konto", icon: IconSettings },
+  { href: "/app/einstellungen/", label: "Strategie", short: "Strategie", icon: IconSettings, desktopOnly: true },
+  { href: "/konto/", label: "Konto & Abo", short: "Konto", icon: IconUser },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname() ?? "/app/";
   const { orders, listings } = usePortfolio();
+  const user = useSessionUser();
   const openItems = orders.filter((o) => o.status !== "eingetroffen").length + listings.filter((l) => l.status === "aktiv").length;
 
   const isActive = (href: string, exact?: boolean) => {
@@ -57,7 +61,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           <p className="flex items-center gap-2 text-[13px] font-semibold">
             <span className="size-2 rounded-full bg-good animate-pulse-dot" aria-hidden /> Scanner aktiv
           </p>
-          <p className="mt-1 text-[12px] leading-relaxed text-muted">Demo-Modus mit modellierten Marktdaten. Verbinde Konten in den Einstellungen.</p>
+          {user ? (
+            <p className="mt-1 truncate text-[12px] leading-relaxed text-muted">
+              {getPlan(user.plan)?.name ?? "Kein Tarif"} · {user.email}
+            </p>
+          ) : (
+            <p className="mt-1 text-[12px] leading-relaxed text-muted">Verbinde deine Marktplätze im Konto.</p>
+          )}
         </div>
       </aside>
 
@@ -65,7 +75,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-line bg-white/85 px-4 backdrop-blur-xl lg:hidden">
         <Brand href="/" />
         <span className="flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-[11px] font-semibold text-ink-2">
-          <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> Demo
+          <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {getPlan(user?.plan)?.name ?? "Live"}
         </span>
       </header>
 
@@ -79,7 +89,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         className="pb-safe fixed inset-x-0 bottom-0 z-30 border-t border-line bg-white/90 backdrop-blur-xl lg:hidden"
       >
         <ul className="mx-auto grid max-w-lg grid-cols-5">
-          {NAV.map(({ href, short, icon: Icon, ...item }) => {
+          {NAV.filter((n) => !("desktopOnly" in n)).map(({ href, short, icon: Icon, ...item }) => {
             const active = isActive(href, "exact" in item && item.exact);
             return (
               <li key={href}>

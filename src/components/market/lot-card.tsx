@@ -5,11 +5,11 @@ import { ProbabilityBar } from "@/components/ui/probability-bar";
 import type { AnalyzedLot } from "@/lib/domain/types";
 import { countdown, eur, signedEur } from "@/lib/format";
 
-export function LotCard({ lot, now, index = 0 }: { lot: AnalyzedLot; now: Date; index?: number }) {
+export function LotCard({ lot, now, index = 0, href }: { lot: AnalyzedLot; now: Date; index?: number; href: string }) {
   const a = lot.analysis;
   return (
     <Link
-      href={`/app/insolvenzen/${lot.id}/`}
+      href={href}
       className="group flex flex-col rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)] hover:ring-line-strong animate-rise"
       style={{ animationDelay: `${Math.min(index, 12) * 40}ms` }}
     >

@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Button, buttonClass } from "@/components/ui/button";
 import { IconCheck, IconMinus, IconPlus } from "@/components/ui/icons";
 import { Sheet } from "@/components/ui/sheet";
+import { api, ApiError, BACKEND } from "@/lib/client/api";
 import { committedCapital, portfolio, usePortfolio } from "@/lib/client/portfolio-store";
 import type { AnalyzedDeal } from "@/lib/domain/types";
 import { amountInput, eur, parseAmount, signedEur } from "@/lib/format";
@@ -42,6 +43,9 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
   const [platforms, setPlatforms] = useState<string[]>([deal.target.platform]);
   const [repricing, setRepricing] = useState(settings.autoRepricing);
   const [done, setDone] = useState<null | TradeMode>(null);
+  const [busy, setBusy] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
+  const [ebayListingId, setEbayListingId] = useState<string | null>(null);
 
   const unitCost = a.totalCost;
   const total = unitCost * qty;
@@ -68,12 +72,32 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
   const close = () => {
     setDone(null);
     setQty(1);
+    setProblem(null);
+    setEbayListingId(null);
     onClose();
   };
 
-  const submit = () => {
-    if (!mode || !canSubmit) return;
+  const shopUrl = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(`${deal.title} ${deal.source.platform}`)}`;
+
+  const submit = async () => {
+    if (!mode || !canSubmit || busy) return;
+    setProblem(null);
+    if (needsListing && BACKEND && platforms.includes("eBay")) {
+      setBusy(true);
+      try {
+        const r = await api<{ listingId: string }>("/api/listings/ebay/", {
+          body: { itemId: deal.id, title: deal.title, description: `${deal.title}. Neu und originalverpackt.`, price: numericPrice, quantity: qty },
+        });
+        setEbayListingId(r.listingId);
+      } catch (e) {
+        setBusy(false);
+        setProblem(e instanceof ApiError ? e.message : "eBay ist gerade nicht erreichbar.");
+        return;
+      }
+      setBusy(false);
+    }
     if (mode === "kauf" || mode === "autopilot") {
+      window.open(shopUrl, "_blank", "noopener,noreferrer");
       portfolio.addOrder({
         itemId: deal.id,
         itemType: "deal",
@@ -110,11 +134,17 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
             <IconCheck size={26} />
           </div>
           <p className="mt-4 text-[15px] leading-relaxed text-ink-2">
-            {done === "kauf" && <>Bestellung über {qty} × „{deal.title}“ ist angelegt.</>}
-            {done === "inserat" && <>Inserat ist auf {platforms.join(", ")} angelegt{repricing ? ", die Preisautomatik ist aktiv" : ""}.</>}
-            {done === "autopilot" && <>Gekauft und auf {platforms.join(", ")} zu {eur(numericPrice)} eingestellt.</>}
+            {done === "kauf" && <>Der Kauf von {qty} × „{deal.title}“ ist in deinem Portfolio vermerkt. Das Angebot ist in einem neuen Tab geöffnet.</>}
+            {done === "inserat" && <>Inserat für {platforms.join(", ")} angelegt{repricing ? ", die Preisautomatik ist aktiv" : ""}.</>}
+            {done === "autopilot" && <>Kauf vermerkt und Inserat für {platforms.join(", ")} zu {eur(numericPrice)} angelegt.</>}
           </p>
-          <p className="mt-2 text-[13px] text-muted">Demo-Modus: Es wurde nichts real bestellt. Mit verbundenen Konten läuft derselbe Ablauf live.</p>
+          <p className="mt-2 text-[13px] text-muted">
+            {ebayListingId
+              ? `Live auf eBay veröffentlicht (Angebotsnummer ${ebayListingId}).`
+              : platforms.some((p) => p !== "eBay") && needsListingFor(done)
+                ? "Für Marktplätze ohne verbundene Schnittstelle liegen Titel und Preis im Portfolio bereit."
+                : "Alle Schritte sind im Portfolio nachvollziehbar."}
+          </p>
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
             <Link href="/app/portfolio/" className={buttonClass("primary", "md", "flex-1")} onClick={close}>
               Zum Portfolio
@@ -213,16 +243,33 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
             </section>
           )}
 
-          <Button size="lg" className="w-full" disabled={!canSubmit} onClick={submit}>
-            {mode === "kauf" && `Jetzt kaufen · ${eur(total)}`}
-            {mode === "inserat" && "Inserat veröffentlichen"}
-            {mode === "autopilot" && `Kaufen & einstellen · ${eur(total)}`}
+          {problem && (
+            <p className="rounded-2xl bg-bad-soft p-4 text-[13px] text-[#b42a22]">
+              {problem}{" "}
+              {/verbunden/i.test(problem) && (
+                <Link href="/konto/verbindungen/" className="font-semibold underline">
+                  eBay verbinden
+                </Link>
+              )}
+            </p>
+          )}
+          <Button size="lg" className="w-full" disabled={!canSubmit || busy} onClick={submit}>
+            {busy && "Wird veröffentlicht …"}
+            {!busy && mode === "kauf" && `Beim Händler kaufen · ${eur(total)}`}
+            {!busy && mode === "inserat" && "Inserat veröffentlichen"}
+            {!busy && mode === "autopilot" && `Kaufen & einstellen · ${eur(total)}`}
           </Button>
-          <p className="-mt-3 text-center text-[11px] text-muted">Demo-Modus · keine echte Bestellung</p>
+          <p className="-mt-3 text-center text-[11px] text-muted">
+            {needsListing && platforms.includes("eBay") && BACKEND ? "Das eBay-Inserat wird live in deinem Konto veröffentlicht." : "Der Kauf erfolgt beim Händler in einem neuen Tab."}
+          </p>
         </div>
       )}
     </Sheet>
   );
+}
+
+function needsListingFor(mode: TradeMode) {
+  return mode === "inserat" || mode === "autopilot";
 }
 
 function Row({ label, value, strong, tone }: { label: string; value: string; strong?: boolean; tone?: "good" | "bad" }) {

@@ -10,18 +10,31 @@ import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { Sheet } from "@/components/ui/sheet";
 import { CardSkeleton } from "@/components/ui/skeleton";
 import { portfolio } from "@/lib/client/portfolio-store";
+import { UpsellCard } from "@/components/market/upsell";
+import { useDashboard } from "@/lib/client/dashboard-mode";
 import { useMarket } from "@/lib/client/use-market";
+import { useRouter } from "next/navigation";
 import { amountInput, countdown, eur, parseAmount, percent, signedEur } from "@/lib/format";
 
 export function LotDetail({ id }: { id: string }) {
-  const { market } = useMarket();
+  const routes = useDashboard();
+  const router = useRouter();
+  const { market } = useMarket(routes.mode);
   const [open, setOpen] = useState(false);
   const [bid, setBid] = useState<string | null>(null);
   const [done, setDone] = useState(false);
 
   if (!market) return <CardSkeleton count={2} />;
   const lot = market.lots.find((l) => l.id === id);
-  if (!lot) return <p className="text-muted">Dieses Verfahren ist nicht mehr verfügbar.</p>;
+  if (!lot)
+    return (
+      <div className="mx-auto max-w-xl py-10">
+        <UpsellCard
+          title={routes.mode === "demo" ? "Dieses Verfahren ist im Tarif enthalten" : "Dieses Verfahren ist nicht verfügbar"}
+          text="Der Insolvenz-Finder ist im Tarif Business enthalten oder als Add-on buchbar."
+        />
+      </div>
+    );
   const a = lot.analysis;
 
   const bidValue = parseAmount(bid ?? amountInput(a.recommendedPrice, 0));
@@ -50,7 +63,7 @@ export function LotDetail({ id }: { id: string }) {
 
   return (
     <>
-      <Link href="/app/insolvenzen/" className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-ink-2 hover:text-ink">
+      <Link href={routes.lots} className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-ink-2 hover:text-ink">
         <IconArrowLeft size={16} /> Insolvenzmassen
       </Link>
 
@@ -121,8 +134,8 @@ export function LotDetail({ id }: { id: string }) {
                 <dd className="tabular">{eur(a.recommendedPrice, { cents: false })}</dd>
               </div>
             </dl>
-            <Button size="lg" className="mt-6 w-full" onClick={() => setOpen(true)} disabled={a.recommendedPrice < lot.currentBid}>
-              <IconGavel size={17} /> Bietagent starten
+            <Button size="lg" className="mt-6 w-full" onClick={() => (routes.mode === "demo" ? router.push("/preise/") : setOpen(true))} disabled={a.recommendedPrice < lot.currentBid}>
+              <IconGavel size={17} /> Bietlimit festlegen
             </Button>
             {a.recommendedPrice < lot.currentBid && (
               <p className="mt-2 text-center text-[12px] text-bad">Das aktuelle Gebot liegt bereits über dem sinnvollen Maximum.</p>
@@ -131,13 +144,13 @@ export function LotDetail({ id }: { id: string }) {
         </aside>
       </div>
 
-      <Sheet open={open} onClose={close} title={done ? "Bietagent aktiv" : "Bietagent starten"} subtitle={done ? undefined : "Bietet automatisch bis zu deinem Limit mit"}>
+      <Sheet open={open} onClose={close} title={done ? "Bietlimit gespeichert" : "Bietlimit festlegen"} subtitle={done ? undefined : "Bis zu diesem Gebot lohnt sich die Masse"}>
         {done ? (
           <div className="animate-rise">
             <div className="grid size-14 place-items-center rounded-full bg-good-soft text-good">
               <IconCheck size={26} />
             </div>
-            <p className="mt-4 text-[15px] text-ink-2">Der Agent bietet bis maximal {eur(bidValue, { cents: false })} mit. Demo-Modus: Es wurde kein echtes Gebot abgegeben.</p>
+            <p className="mt-4 text-[15px] text-ink-2">Dein Bietlimit von {eur(bidValue, { cents: false })} ist gespeichert. Gib dein Gebot beim Auktionshaus ab; wir zeigen dir das Limit und erinnern dich vor Auktionsende.</p>
             <Link href="/app/portfolio/" className={buttonClass("primary", "md", "mt-6 w-full")} onClick={close}>
               Zum Portfolio
             </Link>
@@ -170,7 +183,7 @@ export function LotDetail({ id }: { id: string }) {
               </div>
             </dl>
             <Button size="lg" className="w-full" disabled={!bidValid} onClick={submit}>
-              Bietagent aktivieren
+              Limit speichern
             </Button>
           </div>
         )}

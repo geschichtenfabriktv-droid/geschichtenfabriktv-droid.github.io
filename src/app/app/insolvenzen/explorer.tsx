@@ -5,6 +5,7 @@ import { LotCard } from "@/components/market/lot-card";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
 import { CardSkeleton } from "@/components/ui/skeleton";
+import { useDashboard } from "@/lib/client/dashboard-mode";
 import { useMarket } from "@/lib/client/use-market";
 import type { LotType } from "@/lib/domain/types";
 import { eur } from "@/lib/format";
@@ -12,7 +13,8 @@ import { eur } from "@/lib/format";
 const TYPES: (LotType | "Alle")[] = ["Alle", "Warenlager", "Maschinen", "Fahrzeuge", "Büro & IT", "Marken & Domains"];
 
 export function LotExplorer() {
-  const { market, scanning, refresh } = useMarket();
+  const routes = useDashboard();
+  const { market, scanning, refresh } = useMarket(routes.mode);
   const [type, setType] = useState<LotType | "Alle">("Alle");
 
   const lots = useMemo(() => (market ? market.lots.filter((l) => type === "Alle" || l.lotType === type) : []), [market, type]);
@@ -59,18 +61,25 @@ export function LotExplorer() {
         </div>
       )}
 
+      {market && routes.mode === "app" && market.lots.length === 0 && market.locked.lots > 0 && (
+        <div className="mb-6 rounded-[var(--radius-card)] bg-ink p-6 text-white">
+          <p className="font-display text-3xl">Insolvenz-Finder freischalten</p>
+          <p className="mt-2 text-sm text-white/70">{market.locked.lots} Verfahren warten. Im Tarif Business enthalten oder als Add-on zu Starter und Pro buchbar.</p>
+          <a href="/konto/" className="mt-5 inline-flex h-10 items-center rounded-full bg-white px-5 text-sm font-medium text-ink">Im Konto hinzubuchen</a>
+        </div>
+      )}
       {!market ? (
         <CardSkeleton count={3} />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {lots.map((l, i) => (
-            <LotCard key={l.id} lot={l} now={market.scannedAt} index={i} />
+            <LotCard key={l.id} lot={l} now={market.scannedAt} index={i} href={routes.lot(l.id)} />
           ))}
         </div>
       )}
 
       <p className="mt-8 text-[12px] leading-relaxed text-muted">
-        Demo-Daten: Schuldner und Aktenzeichen sind fiktiv. Im Live-Betrieb stammen Verfahren aus insolvenzbekanntmachungen.de und den angebundenen
+        Beispieldaten: Schuldner und Aktenzeichen sind fiktiv. Im Live-Betrieb stammen Verfahren aus insolvenzbekanntmachungen.de und den angebundenen
         Verwertungsplattformen.
       </p>
     </>
