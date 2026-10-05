@@ -1,0 +1,17 @@
+User-Agent: *
+Allow: /arbitrage/
+Disallow: /arbitrage/impressum/
+Disallow: /arbitrage/datenschutz/
+Disallow: /arbitrage/agb/
+Disallow: /arbitrage/widerruf/
+Disallow: /arbitrage/avv/
+Disallow: /arbitrage/kuendigen/
+Disallow: /arbitrage/app/
+Disallow: /arbitrage/konto/
+Disallow: /arbitrage/checkout/
+Disallow: /arbitrage/api/
+Disallow: /arbitrage/login/
+Disallow: /arbitrage/registrieren/
+Disallow: /arbitrage/passwort-vergessen/
+Disallow: /arbitrage/passwort-zuruecksetzen/
+
