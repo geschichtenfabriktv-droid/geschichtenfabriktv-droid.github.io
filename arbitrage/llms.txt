@@ -1,0 +1,25 @@
+# Arbitrage Radar
+
+> Software für Online-Arbitrage und Reselling aus Deutschland: findet Preisgefälle zwischen Händlern und Marktplätzen, Vorbestell-Chancen und Insolvenzmassen, berechnet Break-even und Gewinnwahrscheinlichkeit und stellt Angebote per Knopfdruck auf eBay ein.
+
+Tarife: Starter 29 € pro Monat, Pro 79 € pro Monat, Business 199 € pro Monat. Monatlich kündbar, 14 Tage Geld-zurück-Garantie. Hosting in der EU.
+
+## Produkt
+- [Startseite](https://geschichtenfabriktv-droid.github.io/arbitrage/): Funktionen und Überblick
+- [Preise](https://geschichtenfabriktv-droid.github.io/arbitrage/preise/): Tarife, Add-ons, Vergleich
+- [Test-Dashboard](https://geschichtenfabriktv-droid.github.io/arbitrage/demo/): Top-3-Chancen je Kategorie ohne Anmeldung
+
+## Lösungen
+- [Arbitrage Software, die Deals findet, bevor andere sie sehen](https://geschichtenfabriktv-droid.github.io/arbitrage/arbitrage-software/): Arbitrage Software, die Preisdifferenzen zwischen Shops und Marktplätzen findet und Gewinn nach Gebühren berechnet. Jetzt kostenlos die Demo testen.
+- [Das Reselling Tool für alle, die mit System weiterverkaufen](https://geschichtenfabriktv-droid.github.io/arbitrage/reselling-tool/): Reselling Tool mit Gewinnwahrscheinlichkeit: Finde Produkte, die sich gewinnbringend weiterverkaufen lassen, und stelle sie per Klick ein. Demo ansehen.
+- [Amazon eBay Arbitrage mit echten Verkaufsdaten](https://geschichtenfabriktv-droid.github.io/arbitrage/amazon-ebay-arbitrage/): Amazon eBay Arbitrage mit Live-Daten: Vergleiche Preise, analysiere eBay-Verkaufspreise und sieh deinen Gewinn nach Gebühren. Jetzt Demo öffnen.
+- [Insolvenzmasse kaufen, ohne blind zu bieten](https://geschichtenfabriktv-droid.github.io/arbitrage/insolvenzmasse-kaufen/): Insolvenzmasse kaufen mit Plan: Finde Warenlager und Maschinen aus Insolvenzauktionen und erhalte ein empfohlenes Maximalgebot. Jetzt Demo ansehen.
+- [Limitierte Vorbestellungen erkennen, bevor der Resell-Preis steigt](https://geschichtenfabriktv-droid.github.io/arbitrage/vorbestellung-arbitrage/): Vorbestellen und teurer verkaufen: Erkenne limitierte Konsolen, Sneaker und LEGO-Sets mit Resell-Potenzial früh und bewerte das Risiko. Demo testen.
+
+## Ratgeber
+- [Online Arbitrage: Die Schritt-für-Schritt-Anleitung für Deutschland](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/online-arbitrage-anleitung/): Online Arbitrage in Deutschland: So findest du Preisdifferenzen, prüfst die Nachfrage, rechnest Gebühren ein und verkaufst mit Gewinn. Mit Rechenbeispiel.
+- [Reselling, Gewerbe und Steuern: Der Überblick für 2026](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/reselling-gewerbe-steuern/): Reselling Gewerbe anmelden, Kleinunternehmer bis 25.000 €, DAC7-Meldung ab 30 Verkäufen: Welche Steuern beim Weiterverkauf auf eBay und Amazon anfallen.
+- [Insolvenzversteigerung: Ablauf, Kosten und Tipps zum Ersteigern](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/insolvenzversteigerung-ablauf/): Insolvenzmasse ersteigern: So läuft eine Insolvenzversteigerung ab, was Aufgeld und Abholung kosten und wie du dein Maximalgebot mit Puffer festlegst.
+- [Reselling-Gewinn berechnen: So weißt du vor dem Kauf, ob es sich lohnt](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/reselling-gewinn-berechnen/): Reselling-Gewinn richtig berechnen: Formeln für Break-even, Marge und ROI inklusive eBay-Gebühren, Versand und Umsatzsteuer – mit Rechenbeispielen.
+- [Limitierte Editionen wiederverkaufen: Sneaker, LEGO, Konsolen und mehr](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/limitierte-editionen-wiederverkaufen/): Sneaker resell, LEGO-Wertsteigerung, Konsole vorbestellen und weiterverkaufen: Wann sich limitierte Editionen lohnen und welche Risiken du einplanen musst.
+- [eBay-Gebühren für gewerbliche Verkäufer: So berechnest du die Provision](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/ebay-gebuehren-reselling/): eBay-Gebühren für gewerbliche Verkäufer erklärt: Verkaufsprovision, Fixgebühr, Anzeigenkosten und Shop-Abo – mit Beispielrechnung und Tipps für Reseller.
