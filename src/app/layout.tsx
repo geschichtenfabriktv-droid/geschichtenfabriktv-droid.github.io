@@ -22,7 +22,8 @@ const serif = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(`${SITE_URL}${basePath}/`),
+  // Ohne basePath: Next.js setzt ihn bei Bild-URLs selbst davor.
+  metadataBase: new URL(`${SITE_URL}/`),
   title: {
     default: "Arbitrage Radar · Gewinne finden, bevor der Markt sie sieht",
     template: "%s · Arbitrage Radar",
