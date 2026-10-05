@@ -149,9 +149,11 @@
       btn.disabled = false; lab.textContent = old;
     }));
     fetch('/api/seats').then((r) => r.json()).then((s) => {
-      const dots = $('#seat-dots'); if (!dots) return; dots.innerHTML = ''; for (let i = 0; i < s.total; i++) dots.insertAdjacentHTML('beforeend', `<i class="${i < s.taken ? 'taken' : ''}"></i>`);
-      const free = s.total - s.taken; $('#seat-text').textContent = free > 0 ? `${free} von ${s.total} Plätzen frei` : 'Aktuell ausgebucht – schreib uns für die Warteliste';
-      const ss = $('#sticky-seats'); if (ss) ss.textContent = free > 0 ? `${free} Plätze frei` : 'ausgebucht';
+      const free = s.total - s.taken; const dd = (n) => Array.from({ length: s.total }, (_, i) => '<i class="' + (i < s.taken ? 'taken' : '') + '"></i>').join('');
+      const dots = $('#seat-dots'); if (dots) dots.innerHTML = dd();
+      $$('.js-dots').forEach((e) => (e.innerHTML = dd())); $$('.js-seats').forEach((e) => (e.textContent = free > 0 ? free + ' von ' + s.total + ' Plätzen frei' : 'Ausgebucht – Warteliste möglich'));
+      const st = $('#seat-text'); if (st) st.textContent = free > 0 ? free + ' von ' + s.total + ' Plätzen frei' : 'Aktuell ausgebucht – schreib uns für die Warteliste';
+      const ss = $('#sticky-seats'); if (ss) ss.textContent = free > 0 ? free + ' Plätze frei' : 'ausgebucht';
     }).catch(() => {});
   }
 

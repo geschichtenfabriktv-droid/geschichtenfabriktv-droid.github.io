@@ -77,6 +77,11 @@
       }
     });
     if (!o.interactive) ['dragPan', 'dragRotate', 'scrollZoom', 'touchZoomRotate', 'touchPitch', 'keyboard', 'doubleClickZoom', 'boxZoom'].forEach((h) => m[h] && m[h].disable());
+    // Größe zuverlässig nachziehen (Container kann beim Erzeugen noch 0 hoch sein, z. B. in Safari/auf dem Handy)
+    const el = typeof container === 'string' ? document.getElementById(container) : container;
+    const fit = () => { try { const c = m.getCanvas(); if (el && (c.clientWidth !== el.clientWidth || c.clientHeight !== el.clientHeight)) m.resize(); } catch (e) {} };
+    if (window.ResizeObserver && el) new ResizeObserver(fit).observe(el);
+    [0, 200, 800, 2000, 4500].forEach((t) => setTimeout(fit, t)); m.on('load', fit); m.on('idle', fit);
     return m;
   }
 
