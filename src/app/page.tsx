@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/json-ld";
+import { faqLd, graph, organizationLd, pageMetadata, softwareLd, websiteLd } from "@/lib/seo";
 import Link from "next/link";
 import { Reveal } from "@/components/site/reveal";
 import { PricingCards } from "@/components/site/pricing-cards";
@@ -10,7 +12,12 @@ import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { getAnalyzedDeals, getAnalyzedLots, summarizeCategories } from "@/lib/data/repository";
 import { eur, signedEur } from "@/lib/format";
 
-export const metadata: Metadata = { alternates: { canonical: "./" } };
+export const metadata: Metadata = pageMetadata({
+  path: "/",
+  title: "Arbitrage-Software für Reseller | Arbitrage Radar",
+  absoluteTitle: true,
+  description: "Finde Arbitrage-Deals, Vorbestell-Chancen und Insolvenzmassen mit Gewinnwahrscheinlichkeit in Prozent. Kostenlos im Test-Dashboard ansehen.",
+});
 
 const SOURCES = ["eBay", "Amazon", "StockX", "Cardmarket", "Kleinanzeigen", "Vinted", "Händler-Feeds", "Keepa", "Insolvenzbekanntmachungen", "Verwerter-Auktionen"];
 
@@ -82,6 +89,7 @@ export default async function Home() {
 
   return (
     <SiteLayout>
+      <JsonLd data={graph(organizationLd(), websiteLd(), softwareLd(), faqLd(FAQ))} />
 
       {/* Hero */}
       <section className="relative">

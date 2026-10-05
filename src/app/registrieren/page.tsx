@@ -4,6 +4,7 @@ import { RegisterForm } from "./register-form";
 
 export const metadata: Metadata = {
   title: "Konto erstellen",
+  robots: { index: false, follow: true },
   description: "Erstelle dein Arbitrage-Radar-Konto und starte mit Gewinnwahrscheinlichkeiten, Autopilot und Insolvenz-Finder.",
 };
 

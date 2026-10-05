@@ -12,6 +12,26 @@ const COLUMNS = [
     ],
   },
   {
+    title: "Lösungen",
+    links: [
+      { href: "/arbitrage-software/", label: "Arbitrage-Software" },
+      { href: "/reselling-tool/", label: "Reselling-Tool" },
+      { href: "/amazon-ebay-arbitrage/", label: "Amazon-eBay-Arbitrage" },
+      { href: "/vorbestellung-arbitrage/", label: "Vorbestellungen weiterverkaufen" },
+      { href: "/insolvenzmasse-kaufen/", label: "Insolvenzmasse kaufen" },
+    ],
+  },
+  {
+    title: "Ratgeber",
+    links: [
+      { href: "/ratgeber/", label: "Alle Artikel" },
+      { href: "/ratgeber/online-arbitrage-anleitung/", label: "Online-Arbitrage Anleitung" },
+      { href: "/ratgeber/reselling-gewinn-berechnen/", label: "Gewinn berechnen" },
+      { href: "/ratgeber/reselling-gewerbe-steuern/", label: "Gewerbe & Steuern" },
+      { href: "/ratgeber/insolvenzversteigerung-ablauf/", label: "Insolvenzversteigerung" },
+    ],
+  },
+  {
     title: "Konto",
     links: [
       { href: "/login/", label: "Anmelden" },
@@ -35,7 +55,7 @@ const COLUMNS = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-white">
-      <div className="mx-auto grid max-w-[1320px] gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)] lg:px-10">
+      <div className="mx-auto grid max-w-[1320px] gap-12 px-4 py-16 sm:px-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(5,1fr)] lg:px-10">
         <div>
           <Brand />
           <p className="mt-4 max-w-xs text-[14px] leading-relaxed text-ink-2">

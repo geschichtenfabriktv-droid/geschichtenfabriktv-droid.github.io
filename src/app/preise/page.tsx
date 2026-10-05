@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbLd, faqLd, graph, pageMetadata, softwareLd } from "@/lib/seo";
 import { PricingCards } from "@/components/site/pricing-cards";
 import { PageIntro, SiteLayout } from "@/components/site/site-layout";
 import { LinkButton } from "@/components/ui/button";
@@ -6,11 +8,11 @@ import { IconCheck, IconMinus } from "@/components/ui/icons";
 import { eur } from "@/lib/format";
 import { ADDONS, GUARANTEE_DAYS, PLANS } from "@/lib/pricing";
 
-export const metadata: Metadata = {
-  title: "Preise & Tarife",
-  alternates: { canonical: "preise/" },
-  description: "Arbitrage Radar ab 29 € im Monat: Starter, Pro mit Autopilot und Business mit Insolvenz-Finder. Monatlich kündbar, 14 Tage Geld-zurück-Garantie.",
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/preise/",
+  title: "Preise: Arbitrage-Software ab 29 € im Monat",
+  description: "Starter, Pro mit Autopilot oder Business mit Insolvenz-Finder: monatlich kündbar, 14 Tage Geld-zurück-Garantie. Jetzt Tarif wählen.",
+});
 
 const ROWS: { label: string; values: (string | boolean)[] }[] = [
   { label: "Gewinnwahrscheinlichkeit & Marktanalyse", values: [true, true, true] },
@@ -44,6 +46,7 @@ function Cell({ v }: { v: string | boolean }) {
 export default function PreisePage() {
   return (
     <SiteLayout>
+      <JsonLd data={graph(softwareLd(), faqLd(FAQ), breadcrumbLd([{ name: "Start", path: "/" }, { name: "Preise", path: "/preise/" }]))} />
       <PageIntro eyebrow="Preise" title={<>Einfach. Fair. <span className="italic text-muted">Monatlich kündbar.</span></>}>
         Ein einziger guter Deal deckt den Monatspreis. Starte mit dem Tarif, der zu deinem Volumen passt, und wechsle jederzeit.
       </PageIntro>
