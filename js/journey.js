@@ -447,7 +447,8 @@ void main(){
     if (!fly || !fly.ready || !fly.vis || isEditing()) return;
     if (fly.explore) return;
     fly.uSm = lerp(fly.uSm, fly.u, 1 - Math.pow(0.0008, dt));
-    if (Math.abs(fly.uSm - (fly.lastU === undefined ? -9 : fly.lastU)) > 0.0006) {
+    if (Math.abs(fly.uSm - (fly.lastU === undefined ? -9 : fly.lastU)) > 0.0006 && (now - (fly.lastJ || 0) > 30)) {
+      fly.lastJ = now;
       fly.map.jumpTo(G.camAt(fly.uSm)); fly.lastU = fly.uSm;
       showStop(Math.round(fly.uSm));
       const tod = 0.1 + 0.9 * clamp(fly.uSm / (STOPS.length - 1)); G.paintTod(fly.t, tod); G.paintUI(fly.el, tod);

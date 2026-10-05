@@ -823,3 +823,14 @@ html{overflow-x:clip}
 
 .manifesto{text-shadow:0 1px 3px rgba(0,0,0,.5),0 0 28px rgba(0,0,0,.45)}
 .finale-inner h2,.finale-inner p{text-shadow:0 1px 3px rgba(0,0,0,.5),0 0 30px rgba(0,0,0,.5)}
+
+/* Karte: Touch/Maus gehen zur Seite, solange man nicht selbst steuert */
+.fly:not(.exploring) .fly-map,.bk-map,.hm-map{pointer-events:none}
+.fly-map canvas,.bk-map canvas,.hm-map canvas{outline:0;-webkit-tap-highlight-color:transparent}
+
+/* iPhone: Hintergründe reichen bis zur Adresszeile (keine Lücke), Inhalte bleiben im sichtbaren Bereich */
+@supports (height:100lvh){
+  .portal-sticky,.fly-sticky{height:100lvh}
+  .portal-sticky>.pt,.portal-sticky>.portal-hint,.fly-ui{bottom:calc(100lvh - 100svh)}
+  .portal-hint{bottom:calc(100lvh - 100svh + 28px)}
+}

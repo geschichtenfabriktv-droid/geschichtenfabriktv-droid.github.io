@@ -62,13 +62,13 @@
     const c0 = o.cam || camAt(0);
     const m = new maplibregl.Map({
       container, center: c0.center, zoom: c0.zoom, pitch: c0.pitch, bearing: c0.bearing, maxPitch: 85, minZoom: 8, maxZoom: 17.5,
-      attributionControl: false, renderWorldCopies: false, fadeDuration: 0, interactive: !!o.interactive,
+      attributionControl: false, renderWorldCopies: false, fadeDuration: 0, interactive: true,
       pixelRatio: Math.min(window.devicePixelRatio || 1, o.dpr || (matchMedia('(pointer:coarse)').matches ? 1.25 : 1.5)), canvasContextAttributes: { antialias: !!o.aa },
       style: {
         version: 8,
         sources: {
-          dem: { type: 'raster-dem', tiles: [T('dem', 'png')], tileSize: 256, encoding: 'terrarium', minzoom: 7, maxzoom: 12, bounds: ISLAND },
-          sat: ras(8, 13, ISLAND), sat2: ras(14, 15, CORE), sat3: ras(16, 16, HERO)
+          dem: { type: 'raster-dem', tiles: [T('dem', 'png')], tileSize: 256, encoding: 'terrarium', minzoom: 7, maxzoom: 13, bounds: ISLAND },
+          sat: ras(8, 13, ISLAND), sat2: ras(14, 15, CORE), sat3: ras(16, 17, HERO)
         },
         layers: [
           { id: 'bg', type: 'background', paint: { 'background-color': '#2f7295' } },
@@ -89,7 +89,7 @@
   /* Tageszeit auf Karte anwenden. t = { map, host, last } */
   function paintTod(t, tod, force) {
     if (!t.map) return; if (!t.styled) { if (!t.map.isStyleLoaded()) return; t.styled = true; force = true; }
-    if (!force && Math.abs(tod - (t.last === undefined ? -9 : t.last)) < 0.004) return; t.last = tod; const m = t.map;
+    const nowT = performance.now(); if (!force && (Math.abs(tod - (t.last === undefined ? -9 : t.last)) < 0.012 || nowT - (t.at || 0) < 90)) return; t.last = tod; t.at = nowT; const m = t.map;
     const night = sm(0.78, 1, tod);
     try {
       ['sat', 'sat2', 'sat3'].forEach((id) => { m.setPaintProperty(id, 'raster-brightness-min', lerp(0.1, 0, night)); m.setPaintProperty(id, 'raster-brightness-max', lerp(1, 0.62, night)); m.setPaintProperty(id, 'raster-saturation', lerp(0.22, -0.25, night)); m.setPaintProperty(id, 'raster-contrast', 0.14); });
