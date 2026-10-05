@@ -162,7 +162,7 @@ html.arrive .loader{display:none}
 .pt::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
 .pt .wrap{position:relative}
 .hero-inner{padding-top:calc(var(--hh) + 10px);padding-bottom:clamp(10px,2vw,26px)}
-.pt-hero::before{background:linear-gradient(90deg,rgba(10,6,5,.5),transparent 62%),linear-gradient(0deg,rgba(10,6,5,.5),transparent 42%)}
+.pt-hero::before{background:linear-gradient(0deg,rgba(10,6,5,.42),transparent 46%)}
 .pt-hero .eyebrow{color:var(--gold)}
 .hero-title{font-size:clamp(38px,5.5vw,92px);line-height:1.03;max-width:14ch;text-shadow:0 2px 50px rgba(0,0,0,.45)}
 .hero-title em{color:var(--gold)}
@@ -175,7 +175,7 @@ html.arrive .loader{display:none}
 .hero-facts b{font:300 clamp(17px,1.7vw,23px) var(--serif)}
 .hero-facts span{font-size:13.5px;color:rgba(246,237,221,.74)}
 .pt-manifest{justify-content:center}
-.pt-manifest::before{background:radial-gradient(95% 90% at 40% 50%,rgba(10,6,5,.7),rgba(10,6,5,.42) 60%,rgba(10,6,5,.14))}
+.pt-manifest::before{background:rgba(10,6,5,.34)}
 .pt-manifest .eyebrow{color:var(--gold)}
 .manifesto{font:300 clamp(26px,4vw,54px)/1.22 var(--serif);letter-spacing:-.012em;text-shadow:0 2px 30px rgba(0,0,0,.8)}
 .js .scrub .sw{opacity:.34;transition:opacity .4s}.js .scrub .sw.on{opacity:1}
@@ -492,7 +492,7 @@ body.editing::after{display:none}
 
 /* Feinschliff nach Qualitätsprüfung */
 .pano-sticky::before{content:"";position:absolute;inset:0 0 auto 0;height:46%;background:linear-gradient(rgba(10,6,5,.72),transparent);z-index:2;pointer-events:none}
-.finale-inner::before{background:radial-gradient(70% 62% at 50% 50%,rgba(10,6,5,.55),transparent 78%)}
+.finale-inner::before{display:none}
 .brand span{white-space:nowrap}
 @media(max-width:560px){.site-header .header-cta{display:none}.brand{font-size:18px}.brand svg{width:28px}}
 
@@ -667,7 +667,7 @@ body.editing .fly-card{display:grid}
 .hm-in{position:absolute;inset:0;opacity:0;transition:opacity 2.4s ease}
 .hm-in.on{opacity:1}
 .hm-map,.hm-map.maplibregl-map{position:absolute;inset:0;width:100%;height:100%}
-.hm-shade{position:absolute;inset:0;background:radial-gradient(90% 80% at 30% 55%,rgba(14,9,7,.34),transparent 70%),linear-gradient(180deg,rgba(14,9,7,.22),transparent 35%,rgba(14,9,7,.2))}
+.hm-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,9,7,.3),transparent 30%,transparent 55%,rgba(14,9,7,.4))}
 .editing .hero-map{display:none!important}
 .nofly .fly-poster{opacity:1!important}
 
@@ -820,3 +820,6 @@ html{overflow-x:clip}
 .sticky-cta .btn,.sticky-cta .btn-small{height:40px;padding:0 20px;font-size:13.5px}
 .sticky-info b{font-size:13px}.sticky-info span{font-size:12px}
 @media(max-width:600px){.sticky-cta{left:50%;right:auto;width:auto;max-width:calc(100% - 24px);transform:translate(-50%,160%);bottom:calc(10px + env(safe-area-inset-bottom));padding:5px 5px 5px 16px;gap:10px}.sticky-cta.show{transform:translate(-50%,0)}.sticky-info span{font-size:12px;white-space:nowrap}.sticky-cta .btn{height:38px;padding:0 16px;font-size:13px}}
+
+.manifesto{text-shadow:0 1px 3px rgba(0,0,0,.5),0 0 28px rgba(0,0,0,.45)}
+.finale-inner h2,.finale-inner p{text-shadow:0 1px 3px rgba(0,0,0,.5),0 0 30px rgba(0,0,0,.5)}

@@ -465,7 +465,8 @@ void main(){
     hero = { P, host, inn: $('.hm-in', host), box: $('.hm-map', host), map: null, loading: false, shown: false, o: 1, last: 0, t0: 0, u: 0, uSm: 0, t: { map: null, host: $('.hm-in', host), styled: false } };
     G.skyBg(hero.inn, 0.12);
     IL.heroDebug = () => hero; const cn = navigator.connection; if (cn && (cn.saveData || /(^|-)2g/.test(cn.effectiveType || ''))) return;
-    const t = setInterval(() => { if (document.body.classList.contains('loaded')) { clearInterval(t); setTimeout(() => { hero.ready = true; heroUpdate(innerHeight); }, 900); } }, 250);
+    let started = false; const go = () => { if (started) return; started = true; hero.ready = true; heroUpdate(innerHeight); };
+    const t = setInterval(() => { if (document.body.classList.contains('loaded')) { clearInterval(t); setTimeout(go, 600); } }, 250); setTimeout(go, 5000);
   }
   function heroUpdate(vh) {
     if (!hero || !hero.ready) return; const P = hero.P;
@@ -476,7 +477,7 @@ void main(){
   }
   function heroCreate() {
     if (hero.map) { hero.loading = false; return; }
-    let m; try { m = G.make(hero.box, { cam: G.camAt(0, HS), aa: false, dpr: 1.25 }); } catch (e) { console.warn('[Hero-Flug]', e); hero.loading = false; return; }
+    let m; try { m = G.make(hero.box, { cam: G.camAt(0, HS), aa: false, dpr: matchMedia('(pointer:coarse)').matches ? 1 : 1.25 }); } catch (e) { console.warn('[Hero-Flug]', e); hero.loading = false; return; }
     hero.map = m; hero.t.map = m; hero.t0 = performance.now() / 1000;
     m.once('style.load', () => { hero.t.styled = true; G.paintTod(hero.t, 0.12, true); G.paintUI(hero.host, 0.12); });
     const reveal = () => { if (hero.shown) return; hero.shown = true; hero.inn.classList.add('on'); };

@@ -1,6 +1,7 @@
 /* Geo – gemeinsames 3D-Landschaftsmodul (MapLibre, echte PNOA-Luftbilder + Geländemodell)
    Genutzt von: Hero-Hintergrund, 3D-Flug, Buchungsseite.  Robust: nie schwarz (Himmelsverlauf + Poster zuerst). */
 (function () {
+  if (/[?&]debug/.test(location.search)) { const log = (t) => { let p = document.getElementById('dbg-err'); if (!p) { p = document.createElement('pre'); p.id = 'dbg-err'; p.style.cssText = 'position:fixed;left:6px;top:80px;z-index:99999;background:#400c;color:#ffb;font:11px/1.3 monospace;padding:6px;max-width:92vw;white-space:pre-wrap;pointer-events:none'; document.body.appendChild(p); } p.textContent += t + String.fromCharCode(10); }; addEventListener('error', (e) => log('JS: ' + e.message + ' @' + String(e.filename).split('/').pop() + ':' + e.lineno)); addEventListener('unhandledrejection', (e) => log('Promise: ' + (e.reason && e.reason.message || e.reason))); }
   const IL = (window.IL = window.IL || {});
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -62,7 +63,7 @@
     const m = new maplibregl.Map({
       container, center: c0.center, zoom: c0.zoom, pitch: c0.pitch, bearing: c0.bearing, maxPitch: 85, minZoom: 8, maxZoom: 17.5,
       attributionControl: false, renderWorldCopies: false, fadeDuration: 0, interactive: !!o.interactive,
-      pixelRatio: Math.min(window.devicePixelRatio || 1, o.dpr || 1.5), canvasContextAttributes: { antialias: !!o.aa },
+      pixelRatio: Math.min(window.devicePixelRatio || 1, o.dpr || (matchMedia('(pointer:coarse)').matches ? 1.25 : 1.5)), canvasContextAttributes: { antialias: !!o.aa },
       style: {
         version: 8,
         sources: {
