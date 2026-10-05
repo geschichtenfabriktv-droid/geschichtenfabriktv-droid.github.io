@@ -1,6 +1,6 @@
 import { cancelSubscription } from "@/server/billing";
 import { verifyPassword } from "@/server/crypto";
-import { error, handler, json, readJson, requireUser } from "@/server/http";
+import { error, handler, json, rateLimit, readJson, requireUser } from "@/server/http";
 import { mollie } from "@/server/mollie";
 import { endSession } from "@/server/session";
 import { deleteUser, findUserByEmail } from "@/server/users";
@@ -11,6 +11,7 @@ import { deleteUser, findUserByEmail } from "@/server/users";
  */
 export const POST = handler(async (req) => {
   const user = await requireUser();
+  await rateLimit(`loeschen:${user.id}`, 10);
   const body = await readJson(req);
   const full = await findUserByEmail(user.email);
   if (!full || !(await verifyPassword(String(body.password ?? ""), full.passwordHash))) return error("Das Passwort stimmt nicht.", 400);

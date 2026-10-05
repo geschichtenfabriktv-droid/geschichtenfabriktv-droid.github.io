@@ -26,10 +26,14 @@ export const env = {
     return optional("DATABASE_URL");
   },
   get authSecret() {
-    return required("AUTH_SECRET", "dev-only-secret-dev-only-secret-dev-only-secret");
+    const v = required("AUTH_SECRET", "dev-only-secret-dev-only-secret-dev-only-secret");
+    if (v.length < 32) throw new Error("AUTH_SECRET muss mindestens 32 Zeichen lang sein.");
+    return v;
   },
   get encryptionKey() {
-    return required("ENCRYPTION_KEY", "ZGV2LW9ubHkta2V5LWRldi1vbmx5LWtleS0xMjM0NTY=");
+    const v = required("ENCRYPTION_KEY", "ZGV2LW9ubHkta2V5LWRldi1vbmx5LWtleS0xMjM0NTY=");
+    if (Buffer.from(v, "base64").length < 32) throw new Error("ENCRYPTION_KEY muss 32 Byte (Base64) lang sein: openssl rand -base64 32");
+    return v;
   },
   get mollieApiKey() {
     return optional("MOLLIE_API_KEY");

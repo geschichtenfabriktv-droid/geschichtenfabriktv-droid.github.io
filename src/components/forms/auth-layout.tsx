@@ -28,7 +28,7 @@ export function AuthLayout({ title, subtitle, children, aside }: { title: string
                 Gewinne finden, <span className="italic text-white/50">bevor der Markt sie sieht.</span>
               </p>
               <ul className="mt-10 space-y-3 text-[15px] text-white/80">
-                {["Gewinnwahrscheinlichkeit für jede Chance", "Kaufen & Einstellen auf Knopfdruck", "Eigene Marktplatz-Konten sicher verbunden", "Hosting in der EU, DSGVO-konform"].map((t) => (
+                {["Gewinnwahrscheinlichkeit für jede Chance", "Kaufen & Einstellen auf Knopfdruck", "Eigene Marktplatz-Konten sicher verbunden", "Server in der EU (Frankfurt)"].map((t) => (
                   <li key={t} className="flex items-center gap-3">
                     <IconCheck size={16} className="text-[#5ee39b]" /> {t}
                   </li>
@@ -58,5 +58,6 @@ export function StaticNotice() {
 
 /** Nur relative Weiterleitungen innerhalb der App zulassen (Schutz vor Open Redirect). */
 export function safeNext(value: string | null | undefined, fallback: string) {
-  return value && value.startsWith("/") && !value.startsWith("//") ? value : fallback;
+  // Nur Pfade wie /app/…: kein //host, kein Backslash (Browser werten /\host als //host), keine Steuerzeichen.
+  return value && /^\/(?![/\\])[^\\\s]*$/.test(value) && !/[\u0000-\u001f]/.test(value) ? value : fallback;
 }

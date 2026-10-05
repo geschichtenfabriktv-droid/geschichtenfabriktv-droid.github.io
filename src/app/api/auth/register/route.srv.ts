@@ -6,7 +6,7 @@ import { createUser, findUserByEmail, publicUser } from "@/server/users";
 import * as v from "@/server/validate";
 
 export const POST = handler(async (req) => {
-  rateLimit(`register:${clientIp(req)}`, 10);
+  await rateLimit(`register:${clientIp(req)}`, 10);
   const body = await readJson(req);
   const email = v.email(body.email);
   const password = v.password(body.password);
@@ -15,6 +15,6 @@ export const POST = handler(async (req) => {
   if (await findUserByEmail(email)) return error("Für diese E-Mail-Adresse gibt es bereits ein Konto.", 409);
   const user = await createUser(email, await hashPassword(password), name);
   await startSession(user);
-  await sendMail(email, "Willkommen bei Arbitrage Radar", `Hallo ${name || ""},\n\ndein Konto ist angelegt. Wähle jetzt deinen Tarif und starte mit den ersten Chancen.\n\nArbitrage Radar`);
+  await sendMail(email, "Willkommen bei Arbitrage Radar", `Hallo${name ? ` ${name}` : ""},\n\ndein Konto ist angelegt. Wähle jetzt deinen Tarif und starte mit den ersten Chancen.\n\nArbitrage Radar`);
   return json({ user: publicUser(user) }, 201);
 });

@@ -2,8 +2,8 @@ import type { CategoryId } from "./domain/types";
 
 export type PlanId = "starter" | "pro" | "business";
 export type BillingInterval = "monat" | "jahr";
-export type AddonId = "insolvenz" | "marktplatz" | "alarm" | "team";
-export type Feature = "autopilot" | "inserat" | "kauf" | "insolvenz" | "api" | "vorbestellung";
+export type AddonId = "insolvenz" | "marktplatz";
+export type Feature = "autopilot" | "inserat" | "kauf" | "insolvenz" | "vorbestellung";
 
 export interface Plan {
   id: PlanId;
@@ -15,7 +15,6 @@ export interface Plan {
   yearly: number;
   highlight?: boolean;
   marketplaces: number;
-  seats: number;
   features: Feature[];
   bullets: string[];
 }
@@ -33,14 +32,13 @@ export const PLANS: readonly Plan[] = [
     monthly: 29,
     yearly: 290,
     marketplaces: 1,
-    seats: 1,
     features: ["kauf", "inserat"],
     bullets: [
-      "7 Produkt-Kategorien inkl. Dienstleistungen",
+      "7 Kategorien inkl. Dienstleistungen",
       "Gewinnwahrscheinlichkeit & Marktanalyse",
-      "Kaufen & Einstellen auf Knopfdruck",
+      "Einstellen auf eBay mit einem Klick",
       "1 verbundener Marktplatz",
-      "Tägliche E-Mail mit Top-Chancen",
+      "Empfohlener Verkaufspreis je Chance",
     ],
   },
   {
@@ -51,31 +49,27 @@ export const PLANS: readonly Plan[] = [
     yearly: 790,
     highlight: true,
     marketplaces: 3,
-    seats: 1,
     features: ["kauf", "inserat", "autopilot", "vorbestellung"],
     bullets: [
       "Alles aus Starter",
-      "Autopilot: kaufen & sofort einstellen",
+      "Autopilot: Angebot öffnen & sofort einstellen",
       "Vorbestell-Radar mit 2×-Kandidaten",
-      "Preisautomatik mit Break-even-Schutz",
       "3 verbundene Marktplätze",
     ],
   },
   {
     id: "business",
     name: "Business",
-    tagline: "Für Händler und Teams",
+    tagline: "Für Händler mit Insolvenzankäufen",
     monthly: 199,
     yearly: 1990,
     marketplaces: 99,
-    seats: 5,
-    features: ["kauf", "inserat", "autopilot", "vorbestellung", "insolvenz", "api"],
+    features: ["kauf", "inserat", "autopilot", "vorbestellung", "insolvenz"],
     bullets: [
       "Alles aus Pro",
       "Insolvenz-Finder mit Maximalgebot",
       "Unbegrenzte Marktplätze",
-      "5 Team-Zugänge",
-      "API-Zugriff & Priorität im Support",
+      "Bevorzugter Support per E-Mail",
     ],
   },
 ] as const;
@@ -91,9 +85,7 @@ export interface Addon {
 
 export const ADDONS: readonly Addon[] = [
   { id: "insolvenz", name: "Insolvenz-Finder", description: "Insolvenzmassen mit Maximalgebot und Bietlimit", monthly: 49, plans: ["starter", "pro"] },
-  { id: "marktplatz", name: "Zusätzlicher Marktplatz", description: "Einen weiteren Marktplatz verbinden", monthly: 9, plans: ["starter", "pro"] },
-  { id: "alarm", name: "Sofort-Alarm", description: "Push-Benachrichtigung in Echtzeit bei Top-Chancen", monthly: 12, plans: ["starter", "pro", "business"] },
-  { id: "team", name: "Team-Zugang", description: "Ein weiterer Nutzer im Konto", monthly: 19, plans: ["pro", "business"] },
+  { id: "marktplatz", name: "Zusätzlicher Marktplatz", description: "Einen zweiten Marktplatz verbinden", monthly: 9, plans: ["starter"] },
 ] as const;
 
 export function getPlan(id: string | null | undefined): Plan | undefined {
@@ -134,6 +126,13 @@ export function categoryAllowed(plan: PlanId | null | undefined, addons: AddonId
   if (category === "insolvenz") return hasFeature(plan, addons, "insolvenz");
   if (category === "vorbestellung") return hasFeature(plan, addons, "vorbestellung");
   return Boolean(getPlan(plan));
+}
+
+/** Wie viele Verkaufsplattformen (eBay, Amazon) gleichzeitig verbunden sein dürfen. */
+export function marketplaceLimit(plan: PlanId | null | undefined, addons: AddonId[]): number {
+  const p = getPlan(plan);
+  if (!p) return 0;
+  return p.marketplaces + (addons.includes("marktplatz") ? 1 : 0);
 }
 
 export const GUARANTEE_DAYS = 14;

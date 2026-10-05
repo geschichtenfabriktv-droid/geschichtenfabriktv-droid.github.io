@@ -23,10 +23,11 @@ Keepa) per OAuth.
 | Tarif | Monat | Jahr | Enthält |
 |---|---|---|---|
 | Starter | 29 € | 290 € | 7 Kategorien, 1 Marktplatz |
-| Pro | 79 € | 790 € | + Vorbestellungen, Autopilot, Preisautomatik, 3 Marktplätze |
-| Business | 199 € | 1.990 € | + Insolvenz-Finder, API, 5 Nutzer, unbegrenzt Marktplätze |
+| Pro | 79 € | 790 € | + Vorbestellungen, Autopilot (Angebot öffnen, mit einem Klick auf eBay einstellen), 3 Marktplätze |
+| Business | 199 € | 1.990 € | + Insolvenz-Finder, unbegrenzt Marktplätze, bevorzugter Support |
 
-Add-ons monatlich: Insolvenz-Finder 49 €, zusätzlicher Marktplatz 9 €, Sofort-Alarm 12 €, Team-Zugang 19 €.
+Erweiterungen monatlich: Insolvenz-Finder 49 € (Starter, Pro), zusätzlicher Marktplatz 9 € (Starter).
+Upgrade sofort mit anteiliger Nachberechnung, Downgrade ab der nächsten Abbuchung.
 Jahresabo = 10 Monatspreise. 14 Tage Geld-zurück-Garantie. Definiert in `src/lib/pricing.ts`.
 
 ## Einrichtung (Live-Version)
@@ -43,7 +44,7 @@ Jahresabo = 10 Monatspreise. 14 Tage Geld-zurück-Garantie. Definiert in `src/li
    setzen. Als „Accept URL“ der RuName `APP_URL/api/verbindungen/ebay/callback/` eintragen. Damit werden
    auch Live-Marktpreise (Browse API) aktiv.
 5. Amazon: als SP-API-Entwickler registrieren, App anlegen, `AMAZON_SP_APP_ID`, `AMAZON_LWA_CLIENT_ID`,
-   `AMAZON_LWA_CLIENT_SECRET` setzen; Redirect `APP_URL/api/verbindungen/amazon/callback/`.
+   `AMAZON_LWA_CLIENT_SECRET` setzen; Redirect `APP_URL/api/verbindungen/amazon/callback/`, Login-URI `APP_URL/api/amazon/login/`.
 6. Mollie-Webhook braucht nichts weiter: die URL wird pro Zahlung mitgeschickt.
 
 ## Datenschutz

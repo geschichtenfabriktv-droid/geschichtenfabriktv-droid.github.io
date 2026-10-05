@@ -12,6 +12,7 @@ export interface SessionUser {
   addons: AddonId[];
   status: string;
   currentPeriodEnd: string | null;
+  pendingPlan?: PlanId | null;
   hasAccess: boolean;
 }
 

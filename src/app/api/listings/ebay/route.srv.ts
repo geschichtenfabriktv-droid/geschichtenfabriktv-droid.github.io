@@ -25,6 +25,11 @@ export const POST = handler(async (req) => {
     });
     return json(result);
   } catch (e) {
-    return error(e instanceof Error ? e.message : "eBay hat das Inserat abgelehnt.", 502);
+    const message = e instanceof Error ? e.message : "";
+    // Eigene, verständliche Meldungen weitergeben; technische Antworten von eBay nur protokollieren.
+    if (/nicht verbunden|Richtlinien/.test(message)) return error(message, 400);
+    console.error("[ebay-inserat]", message);
+    if (/eBay-Token/.test(message)) return error("Die Verbindung zu eBay ist abgelaufen. Bitte verbinde dein eBay-Konto im Kundenkonto neu.", 401);
+    return error("eBay hat das Inserat abgelehnt. Prüfe Titel, Preis und die Richtlinien in deinem eBay-Konto und versuche es erneut.", 502);
   }
 });

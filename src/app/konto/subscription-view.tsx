@@ -57,13 +57,13 @@ export function SubscriptionView() {
   const selAddons = (addons ?? u.addons).filter((a) => ADDONS.find((x) => x.id === a)?.plans.includes(selPlan));
   const changed = current && (selPlan !== u.plan || selAddons.slice().sort().join() !== u.addons.slice().sort().join());
 
-  const act = async (fn: () => Promise<unknown>, ok: string) => {
+  const act = async <T,>(fn: () => Promise<T>, ok: string | ((result: T) => string)) => {
     setBusy(true);
     setMessage(null);
     try {
-      await fn();
+      const result = await fn();
       await reload();
-      setMessage({ tone: "good", text: ok });
+      setMessage({ tone: "good", text: typeof ok === "function" ? ok(result) : ok });
     } catch (e) {
       setMessage({ tone: "bad", text: e instanceof ApiError ? e.message : "Das hat nicht geklappt." });
     } finally {
@@ -105,7 +105,15 @@ export function SubscriptionView() {
       {current && u.status === "active" && (
         <section className="rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-line">
           <h2 className="text-lg font-semibold tracking-tight">Tarif oder Erweiterungen ändern</h2>
-          <p className="mt-1 text-[13px] text-muted">Neue Funktionen sind sofort aktiv. Der neue Preis gilt ab der nächsten Abbuchung.</p>
+          <p className="mt-1 text-[13px] text-muted">
+            Ein Upgrade ist sofort aktiv, der Unterschied für die restliche Laufzeit wird anteilig abgebucht. Ein günstigerer Tarif gilt ab der nächsten
+            Abbuchung.
+          </p>
+          {u.pendingPlan && (
+            <p className="mt-3 rounded-2xl bg-canvas px-4 py-3 text-[13px] text-ink-2">
+              Vorgemerkt ab {u.currentPeriodEnd ? dateDe(u.currentPeriodEnd) : "der nächsten Abbuchung"}: {getPlan(u.pendingPlan)?.name}
+            </p>
+          )}
           <div className="mt-4 grid gap-2 sm:grid-cols-3">
             {PLANS.map((p) => (
               <button
@@ -127,14 +135,21 @@ export function SubscriptionView() {
                 checked={selAddons.includes(a.id)}
                 onChange={(e) => setAddons(e.target.checked ? [...selAddons, a.id] : selAddons.filter((x) => x !== a.id))}
               >
-                <span className="font-medium text-ink">{a.name}</span> · +{eur(a.monthly, { cents: false })} / Monat
+                <span className="font-medium text-ink">{a.name}</span> · +{eur(u.planInterval === "jahr" ? a.monthly * 10 : a.monthly, { cents: false })} /{" "}
+                {u.planInterval === "jahr" ? "Jahr" : "Monat"}
               </Checkbox>
             ))}
           </div>
           <p className="tabular mt-4 text-sm">
             Neuer Betrag: <strong>{eur(priceFor(selPlan, u.planInterval ?? "monat", selAddons))}</strong> {u.planInterval === "jahr" ? "jährlich" : "monatlich"}
           </p>
-          <Button className="mt-4" disabled={!changed || busy} onClick={() => act(() => api("/api/billing/change/", { body: { plan: selPlan, addons: selAddons } }), "Dein Tarif ist geändert.")}>
+          <Button className="mt-4" disabled={!changed || busy} onClick={() => act(
+                () => api<{ effective: "now" | "next_period"; charged: number }>("/api/billing/change/", { body: { plan: selPlan, addons: selAddons } }),
+                (r) =>
+                  r.effective === "now"
+                    ? `Dein Tarif ist geändert und sofort aktiv.${r.charged ? ` Für die restliche Laufzeit buchen wir anteilig ${eur(r.charged)} ab.` : ""}`
+                    : "Die Änderung ist vorgemerkt und gilt ab der nächsten Abbuchung.",
+              )}>
             Änderung übernehmen
           </Button>
         </section>
@@ -166,7 +181,7 @@ export function SubscriptionView() {
             </tbody>
           </table>
         )}
-        <p className="mt-4 text-[12px] text-muted">Rechnungen erhältst du per E-Mail. Fragen zur Abrechnung beantworten wir über die Kontaktdaten im Impressum.</p>
+        <p className="mt-4 text-[12px] text-muted">Für jede Zahlung bekommst du eine Bestätigung per E-Mail. Fragen zur Abrechnung beantworten wir über die Kontaktdaten im Impressum.</p>
       </section>
 
       {current && u.status !== "canceled" && u.status !== "none" && (
@@ -187,11 +202,11 @@ export function SubscriptionView() {
         </section>
       )}
       <p className="text-[12px] text-muted">
-        Du kannst auch ohne Anmeldung über{" "}
+        Ohne Anmeldung geht es auch über die Seite{" "}
         <Link href="/kuendigen/" className="underline">
-          Verträge hier kündigen
-        </Link>{" "}
-        kündigen.
+          „Verträge hier kündigen“
+        </Link>
+        .
       </p>
     </div>
   );

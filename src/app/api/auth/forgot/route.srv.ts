@@ -8,7 +8,7 @@ import * as v from "@/server/validate";
 
 /** Antwortet immer gleich, damit nicht erkennbar ist, ob ein Konto existiert. */
 export const POST = handler(async (req) => {
-  rateLimit(`forgot:${clientIp(req)}`, 5);
+  await rateLimit(`forgot:${clientIp(req)}`, 5);
   const email = v.email((await readJson(req)).email);
   const user = await findUserByEmail(email);
   if (user) {

@@ -1,16 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { categoryAllowed, hasFeature, priceFor, sanitizeAddons } from "./pricing";
+import { categoryAllowed, hasFeature, marketplaceLimit, priceFor, sanitizeAddons } from "./pricing";
 
 describe("Preise", () => {
   it("berechnet Monats- und Jahrespreise mit Add-ons", () => {
     expect(priceFor("starter", "monat")).toBe(29);
     expect(priceFor("pro", "jahr")).toBe(790);
-    expect(priceFor("pro", "monat", ["insolvenz", "alarm"])).toBe(140);
-    expect(priceFor("pro", "jahr", ["alarm"])).toBe(910);
+    expect(priceFor("pro", "monat", ["insolvenz"])).toBe(128);
+    expect(priceFor("starter", "jahr", ["marktplatz"])).toBe(380);
   });
 
   it("lässt nur passende Add-ons zu", () => {
-    expect(sanitizeAddons("business", ["insolvenz", "team", "team", "x"])).toEqual(["team"]);
+    expect(sanitizeAddons("starter", ["marktplatz", "insolvenz", "marktplatz", "x"])).toEqual(["insolvenz", "marktplatz"]);
+    expect(sanitizeAddons("business", ["insolvenz", "marktplatz"])).toEqual([]);
     expect(sanitizeAddons("starter", "nope")).toEqual([]);
   });
 
@@ -21,5 +22,8 @@ describe("Preise", () => {
     expect(categoryAllowed("pro", [], "vorbestellung")).toBe(true);
     expect(hasFeature("business", [], "insolvenz")).toBe(true);
     expect(hasFeature(null, [], "autopilot")).toBe(false);
+    expect(marketplaceLimit("starter", [])).toBe(1);
+    expect(marketplaceLimit("starter", ["marktplatz"])).toBe(2);
+    expect(marketplaceLimit(null, [])).toBe(0);
   });
 });

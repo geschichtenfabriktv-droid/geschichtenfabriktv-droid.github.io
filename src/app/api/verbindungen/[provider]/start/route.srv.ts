@@ -1,7 +1,9 @@
 import { getProvider } from "@/lib/providers";
-import { createOAuthState, saveConnection } from "@/server/connections";
+import { marketplaceLimit } from "@/lib/pricing";
+import { createOAuthState, listConnections, saveConnection } from "@/server/connections";
 import { error, handler, json, readJson, requireUser } from "@/server/http";
 import { amazonAuthorizeUrl, ebayAuthorizeUrl, isAmazonConfigured, isEbayConfigured, verifyKeepaKey } from "@/server/marketplaces";
+import { hasAccess } from "@/server/users";
 import * as v from "@/server/validate";
 
 /** Startet eine Verbindung. Ohne ausdrückliche Einwilligung wird nichts verbunden. */
@@ -12,6 +14,20 @@ export const POST = handler(async (req, ctx: { params: Promise<{ provider: strin
   if (!info) return error("Unbekannter Anbieter.", 404);
   const body = await readJson(req);
   v.accepted(body.consent, "Bitte bestätige die Einwilligung zur Datenverarbeitung.");
+  if (!hasAccess(user)) return error("Verbindungen sind mit einem aktiven Tarif verfügbar.", 402);
+
+  if (info.id === "ebay" || info.id === "amazon") {
+    const others = (await listConnections(user.id)).filter((c) => (c.provider === "ebay" || c.provider === "amazon") && c.provider !== info.id);
+    const limit = marketplaceLimit(user.plan, user.addons);
+    if (others.length >= limit) {
+      return error(
+        limit === 1
+          ? "Dein Tarif enthält einen Marktplatz. Trenne die bestehende Verbindung oder buche die Erweiterung „Zusätzlicher Marktplatz“."
+          : "Du hast die Zahl der Marktplätze in deinem Tarif erreicht.",
+        402,
+      );
+    }
+  }
 
   if (info.id === "ebay") {
     if (!isEbayConfigured()) return error("Die eBay-Anbindung wird gerade freigeschaltet. Bitte versuche es später.", 503);

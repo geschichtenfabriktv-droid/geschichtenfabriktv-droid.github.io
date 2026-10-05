@@ -8,7 +8,7 @@ import { api, ApiError, BACKEND } from "@/lib/client/api";
 type Result = { reference: string; receivedAt: string };
 
 export function CancelForm() {
-  const [kind, setKind] = useState<"ordentlich" | "ausserordentlich">("ordentlich");
+  const [kind, setKind] = useState<"ordentlich" | "ausserordentlich" | "widerruf">("ordentlich");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [done, setDone] = useState<Result | null>(null);
@@ -41,7 +41,7 @@ export function CancelForm() {
         <p className="mt-2 text-[14px]">
           Eingang: {new Date(done.receivedAt).toLocaleString("de-DE")} · Referenz: {done.reference}
         </p>
-        <p className="mt-2 text-[14px]">Die Bestätigung haben wir dir per E-Mail geschickt. Bitte bewahre sie auf.</p>
+        <p className="mt-2 text-[14px]">Gehört die E-Mail-Adresse zu einem Konto, schicken wir die Bestätigung dorthin. Bitte bewahre die Referenz auf.</p>
       </div>
     );
   }
@@ -50,11 +50,12 @@ export function CancelForm() {
     <form onSubmit={submit} className="max-w-xl space-y-4 rounded-[24px] p-6 ring-1 ring-line">
       <fieldset>
         <legend className="text-[13px] font-medium">Art der Kündigung</legend>
-        <div className="mt-2 grid grid-cols-2 gap-2">
+        <div className="mt-2 grid gap-2 sm:grid-cols-3">
           {(
             [
               ["ordentlich", "Ordentlich zum nächstmöglichen Zeitpunkt"],
               ["ausserordentlich", "Außerordentlich (fristlos)"],
+              ["widerruf", "Widerruf (innerhalb von 14 Tagen)"],
             ] as const
           ).map(([k, label]) => (
             <label

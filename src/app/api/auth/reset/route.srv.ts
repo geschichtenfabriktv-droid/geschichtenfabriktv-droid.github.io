@@ -16,5 +16,6 @@ export const POST = handler(async (req) => {
   if (!userId) return error("Der Link ist ungültig oder abgelaufen. Fordere bitte einen neuen an.", 400);
   // Alle bestehenden Sitzungen werden ungültig.
   await updateUser(userId, { passwordHash: await hashPassword(password), bumpSession: true });
+  await db.query("delete from password_resets where user_id = $1", [userId]);
   return json({ ok: true });
 });

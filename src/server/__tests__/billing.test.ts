@@ -19,7 +19,7 @@ function fakeMollie() {
         status: "open",
         amount: input.amount,
         description: input.description,
-        sequenceType: "first",
+        sequenceType: input.sequenceType ?? "first",
         customerId: input.customerId,
         metadata: input.metadata,
         createdAt: new Date().toISOString(),
@@ -74,10 +74,10 @@ describe("Abrechnung mit Mollie", () => {
   it("schaltet nach bezahlter Erstzahlung frei und legt das Abo an", async () => {
     const m = fakeMollie();
     const user = await createUser(`a${Date.now()}@test.de`, "x", "Test");
-    const { checkoutUrl } = await startCheckout(user, { plan: "pro", interval: "monat", addons: ["alarm", "unbekannt"] }, m.client);
+    const { checkoutUrl } = await startCheckout(user, { plan: "pro", interval: "monat", addons: ["insolvenz", "unbekannt"] }, m.client);
     expect(checkoutUrl).toMatch(/^https:\/\/mollie\.test/);
     const payment = [...m.payments.values()][0]!;
-    expect(payment.amount.value).toBe("91.00");
+    expect(payment.amount.value).toBe("128.00");
     expect((await findUserById(user.id))!.status).toBe("pending");
 
     payment.status = "paid";
@@ -88,11 +88,11 @@ describe("Abrechnung mit Mollie", () => {
     const after = (await findUserById(user.id))!;
     expect(after.status).toBe("active");
     expect(after.plan).toBe("pro");
-    expect(after.addons).toEqual(["alarm"]);
+    expect(after.addons).toEqual(["insolvenz"]);
     expect(after.currentPeriodEnd?.slice(0, 10)).toBe("2026-11-05");
     expect(m.subscriptions.size).toBe(1);
     const sub = [...m.subscriptions.values()][0]!;
-    expect(sub).toMatchObject({ amount: "91.00", startDate: "2026-11-05" });
+    expect(sub).toMatchObject({ amount: "128.00", startDate: "2026-11-05" });
     expect(hasAccess(after, now)).toBe(true);
   });
 
@@ -139,16 +139,85 @@ describe("Abrechnung mit Mollie", () => {
     expect(hasAccess(u, new Date("2026-12-01T00:00:00Z"))).toBe(true);
   });
 
-  it("ändert den Abo-Betrag beim Tarifwechsel", async () => {
+  async function activeUser(m: ReturnType<typeof fakeMollie>, plan: "starter" | "pro" | "business", t0: Date) {
+    const user = await createUser(`${plan}${Math.random()}@test.de`, "x", "Test");
+    await startCheckout(user, { plan, interval: "monat", addons: [] }, m.client);
+    const first = [...m.payments.values()].at(-1)!;
+    first.status = "paid";
+    await processPayment(first.id, m.client, t0);
+    return (await findUserById(user.id))!;
+  }
+
+  it("schaltet ein Upgrade sofort frei und bucht den Unterschied anteilig ab", async () => {
     const m = fakeMollie();
-    const user = await createUser(`d${Date.now()}@test.de`, "x", "Test");
+    const t0 = new Date("2026-10-05T12:00:00Z");
+    const u = await activeUser(m, "starter", t0);
+    // Halbe Laufzeit vorbei (Periode 05.10. bis 05.11.)
+    const res = await changePlan(u, { plan: "business", addons: [] }, m.client, new Date("2026-10-21T00:00:00Z"));
+    expect(res.effective).toBe("now");
+    expect(m.subscriptions.get(u.mollieSubscriptionId!)!.amount).toBe("199.00");
+    const upgrade = [...m.payments.values()].at(-1)!;
+    expect(upgrade.sequenceType).toBe("recurring");
+    expect(Number(upgrade.amount.value)).toBeGreaterThan(80);
+    expect(Number(upgrade.amount.value)).toBeLessThan(170);
+    expect((await findUserById(u.id))!.plan).toBe("business");
+  });
+
+  it("merkt ein Downgrade bis zur nächsten Abbuchung vor", async () => {
+    const m = fakeMollie();
+    const t0 = new Date("2026-10-05T12:00:00Z");
+    const u = await activeUser(m, "business", t0);
+    const before = m.payments.size;
+    const res = await changePlan(u, { plan: "starter", addons: ["marktplatz"] }, m.client, t0);
+    expect(res.effective).toBe("next_period");
+    expect(m.payments.size).toBe(before);
+    let now = (await findUserById(u.id))!;
+    expect(now.plan).toBe("business");
+    expect(now.pendingPlan).toBe("starter");
+    await processPayment(m.recurring(u.mollieCustomerId!, u.mollieSubscriptionId!, "paid"), m.client, new Date("2026-11-05T08:00:00Z"));
+    now = (await findUserById(u.id))!;
+    expect(now.plan).toBe("starter");
+    expect(now.addons).toEqual(["marktplatz"]);
+    expect(now.pendingPlan).toBeNull();
+  });
+
+  it("verarbeitet gleichzeitige Webhooks nur einmal", async () => {
+    const m = fakeMollie();
+    const user = await createUser(`e${Date.now()}@test.de`, "x", "Test");
+    await startCheckout(user, { plan: "pro", interval: "monat", addons: [] }, m.client);
+    const first = [...m.payments.values()][0]!;
+    first.status = "paid";
+    await Promise.all([processPayment(first.id, m.client), processPayment(first.id, m.client), processPayment(first.id, m.client)]);
+    expect(m.subscriptions.size).toBe(1);
+  });
+
+  it("lehnt einen zweiten Checkout mit laufendem Abo ab", async () => {
+    const m = fakeMollie();
+    const u = await activeUser(m, "pro", new Date());
+    await expect(startCheckout(u, { plan: "business", interval: "monat", addons: [] }, m.client)).rejects.toThrow(/bereits ein Abo/);
+  });
+
+  it("beendet das Abo bei Rückbuchung", async () => {
+    const m = fakeMollie();
+    const u = await activeUser(m, "pro", new Date("2026-10-05T12:00:00Z"));
+    const first = [...m.payments.values()][0]!;
+    first.amountChargedBack = { currency: "EUR", value: "79.00" };
+    const subId = u.mollieSubscriptionId!;
+    await processPayment(first.id, m.client, new Date("2026-10-10T12:00:00Z"));
+    const after = (await findUserById(u.id))!;
+    expect(after.status).toBe("none");
+    expect(m.subscriptions.get(subId)!.canceled).toBe(true);
+    expect(hasAccess(after, new Date("2026-10-11T00:00:00Z"))).toBe(false);
+  });
+
+  it("schaltet nicht frei, wenn der Betrag nicht zum Tarif passt", async () => {
+    const m = fakeMollie();
+    const user = await createUser(`f${Date.now()}@test.de`, "x", "Test");
     await startCheckout(user, { plan: "starter", interval: "monat", addons: [] }, m.client);
     const first = [...m.payments.values()][0]!;
     first.status = "paid";
-    await processPayment(first.id, m.client);
-    const u = (await findUserById(user.id))!;
-    await changePlan(u, { plan: "business", addons: ["team"] }, m.client);
-    expect(m.subscriptions.get(u.mollieSubscriptionId!)!.amount).toBe("218.00");
-    expect((await findUserById(user.id))!.plan).toBe("business");
+    first.metadata = { ...(first.metadata as object), plan: "business" };
+    await expect(processPayment(first.id, m.client)).rejects.toThrow(/Betrag/);
+    expect((await findUserById(user.id))!.status).not.toBe("active");
   });
 });

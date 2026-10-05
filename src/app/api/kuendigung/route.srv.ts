@@ -6,21 +6,28 @@ import { sendMail } from "@/server/mail";
 import { findUserByEmail } from "@/server/users";
 import * as v from "@/server/validate";
 
+const KINDS = {
+  ordentlich: "ordentliche Kündigung",
+  ausserordentlich: "außerordentliche Kündigung",
+  widerruf: "Widerruf",
+} as const;
+
 /**
- * Kündigungsbutton nach § 312k BGB: ohne Anmeldung nutzbar. Passt die E-Mail zu einem Konto mit
- * laufendem Abo, wird es gekündigt; in jedem Fall geht eine Eingangsbestätigung per E-Mail raus.
+ * Kündigungsbutton nach § 312k BGB: ohne Anmeldung nutzbar. Jede Erklärung wird mit Zeitstempel
+ * gespeichert. Passt die E-Mail zu einem Konto, wird ein laufendes Abo beendet und die Bestätigung
+ * an die Kontoadresse geschickt. Die Antwort ist immer gleich, damit niemand Konten ausforschen kann.
  */
 export const POST = handler(async (req) => {
-  rateLimit(`kuendigung:${clientIp(req)}`, 10);
+  await rateLimit(`kuendigung:${clientIp(req)}`, 10);
   const body = await readJson(req);
   const email = v.email(body.email);
+  await rateLimit(`kuendigung-konto:${email}`, 5, 24 * 60 * 60 * 1000);
   const name = v.text(body.name, 120, "Name");
   const contract = v.text(body.contract, 200, "Vertrag") || "Arbitrage Radar Abo";
   const reason = v.text(body.reason, 1000, "Grund");
-  const kind = body.kind === "ausserordentlich" ? "ausserordentlich" : "ordentlich";
+  const kind: keyof typeof KINDS = body.kind === "ausserordentlich" || body.kind === "widerruf" ? body.kind : "ordentlich";
 
   const user = await findUserByEmail(email);
-  if (user?.mollieSubscriptionId) await cancelSubscription(user);
   const db = await getDb();
   const id = randomUUID();
   const at = new Date();
@@ -34,13 +41,30 @@ export const POST = handler(async (req) => {
     user?.id ?? null,
     at,
   ]);
-  const end = user?.currentPeriodEnd ? new Date(user.currentPeriodEnd).toLocaleDateString("de-DE") : null;
-  await sendMail(
-    email,
-    "Eingangsbestätigung deiner Kündigung",
-    `Hallo ${name},\n\nwir haben deine ${kind}e Kündigung am ${at.toLocaleString("de-DE")} erhalten.\nVertrag: ${contract}\n${
-      end ? `Dein Zugang endet am ${end}.` : "Wir bestätigen dir das Vertragsende in Kürze."
-    }\nReferenz: ${id}\n\nArbitrage Radar`,
-  );
+
+  if (user) {
+    let ended = !user.mollieSubscriptionId;
+    if (user.mollieSubscriptionId) {
+      try {
+        await cancelSubscription(user);
+        ended = true;
+      } catch (e) {
+        // Erklärung ist gespeichert und wird manuell nachbearbeitet.
+        console.error(`[kuendigung] Abo ${id} konnte nicht automatisch beendet werden`, e instanceof Error ? e.message : e);
+      }
+    }
+    const end = user.currentPeriodEnd ? new Date(user.currentPeriodEnd).toLocaleDateString("de-DE", { timeZone: "Europe/Berlin" }) : null;
+    const outcome =
+      kind === "widerruf"
+        ? "Dein Abo ist beendet. Den bezahlten Betrag erstatten wir dir innerhalb von 14 Tagen über die ursprüngliche Zahlungsart."
+        : ended && end
+          ? `Es werden keine weiteren Beträge abgebucht. Dein Zugang bleibt bis zum ${end} bestehen.`
+          : "Wir bestätigen dir das Vertragsende in Kürze.";
+    await sendMail(
+      user.email,
+      `Eingangsbestätigung: ${KINDS[kind]}`,
+      `Hallo${name ? ` ${name}` : ""},\n\nwir haben deine ${KINDS[kind]} am ${at.toLocaleString("de-DE", { timeZone: "Europe/Berlin" })} erhalten.\nVertrag: ${contract}\n${outcome}\nReferenz: ${id}\n\nArbitrage Radar`,
+    );
+  }
   return json({ ok: true, reference: id, receivedAt: at.toISOString() });
 });

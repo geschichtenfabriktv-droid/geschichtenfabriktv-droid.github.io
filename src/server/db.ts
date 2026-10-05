@@ -64,6 +64,13 @@ create table if not exists portfolios (
   data jsonb not null,
   updated_at timestamptz not null default now()
 );
+alter table users add column if not exists pending_plan text;
+alter table users add column if not exists pending_addons jsonb;
+create table if not exists rate_limits (
+  key text primary key,
+  count integer not null,
+  reset_at timestamptz not null
+);
 create table if not exists cancellations (
   id uuid primary key,
   email text not null,

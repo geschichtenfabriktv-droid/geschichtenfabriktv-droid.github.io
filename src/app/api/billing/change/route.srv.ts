@@ -5,7 +5,7 @@ import { findUserById, publicUser } from "@/server/users";
 export const POST = handler(async (req) => {
   const user = await requireUser();
   const body = await readJson(req);
-  await changePlan(user, { plan: body.plan, addons: body.addons });
+  const result = await changePlan(user, { plan: body.plan, addons: body.addons });
   const fresh = await findUserById(user.id);
-  return json({ user: fresh ? publicUser(fresh) : null });
+  return json({ ...result, user: fresh ? publicUser(fresh) : null });
 });

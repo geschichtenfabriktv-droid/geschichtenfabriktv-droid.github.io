@@ -20,6 +20,8 @@ export interface MolliePayment {
   metadata?: Record<string, unknown> | null;
   paidAt?: string;
   createdAt: string;
+  amountRefunded?: MollieAmount;
+  amountChargedBack?: MollieAmount;
   _links: { checkout?: { href: string } };
 }
 
@@ -29,8 +31,8 @@ export interface MollieClient {
     amount: MollieAmount;
     description: string;
     customerId: string;
-    sequenceType: "first";
-    redirectUrl: string;
+    sequenceType: "first" | "recurring";
+    redirectUrl?: string;
     webhookUrl?: string;
     metadata: Record<string, unknown>;
     locale?: string;
@@ -40,6 +42,7 @@ export interface MollieClient {
   createSubscription(
     customerId: string,
     input: { amount: MollieAmount; interval: string; startDate: string; description: string; webhookUrl?: string; metadata: Record<string, unknown> },
+    idempotencyKey?: string,
   ): Promise<{ id: string }>;
   updateSubscription(customerId: string, subscriptionId: string, input: { amount: MollieAmount; description?: string }): Promise<void>;
   cancelSubscription(customerId: string, subscriptionId: string): Promise<void>;
@@ -50,18 +53,27 @@ export function amount(value: number): MollieAmount {
   return { currency: "EUR", value: value.toFixed(2) };
 }
 
-async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
+export class MollieError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
+async function call<T>(method: string, path: string, body?: unknown, headers: Record<string, string> = {}): Promise<T> {
   const key = env.mollieApiKey;
   if (!key) throw new Error("MOLLIE_API_KEY ist nicht gesetzt.");
   const res = await fetch(`${API}${path}`, {
     method,
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", ...headers },
     body: body ? JSON.stringify(body) : undefined,
     cache: "no-store",
   });
   if (res.status === 204) return undefined as T;
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(`Mollie ${method} ${path}: ${res.status} ${(data as { detail?: string }).detail ?? ""}`);
+  if (!res.ok) throw new MollieError(res.status, `Mollie ${method} ${path}: ${res.status} ${(data as { detail?: string }).detail ?? ""}`);
   return data as T;
 }
 
@@ -72,10 +84,16 @@ export const mollie: MollieClient = {
   listCustomerPayments: async (customerId) =>
     (await call<{ _embedded?: { payments: MolliePayment[] } }>("GET", `/customers/${encodeURIComponent(customerId)}/payments?limit=50`))._embedded
       ?.payments ?? [],
-  createSubscription: (customerId, input) => call("POST", `/customers/${encodeURIComponent(customerId)}/subscriptions`, input),
+  createSubscription: (customerId, input, idempotencyKey) =>
+    call("POST", `/customers/${encodeURIComponent(customerId)}/subscriptions`, input, idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
   updateSubscription: (customerId, id, input) =>
     call("PATCH", `/customers/${encodeURIComponent(customerId)}/subscriptions/${encodeURIComponent(id)}`, input),
-  cancelSubscription: (customerId, id) => call("DELETE", `/customers/${encodeURIComponent(customerId)}/subscriptions/${encodeURIComponent(id)}`),
+  cancelSubscription: (customerId, id) =>
+    call<void>("DELETE", `/customers/${encodeURIComponent(customerId)}/subscriptions/${encodeURIComponent(id)}`).catch((e) => {
+      // Bereits gekündigt oder nicht mehr vorhanden: Ziel ist erreicht.
+      if (e instanceof MollieError && [404, 410, 422].includes(e.status)) return;
+      throw e;
+    }),
   deleteCustomer: (customerId) => call("DELETE", `/customers/${encodeURIComponent(customerId)}`),
 };
 

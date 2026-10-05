@@ -17,6 +17,9 @@ export interface User {
   currentPeriodEnd: string | null;
   mollieCustomerId: string | null;
   mollieSubscriptionId: string | null;
+  /** Günstigerer Tarif, der ab der nächsten Abbuchung gilt */
+  pendingPlan: PlanId | null;
+  pendingAddons: AddonId[] | null;
   sessionVersion: number;
 }
 
@@ -32,11 +35,18 @@ interface Row {
   current_period_end: Date | string | null;
   mollie_customer_id: string | null;
   mollie_subscription_id: string | null;
+  pending_plan: string | null;
+  pending_addons: unknown;
   session_version: number;
   password_hash?: string;
 }
 
 const iso = (d: Date | string | null) => (d ? new Date(d).toISOString() : null);
+
+function parseList(v: unknown): AddonId[] | null {
+  const list = typeof v === "string" ? JSON.parse(v) : v;
+  return Array.isArray(list) ? (list as AddonId[]) : null;
+}
 
 function map(r: Row): User {
   const addons = typeof r.addons === "string" ? JSON.parse(r.addons) : r.addons;
@@ -52,6 +62,8 @@ function map(r: Row): User {
     currentPeriodEnd: iso(r.current_period_end),
     mollieCustomerId: r.mollie_customer_id,
     mollieSubscriptionId: r.mollie_subscription_id,
+    pendingPlan: (r.pending_plan as PlanId) ?? null,
+    pendingAddons: parseList(r.pending_addons),
     sessionVersion: r.session_version,
   };
 }
@@ -100,6 +112,8 @@ export async function updateUser(
     currentPeriodEnd: string | null;
     mollieCustomerId: string | null;
     mollieSubscriptionId: string | null;
+    pendingPlan: PlanId | null;
+    pendingAddons: AddonId[] | null;
     bumpSession: boolean;
   }>,
 ): Promise<void> {
@@ -113,6 +127,8 @@ export async function updateUser(
   if (patch.currentPeriodEnd !== undefined) cols.current_period_end = patch.currentPeriodEnd;
   if (patch.mollieCustomerId !== undefined) cols.mollie_customer_id = patch.mollieCustomerId;
   if (patch.mollieSubscriptionId !== undefined) cols.mollie_subscription_id = patch.mollieSubscriptionId;
+  if (patch.pendingPlan !== undefined) cols.pending_plan = patch.pendingPlan;
+  if (patch.pendingAddons !== undefined) cols.pending_addons = patch.pendingAddons === null ? null : JSON.stringify(patch.pendingAddons);
   const keys = Object.keys(cols);
   const sets = keys.map((k, i) => `${k} = $${i + 2}`);
   if (patch.bumpSession) sets.push("session_version = session_version + 1");
@@ -147,6 +163,8 @@ export function publicUser(u: User) {
     addons: u.addons,
     status: u.status,
     currentPeriodEnd: u.currentPeriodEnd,
+    pendingPlan: u.pendingPlan,
+    pendingAddons: u.pendingAddons,
     hasAccess: hasAccess(u),
   };
 }
