@@ -27,7 +27,8 @@ export function IntervalToggle({ value, onChange }: { value: BillingInterval; on
   );
 }
 
-export function PricingCards({ compact = false }: { compact?: boolean }) {
+export function PricingCards({ compact = false, headingLevel = 3 }: { compact?: boolean; headingLevel?: 2 | 3 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   const [interval, setInterval] = useState<BillingInterval>("jahr");
   return (
     <div>
@@ -43,9 +44,9 @@ export function PricingCards({ compact = false }: { compact?: boolean }) {
               className={`relative flex flex-col rounded-[28px] p-7 md:p-8 ${p.highlight ? "bg-ink text-white shadow-[var(--shadow-float)]" : "bg-white ring-1 ring-line"}`}
             >
               {p.highlight && (
-                <span className="absolute -top-3 left-8 rounded-full bg-good px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">Beliebteste Wahl</span>
+                <span className="absolute -top-3 left-8 rounded-full bg-[#0b7a43] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">Beliebteste Wahl</span>
               )}
-              <h3 className="font-display text-[34px] leading-none tracking-tight">{p.name}</h3>
+              <Heading className="font-display text-[34px] leading-none tracking-tight">{p.name}</Heading>
               <p className={`mt-2 text-[14px] ${p.highlight ? "text-white/65" : "text-ink-2"}`}>{p.tagline}</p>
               <p className="mt-8 flex items-baseline gap-1.5">
                 <span className="tabular text-[48px] font-semibold leading-none tracking-tight">{eur(perMonth, { cents: perMonth % 1 !== 0 })}</span>

@@ -52,7 +52,7 @@ export default function PreisePage() {
       </PageIntro>
 
       <section className="mx-auto max-w-[1320px] px-4 pb-20 sm:px-6 lg:px-10">
-        <PricingCards />
+        <PricingCards headingLevel={2} />
       </section>
 
       <section className="border-t border-line bg-canvas">

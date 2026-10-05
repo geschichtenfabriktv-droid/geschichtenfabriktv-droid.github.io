@@ -298,13 +298,13 @@ export default async function Home() {
           </Reveal>
           <ol className="mt-16 grid gap-10 md:grid-cols-3 md:gap-8">
             {STEPS.map((s, i) => (
-              <Reveal key={s.n} delay={i * 100}>
-                <li className="border-t border-ink pt-6">
+              <li key={s.n} className="border-t border-ink pt-6">
+                <Reveal delay={i * 100}>
                   <span className="tabular font-display text-[56px] leading-none text-muted">{s.n}</span>
                   <h3 className="mt-6 text-2xl font-semibold tracking-tight">{s.title}</h3>
                   <p className="mt-3 text-[15px] leading-relaxed text-ink-2">{s.text}</p>
-                </li>
-              </Reveal>
+                </Reveal>
+              </li>
             ))}
           </ol>
         </div>

@@ -12,12 +12,13 @@ export function BrandMark({ className = "" }: { className?: string }) {
 
 export function Brand({ href = "/", compact = false }: { href?: string; compact?: boolean }) {
   return (
-    <Link href={href} className="group inline-flex items-center gap-2.5" aria-label="Arbitrage Radar, zur Startseite">
+    <Link href={href} className="group inline-flex items-center gap-2.5" aria-label={compact ? "Arbitrage Radar, zur Startseite" : undefined}>
       <BrandMark className="size-8 transition-transform duration-300 group-hover:-rotate-6" />
       {!compact && (
         <span className="flex items-baseline gap-1.5 leading-none">
-          <span className="font-display text-[22px] tracking-tight">Arbitrage</span>
+          <span className="font-display text-[22px] tracking-tight">Arbitrage</span>{" "}
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">Radar</span>
+          <span className="sr-only">, zur Startseite</span>
         </span>
       )}
     </Link>

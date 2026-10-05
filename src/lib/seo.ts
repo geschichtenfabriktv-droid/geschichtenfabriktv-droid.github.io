@@ -20,7 +20,7 @@ export function pageMetadata({
   title,
   description,
   type = "website",
-  absoluteTitle = false,
+  absoluteTitle: absolute = false,
   published,
   updated,
 }: {
@@ -33,6 +33,8 @@ export function pageMetadata({
   updated?: string;
 }): Metadata {
   const url = absoluteUrl(path);
+  // Markenname nur anhängen, wenn der Titel dann noch in die Suchergebnisse passt (ca. 60 Zeichen).
+  const absoluteTitle = absolute || title.length + BRAND.length + 3 > 62;
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,

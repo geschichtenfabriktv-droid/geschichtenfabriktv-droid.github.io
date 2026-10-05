@@ -6,7 +6,7 @@ export const ARTICLES: Article[] = [
     slug: "online-arbitrage-anleitung",
     title: "Online Arbitrage Anleitung 2026: Schritt für Schritt",
     description:
-      "Online Arbitrage in Deutschland: So findest du Preisdifferenzen, prüfst die Nachfrage, rechnest Gebühren ein und verkaufst mit Gewinn. Anleitung mit Beispiel.",
+      "Online Arbitrage in Deutschland: So findest du Preisdifferenzen, prüfst die Nachfrage, rechnest Gebühren ein und verkaufst mit Gewinn. Mit Rechenbeispiel.",
     h1: "Online Arbitrage: Die Schritt-für-Schritt-Anleitung für Deutschland",
     intro:
       "Online Arbitrage bedeutet, ein Produkt bei einem Onlinehändler günstiger einzukaufen, als es auf einem Marktplatz wie eBay oder Amazon gerade verkauft wird, und die Differenz nach allen Kosten als Gewinn mitzunehmen. Entscheidend ist nicht der Preisunterschied allein, sondern ob nach Gebühren, Versand und Steuern noch genug übrig bleibt und ob sich der Artikel schnell genug verkauft. Diese Anleitung zeigt dir den kompletten Ablauf vom ersten Fund bis zum skalierbaren Prozess.",
@@ -126,6 +126,15 @@ export const ARTICLES: Article[] = [
           "**Kategorien fokussieren**, in denen du Produkte und Fälschungsmerkmale kennst",
           "**Buchhaltung von Anfang an** sauber führen: Einkaufsbelege, Gebührenabrechnungen, Versandkosten",
         ],
+      },
+      { type: "h2", text: "Wie viel Zeit und Kapital du einplanen solltest" },
+      {
+        type: "p",
+        text: "Zwischen Einkauf und Auszahlung vergehen bei Online Arbitrage oft mehrere Wochen: Lieferzeit zu dir, Einstellen, Verkaufsdauer, Versand zum Käufer und die Auszahlungsfrist des Marktplatzes. In dieser Zeit ist dein Geld gebunden. Plane deshalb so, dass du auch dann handlungsfähig bleibst, wenn einzelne Artikel deutlich länger liegen als erwartet.",
+      },
+      {
+        type: "p",
+        text: "Zeit kostet vor allem die Suche. Wer manuell sourct, verbringt den größten Teil seiner Arbeitszeit mit Vergleichen, die zu keinem Kauf führen. Genau dieser Teil lässt sich am besten automatisieren – Einkauf, Qualitätsprüfung und Kundenservice bleiben dagegen deine Aufgabe.",
       },
       { type: "h2", text: "Die häufigsten Fehler bei Online Arbitrage" },
       {
@@ -297,6 +306,11 @@ export const ARTICLES: Article[] = [
         type: "p",
         text: "Gegenstände des täglichen Gebrauchs wie Kleidung, Smartphones oder Möbel fallen nicht unter § 23 EStG. Wichtig: Diese Regel betrifft nur echte Privatverkäufe. Wer gezielt zum Weiterverkauf einkauft, ist gewerblich – dann zählt jeder Gewinn, unabhängig von Haltedauer oder Freigrenze.",
       },
+      { type: "h3", text: "Einkauf im EU-Ausland" },
+      {
+        type: "p",
+        text: "Kaufst du als Unternehmer Ware bei Händlern in anderen EU-Ländern ein, gelten besondere Regeln für den innergemeinschaftlichen Erwerb. Mit einer Umsatzsteuer-Identifikationsnummer kann der Lieferant unter Voraussetzungen ohne ausländische Umsatzsteuer liefern; die Besteuerung erfolgt dann in Deutschland. Verkaufst du umgekehrt an Privatkunden im EU-Ausland, können ab bestimmten Schwellen die Regeln des One-Stop-Shop-Verfahrens (OSS) relevant werden. Beides solltest du vor dem ersten grenzüberschreitenden Geschäft mit deiner Steuerberatung klären.",
+      },
       { type: "h2", text: "Buchhaltung: Was du von Anfang an sammeln solltest" },
       {
         type: "ul",
@@ -352,7 +366,7 @@ export const ARTICLES: Article[] = [
     slug: "insolvenzversteigerung-ablauf",
     title: "Insolvenzversteigerung: Ablauf, Aufgeld & Tipps 2026",
     description:
-      "Insolvenzmasse ersteigern: So läuft eine Insolvenzversteigerung ab, was Aufgeld und Abholung kosten und wie du dein Maximalgebot mit Gewinnpuffer festlegst.",
+      "Insolvenzmasse ersteigern: So läuft eine Insolvenzversteigerung ab, was Aufgeld und Abholung kosten und wie du dein Maximalgebot mit Puffer festlegst.",
     h1: "Insolvenzversteigerung: Ablauf, Kosten und Tipps zum Ersteigern",
     intro:
       "Bei einer Insolvenzversteigerung verkauft ein vom Insolvenzverwalter beauftragter Verwerter das Inventar eines insolventen Unternehmens, meist online an den Höchstbietenden. Zum Zuschlag kommen häufig 15–20 % Aufgeld plus Umsatzsteuer sowie Abholkosten hinzu, und die Ware wird typischerweise „gekauft wie gesehen“ ohne Gewährleistung verkauft. Gewinn macht, wer vorher besichtigt, alle Nebenkosten einrechnet und ein festes Maximalgebot setzt.",
@@ -477,6 +491,30 @@ export const ARTICLES: Article[] = [
           "**Fristen ernst nehmen** – wer nicht fristgerecht zahlt oder abholt, riskiert Kosten und Rücktritt.",
         ],
       },
+      { type: "h2", text: "Welche Lose sich für den Weiterverkauf eignen" },
+      {
+        type: "p",
+        text: "Nicht jedes günstige Los ist ein gutes Arbitrage-Objekt. Am besten funktionieren Positionen, deren Wiederverkaufswert du anhand vergleichbarer Angebote zuverlässig einschätzen kannst, und die sich ohne großen Aufwand einzeln verkaufen lassen.",
+      },
+      {
+        type: "table",
+        head: ["Los-Typ", "Eignung", "Worauf achten"],
+        rows: [
+          ["Markenwerkzeug, Elektrowerkzeug", "oft gut", "Akkus, Ladegeräte, Funktion prüfen"],
+          ["IT und Büroelektronik", "gut bei aktuellen Modellen", "Datenträger, Lizenzen, Netzteile"],
+          ["Neuware aus Warenbeständen", "gut", "Vollständigkeit, Originalverpackung, Markenrechte"],
+          ["Büromöbel", "eher regional", "Transport und Lagerplatz sind teuer"],
+          ["Großmaschinen", "nur mit Erfahrung", "Demontage, Prüfpflichten, Spedition"],
+        ],
+      },
+      {
+        type: "p",
+        text: "Gemischte Lose („Konvolut“) können lukrativ sein, weil einzelne Teile mehr wert sind als das ganze Paket. Sie bedeuten aber auch mehr Arbeit: sortieren, prüfen, fotografieren, einzeln einstellen. Rechne diesen Aufwand ehrlich mit ein und setze für den Rest, der sich nicht lohnt, einen Sammelverkauf oder die Entsorgung an.",
+      },
+      {
+        type: "p",
+        text: "Achte außerdem auf das Auktionsende. Viele Online-Auktionen eines Verwerters enden gestaffelt innerhalb weniger Stunden. Wer auf mehrere Lose bietet, sollte vorher festlegen, wie viel er insgesamt maximal ausgeben und abholen kann – sonst gewinnst du am Ende mehr Lose, als du transportieren oder finanzieren kannst.",
+      },
       { type: "h2", text: "Tipps für Einsteiger" },
       {
         type: "table",
@@ -522,5 +560,540 @@ export const ARTICLES: Article[] = [
       },
     ],
     related: ["insolvenzmasse-kaufen", "arbitrage-software", "reselling-tool"],
+  },
+
+  // ───────────────────────────────────────────────────────────── 4
+  {
+    slug: "reselling-gewinn-berechnen",
+    title: "Reselling Gewinn berechnen: Break-even, Marge, ROI",
+    description:
+      "Reselling-Gewinn richtig berechnen: Formeln für Break-even, Marge und ROI inklusive eBay-Gebühren, Versand und Umsatzsteuer – mit Rechenbeispielen.",
+    h1: "Reselling-Gewinn berechnen: So weißt du vor dem Kauf, ob es sich lohnt",
+    intro:
+      "Dein Reselling-Gewinn ist der Verkaufspreis minus Einkaufspreis, Marktplatzgebühren, Versand, Verpackung und – falls du regelbesteuert bist – die abzuführende Umsatzsteuer. Ob sich ein Weiterverkauf lohnt, zeigt der Break-even-Preis: der Verkaufspreis, ab dem du nach allen Kosten bei null landest. Liegt der realistische Marktpreis deutlich darüber, ist der Deal interessant.",
+    keywords: [
+      "reselling gewinn berechnen",
+      "break even berechnen ebay",
+      "lohnt sich weiterverkauf",
+      "marge berechnen",
+      "roi berechnen reselling",
+      "ebay gewinn berechnen",
+    ],
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    readingMinutes: 7,
+    sections: [
+      { type: "h2", text: "Die Grundformel für den Reselling-Gewinn" },
+      {
+        type: "p",
+        text: "**Gewinn = Verkaufspreis − Marktplatzgebühren − Versand − Verpackung − Einkaufspreis − Umsatzsteuer-Zahllast**",
+      },
+      {
+        type: "p",
+        text: "Klingt einfach, aber in der Praxis wird fast immer etwas vergessen. Die häufigsten Lücken: Die Verkaufsprovision wird oft auch auf die Versandkosten berechnet, die der Käufer zahlt. Verpackung, Retouren und Zahlungsgebühren fehlen in der Rechnung. Und wer regelbesteuert ist, vergisst, dass ein Teil des Verkaufspreises gar nicht ihm gehört, sondern dem Finanzamt.",
+      },
+      {
+        type: "table",
+        head: ["Kostenblock", "Was dazugehört", "Oft vergessen"],
+        rows: [
+          ["Einkauf", "Kaufpreis, ggf. Versand zu dir", "Gutscheine erst nach Kauf gutgeschrieben"],
+          ["Marktplatz", "Verkaufsprovision, Fixgebühr pro Bestellung", "Provision auf Versandanteil, Anzeigenkosten"],
+          ["Versand", "Porto, Versicherung", "Übergröße, Nachporto"],
+          ["Verpackung", "Karton, Polster, Klebeband", "bei vielen Sendungen spürbar"],
+          ["Steuern", "Umsatzsteuer bei Regelbesteuerung", "Einkommensteuer auf den Gewinn"],
+          ["Risiko", "Retouren, Beschädigung, Preisverfall", "gebundenes Kapital"],
+        ],
+      },
+      { type: "h2", text: "Marge und ROI: Zwei Kennzahlen, zwei Fragen" },
+      {
+        type: "ul",
+        items: [
+          "**Marge** = Gewinn ÷ Verkaufspreis. Sie beantwortet: Wie viel vom Umsatz bleibt hängen?",
+          "**ROI (Return on Investment)** = Gewinn ÷ Einkaufspreis. Er beantwortet: Wie gut verzinst sich mein eingesetztes Kapital?",
+        ],
+      },
+      {
+        type: "p",
+        text: "Beispiel: 20 € Gewinn bei 100 € Verkaufspreis und 60 € Einkauf ergeben 20 % Marge und 33,3 % ROI. Für Reseller ist der ROI oft aussagekräftiger, weil Kapital der Engpass ist. Noch besser ist es, den ROI mit der **Verkaufsdauer** zu verbinden: 15 % ROI in einer Woche schlagen 30 % ROI in drei Monaten, wenn du das Geld mehrfach umschlagen kannst.",
+      },
+      { type: "h2", text: "Break-even berechnen (eBay-Beispiel)" },
+      {
+        type: "p",
+        text: "Weil die Verkaufsprovision prozentual vom Verkaufspreis abhängt, kannst du den Break-even nicht einfach durch Addieren ermitteln. Die Formel lautet:",
+      },
+      {
+        type: "p",
+        text: "**Break-even-Preis = (Einkauf + Versand + Verpackung + Fixgebühr) ÷ (1 − Provisionssatz)**",
+      },
+      {
+        type: "p",
+        text: "**Beispielrechnung mit 11 % + 0,35 €** (die echten eBay-Sätze hängen von Kategorie und Konditionen ab – mehr im Ratgeber [eBay-Gebühren für Reseller](/ratgeber/ebay-gebuehren-reselling/)): Einkauf 40,00 €, Versand 4,99 €, Verpackung 0,60 €, Verkauf versandkostenfrei, Kleinunternehmer.",
+      },
+      {
+        type: "table",
+        head: ["Schritt", "Rechnung", "Ergebnis"],
+        rows: [
+          ["Fixe Kosten addieren", "40,00 + 4,99 + 0,60 + 0,35", "45,94 €"],
+          ["Durch (1 − 0,11) teilen", "45,94 ÷ 0,89", "51,62 €"],
+          ["Probe: Provision", "51,62 × 11 % + 0,35", "6,03 €"],
+          ["Probe: Rest", "51,62 − 6,03 − 4,99 − 0,60 − 40,00", "0,00 €"],
+        ],
+      },
+      {
+        type: "p",
+        text: "Unter 51,62 € machst du Verlust. Willst du mindestens 5 € Gewinn, brauchst du (45,94 + 5) ÷ 0,89 = **57,24 €** Verkaufspreis. Liegen die verkauften Angebote stabil bei 65 €, hast du Puffer; schwanken sie zwischen 50 und 60 €, ist der Deal zu knapp.",
+      },
+      {
+        type: "tip",
+        title: "Mindestgewinn statt nur Break-even",
+        text: "Break-even heißt: Du arbeitest umsonst. Lege eine feste Untergrenze fest, zum Beispiel den höheren Wert aus 5 € oder 5 % des Preises. So deckst du auch Zeitaufwand und kleine Ausfälle ab.",
+      },
+      { type: "h2", text: "Mit Umsatzsteuer rechnen: Kleinunternehmer vs. Regelbesteuerung" },
+      {
+        type: "p",
+        text: "Als **Kleinunternehmer** weist du keine Umsatzsteuer aus und rechnest mit Bruttopreisen. Bist du **regelbesteuert**, steckt im Verkaufspreis 19 % Umsatzsteuer, die du abführen musst – dafür bekommst du die Vorsteuer aus deinem Einkauf zurück. Du rechnest dann am einfachsten mit Nettobeträgen.",
+      },
+      {
+        type: "p",
+        text: "Beispiel: Einkauf 50,00 € brutto, Verkauf 79,00 € brutto, Versand 4,99 €, Gebühren nach Beispielsatz 11 % + 0,35 € = 9,04 € (vereinfacht ohne Vorsteuer auf Gebühren und Versand):",
+      },
+      {
+        type: "table",
+        head: ["Position", "Kleinunternehmer", "Regelbesteuert (netto)"],
+        rows: [
+          ["Verkaufspreis", "79,00 €", "66,39 €"],
+          ["Einkauf", "− 50,00 €", "− 42,02 €"],
+          ["Gebühren", "− 9,04 €", "− 9,04 €"],
+          ["Versand", "− 4,99 €", "− 4,99 €"],
+          ["**Gewinn**", "**14,97 €**", "**10,34 €**"],
+        ],
+      },
+      {
+        type: "p",
+        text: "Der Unterschied entsteht, weil bei Regelbesteuerung die Umsatzsteuer auf die Wertschöpfung (hier 79 € − 50 €) abgeführt wird. In der Praxis verringert der Vorsteuerabzug auf Gebühren und Versand diesen Abstand etwas. Bei Gebrauchtware von Privatpersonen kann die Differenzbesteuerung helfen – Details im Ratgeber [Reselling: Gewerbe und Steuern](/ratgeber/reselling-gewerbe-steuern/).",
+      },
+      { type: "h2", text: "Lohnt sich der Weiterverkauf? Die Checkliste" },
+      {
+        type: "ol",
+        items: [
+          "**Realistischer Verkaufspreis:** Median der verkauften Angebote der letzten Wochen, nicht der höchste Angebotspreis.",
+          "**Break-even und Mindestgewinn** berechnet – inklusive Provision auf den Versandanteil.",
+          "**Verkaufsgeschwindigkeit:** Wie viele Einheiten wurden zuletzt verkauft, wie viele sind aktuell gelistet?",
+          "**Preistrend:** Steigt, fällt oder schwankt der Preis? Droht ein Restock oder Nachfolgemodell?",
+          "**Risiken:** Fälschungsgefahr, Markenbeschränkungen, hohe Retourenquote in der Kategorie.",
+          "**Kapitalbindung:** Kannst du das Geld entbehren, falls der Verkauf länger dauert?",
+        ],
+      },
+      { type: "h2", text: "Den realistischen Verkaufspreis ermitteln" },
+      {
+        type: "p",
+        text: "Die beste Formel hilft nichts, wenn der angenommene Verkaufspreis falsch ist. Nutze deshalb **verkaufte Angebote** als Basis, nicht aktive. Aktive Angebote zeigen, was Verkäufer gern hätten; verkaufte Angebote zeigen, was Käufer tatsächlich zahlen. Achte dabei auf gleichen Zustand (neu, wie neu, gebraucht), gleiche Variante und vergleichbare Versandkosten.",
+      },
+      {
+        type: "ul",
+        items: [
+          "**Median statt Durchschnitt:** Einzelne Ausreißer nach oben oder unten verzerren den Mittelwert.",
+          "**Zeitraum begrenzen:** Verkäufe der letzten Wochen sind aussagekräftiger als die der letzten Monate.",
+          "**Konkurrenz zählen:** Viele aktive Angebote bei wenigen Verkäufen drücken den Preis, wenn du schnell verkaufen willst.",
+          "**Sicherheitsabschlag:** Rechne lieber mit einem Preis etwas unter dem Median.",
+        ],
+      },
+      { type: "h3", text: "Sensitivität: Was passiert, wenn der Preis fällt?" },
+      {
+        type: "p",
+        text: "Mit dem Beispiel von oben (Einkauf 40 €, Break-even 51,62 €) siehst du, wie empfindlich der Gewinn auf den Verkaufspreis reagiert – jeder Euro weniger kostet dich wegen der Provision nur 0,89 € Gewinn, aber er kostet ihn trotzdem:",
+      },
+      {
+        type: "table",
+        head: ["Verkaufspreis", "Gebühren (11 % + 0,35 €)", "Gewinn"],
+        rows: [
+          ["65,00 €", "7,50 €", "11,91 €"],
+          ["60,00 €", "6,95 €", "7,46 €"],
+          ["55,00 €", "6,40 €", "3,01 €"],
+          ["50,00 €", "5,85 €", "− 1,44 €"],
+        ],
+      },
+      { type: "h2", text: "Von der Rechnung zur Wahrscheinlichkeit" },
+      {
+        type: "p",
+        text: "Eine einzelne Gewinnzahl täuscht Sicherheit vor. Marktpreise streuen, und nicht jeder Artikel verkauft zum Durchschnittspreis. Arbitrage Radar rechnet deshalb nicht nur den Break-even inklusive Gebühren, Versand und Steuern, sondern schätzt aus aktuellen Marktangeboten die **Wahrscheinlichkeit**, dass du mindestens den Break-even plus einen Mindestgewinn von 5 € bzw. 5 % (der höhere Wert zählt) erzielst. Gewichtet wird mit der Sell-Through-Rate der letzten 30 Tage; angezeigt wird das Ergebnis als Prozentwert zwischen 1 und 97 % auf einem Balken von Rot bis Grün.",
+      },
+      {
+        type: "p",
+        text: "So siehst du auf einen Blick, ob ein Deal solide oder nur auf dem Papier gut ist. Probier es im [Test-Dashboard](/demo/) mit den Top-3-Chancen jeder Kategorie aus – ohne Anmeldung. Mehr zur Kalkulation steht auf der Seite [Reselling-Tool](/reselling-tool/), einen Überblick über alle Funktionen bietet die Seite [Arbitrage-Software](/arbitrage-software/).",
+      },
+      {
+        type: "cta",
+        title: "Break-even und Gewinnchance für jeden Deal",
+        text: "Arbitrage Radar rechnet Gebühren, Versand und Steuern automatisch ein, ermittelt den Zielpreis aus Live-Marktangeboten und zeigt dir die Gewinnwahrscheinlichkeit in Prozent – bevor du einkaufst.",
+      },
+    ],
+    faq: [
+      {
+        q: "Wie berechne ich den Break-even bei eBay?",
+        a: "Addiere Einkaufspreis, Versand, Verpackung und die Fixgebühr pro Bestellung und teile die Summe durch (1 − Provisionssatz). Das Ergebnis ist der Verkaufspreis, bei dem du genau bei null landest. Prüfe die aktuellen Provisionssätze deiner Kategorie auf der Gebührenseite von eBay.",
+      },
+      {
+        q: "Was ist der Unterschied zwischen Marge und ROI?",
+        a: "Die Marge setzt den Gewinn ins Verhältnis zum Verkaufspreis, der ROI ins Verhältnis zum Einkaufspreis. 20 € Gewinn bei 100 € Verkauf und 60 € Einkauf sind 20 % Marge und rund 33 % ROI.",
+      },
+      {
+        q: "Ab wann lohnt sich ein Weiterverkauf?",
+        a: "Wenn der realistische Verkaufspreis deutlich über dem Break-even liegt und der Artikel zügig verkauft. Viele Reseller setzen sich einen Mindestgewinn pro Artikel, etwa 5 € oder 5 %, damit Zeitaufwand und kleine Ausfälle gedeckt sind.",
+      },
+      {
+        q: "Muss ich die Umsatzsteuer in die Gewinnberechnung einbeziehen?",
+        a: "Ja, wenn du regelbesteuert bist: Dann gehören 19 % des Bruttoverkaufspreises dem Finanzamt, während du die Vorsteuer aus Einkäufen zurückbekommst. Als Kleinunternehmer fällt keine Umsatzsteuer an, du kannst aber auch keine Vorsteuer abziehen.",
+      },
+      {
+        q: "Berechnet eBay die Provision auch auf die Versandkosten?",
+        a: "Ja, bei gewerblichen Verkäufern bezieht sich die Verkaufsprovision in der Regel auf den Gesamtbetrag inklusive Versand. Rechne den Versandanteil deshalb immer mit ein.",
+      },
+    ],
+    related: ["reselling-tool", "arbitrage-software", "amazon-ebay-arbitrage"],
+  },
+
+  // ───────────────────────────────────────────────────────────── 5
+  {
+    slug: "limitierte-editionen-wiederverkaufen",
+    title: "Limitierte Editionen wiederverkaufen: Chancen & Risiken",
+    description:
+      "Sneaker resell, LEGO-Wertsteigerung, Konsole vorbestellen und weiterverkaufen: Wann sich limitierte Editionen lohnen und welche Risiken du einplanen musst.",
+    h1: "Limitierte Editionen wiederverkaufen: Sneaker, LEGO, Konsolen und mehr",
+    intro:
+      "Limitierte Editionen lassen sich mit Gewinn weiterverkaufen, wenn die Nachfrage das Angebot zum Erscheinungstermin deutlich übersteigt – typisch bei bestimmten Sneaker-Releases, auslaufenden LEGO-Sets oder neuen Konsolen. Der Aufschlag ist aber oft nur vorübergehend: Restocks, Nachproduktionen und Fälschungen können Preise schnell drücken. Wer vorher Break-even, Verkaufszeitpunkt und Plattformregeln kennt, reduziert das Risiko deutlich.",
+    keywords: [
+      "limitierte editionen wiederverkaufen",
+      "sneaker resell",
+      "lego wertsteigerung",
+      "konsole vorbestellen weiterverkaufen",
+      "limited edition resell",
+      "vorbestellung weiterverkaufen",
+    ],
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    readingMinutes: 7,
+    sections: [
+      { type: "h2", text: "Warum limitierte Produkte im Preis steigen können" },
+      {
+        type: "p",
+        text: "Der Mechanismus ist simpel: Ein Hersteller legt eine begrenzte Menge zu einem festen Preis (UVP) auf, die Nachfrage ist größer, und wer leer ausgeht, zahlt auf dem Sekundärmarkt mehr. Der Aufschlag hängt davon ab, **wie knapp** das Produkt tatsächlich ist und **wie lange** diese Knappheit anhält. Genau hier liegt das Risiko: Ob eine Edition wirklich limitiert bleibt, weißt du beim Kauf oft nicht sicher.",
+      },
+      {
+        type: "table",
+        head: ["Kategorie", "Typischer Gewinnzeitpunkt", "Hauptrisiko"],
+        rows: [
+          ["Sneaker (limitierte Releases)", "kurz nach Release", "Restock, Fälschungen, Raffle-Glück"],
+          ["LEGO (auslaufende Sets)", "Monate bis Jahre nach Produktionsende", "Lager, Kapitalbindung, Neuauflagen"],
+          ["Konsolen und Hardware", "Launch-Phase bei knapper Ware", "schneller Preisverfall bei Nachlieferung"],
+          ["Sammelkarten, Collector's Editions", "Release oder später", "Hype-Zyklen, Zustand, Fälschungen"],
+          ["Event-Tickets", "vor dem Event", "Weiterverkaufsverbote, Personalisierung"],
+        ],
+      },
+      { type: "h2", text: "Sneaker resell: Raffles, Release und Echtheit" },
+      {
+        type: "p",
+        text: "Begehrte Sneaker-Releases werden häufig per Raffle (Verlosung) oder über Apps verkauft – an Ware zu kommen ist also selbst schon Glückssache. Hast du ein Paar, ist der Verkaufszeitpunkt entscheidend: Bei manchen Modellen ist der Preis direkt nach Release am höchsten, bei anderen steigt er, wenn die Größenläufe ausverkauft sind.",
+      },
+      {
+        type: "ul",
+        items: [
+          "**Echtheitsprüfung:** Plattformen wie StockX prüfen Ware vor dem Versand an den Käufer; eBay bietet in bestimmten Kategorien und Preisklassen eine Echtheitsprüfung an. Das schafft Vertrauen und erleichtert höhere Preise.",
+          "**Fälschungsrisiko beim Einkauf:** Kaufe nur bei offiziellen Händlern. Wer Ware aus zweiter Hand zum Weiterverkauf einkauft, trägt das Risiko, Fälschungen zu verkaufen – das kann rechtliche Folgen haben.",
+          "**Größe zählt:** Gängige Herrengrößen verkaufen oft schneller, Randgrößen können deutlich abweichen.",
+        ],
+      },
+      { type: "h3", text: "Rechenbeispiel Sneaker" },
+      {
+        type: "p",
+        text: "Retail-Preis 180 €, erwarteter Verkaufspreis 260 €. **Beispielannahme: 10 % Gesamtgebühren** der Verkaufsplattform (Transaktions- und Zahlungsgebühr; die echten Sätze variieren je Plattform und Verkäuferstufe), Versand 5 €: 260 € − 26 € − 5 € − 180 € = **49 € Gewinn**. Kommt kurz darauf ein Restock und der Marktpreis fällt auf 210 €, bleiben nur noch 210 − 21 − 5 − 180 = **4 €**.",
+      },
+      { type: "h2", text: "LEGO: Wertsteigerung nach Produktionsende" },
+      {
+        type: "p",
+        text: "Bei LEGO entsteht ein Aufschlag typischerweise nicht zum Release, sondern nach dem Produktionsende (EOL, „End of Life“), wenn der Handel leer ist. Das bedeutet aber: Kapital und Lagerplatz sind oft über ein bis mehrere Jahre gebunden, und nicht jedes Set steigt. Neuauflagen ähnlicher Modelle können den Wert älterer Sets drücken.",
+      },
+      {
+        type: "p",
+        text: "Beispiel: Ein Set wird im Abverkauf für 79,99 € gekauft und zwei Jahre später für 140 € auf eBay verkauft. **Beispielrechnung mit 11 % + 0,35 €** Gebühren (15,75 €) und 6,99 € Versand: 140 − 15,75 − 6,99 − 79,99 = **37,27 € Gewinn**. Auf zwei Jahre gerechnet ist das ein ROI von rund 47 % – also gut 20 % pro Jahr vor Steuern, sofern das Set unbeschädigt bleibt und der Preis tatsächlich steigt.",
+      },
+      {
+        type: "tip",
+        title: "Originalverpackung ist Teil des Werts",
+        text: "Bei Sammlerware entscheiden Karton und Zustand mit über den Preis. Lagere trocken, lichtgeschützt und gestapelt nur so, dass nichts eingedrückt wird.",
+      },
+      { type: "h2", text: "Konsole vorbestellen und weiterverkaufen" },
+      {
+        type: "p",
+        text: "Bei neuen Konsolen und begehrter Hardware ist die Ware zum Launch oft knapp. Wer vorbestellt hat, kann in dieser Phase über UVP verkaufen. Sobald die Händler regelmäßig nachliefern, nähert sich der Preis meist schnell wieder der UVP an. Das Zeitfenster ist also kurz.",
+      },
+      {
+        type: "table",
+        head: ["Position", "Betrag"],
+        rows: [
+          ["Vorbestellpreis (UVP)", "499,99 €"],
+          ["Verkaufspreis in der Launch-Woche (Annahme)", "649,00 €"],
+          ["eBay-Gebühren (Beispiel 11 % + 0,35 €)", "− 71,74 €"],
+          ["Versicherter Versand", "− 9,99 €"],
+          ["**Gewinn**", "**67,28 €**"],
+          ["Break-even-Preis: (499,99 + 9,99 + 0,35) ÷ 0,89", "573,40 €"],
+        ],
+      },
+      {
+        type: "p",
+        text: "Fällt der Marktpreis unter 573,40 €, verlierst du Geld. Achte außerdem darauf, dass Händler Vorbestellungen stornieren oder Mengen pro Kunde begrenzen können. Mehr zu Strategien rund um Vorbestellungen findest du auf der Seite [Vorbestellungs-Arbitrage](/vorbestellung-arbitrage/), die Formeln im Ratgeber [Reselling-Gewinn berechnen](/ratgeber/reselling-gewinn-berechnen/).",
+      },
+      { type: "h2", text: "Regeln und Grenzen: Was nicht erlaubt ist" },
+      {
+        type: "ul",
+        items: [
+          "**Event-Tickets:** Viele Veranstalter personalisieren Tickets oder verbieten den Weiterverkauf über dem Originalpreis in ihren AGB. Solche Tickets können ungültig werden. Auch Marktplätze beschränken den Ticketverkauf teilweise.",
+          "**Plattformregeln:** Amazon und eBay haben eigene Richtlinien zu überhöhten Preisen und zu bestimmten Produkten; in Ausnahmesituationen werden Angebote mit stark überhöhten Preisen entfernt.",
+          "**Händler-AGB:** Manche Shops begrenzen Stückzahlen oder schließen Wiederverkäufer aus und stornieren entsprechende Bestellungen.",
+          "**Bots:** Automatisierte Kaufsoftware verstößt gegen die Nutzungsbedingungen vieler Shops und kann zu Kontosperren führen.",
+        ],
+      },
+      { type: "h2", text: "Steuern bei limitierten Editionen" },
+      {
+        type: "p",
+        text: "Wer gezielt limitierte Produkte kauft, um sie weiterzuverkaufen, handelt in aller Regel gewerblich – unabhängig davon, ob die Haltedauer über einem Jahr liegt. Die Ein-Jahres-Regel für private Veräußerungsgeschäfte greift nur bei echten Privatverkäufen, etwa wenn du eine über Jahre privat aufgebaute Sammlung auflöst. Details erklärt der Ratgeber [Reselling: Gewerbe und Steuern](/ratgeber/reselling-gewerbe-steuern/); für deinen Einzelfall ist ein Steuerberater die richtige Adresse. Welche Gebühren beim Verkauf auf eBay anfallen, zeigt der Artikel zu [eBay-Gebühren für Reseller](/ratgeber/ebay-gebuehren-reselling/).",
+      },
+      { type: "h2", text: "Der richtige Verkaufszeitpunkt" },
+      {
+        type: "p",
+        text: "Bei limitierten Editionen entscheidet das Timing oft mehr als der Einkaufspreis. Die Preisspitze liegt je nach Kategorie an sehr unterschiedlichen Stellen: Bei Hardware meist in den ersten Tagen und Wochen nach Launch, bei Sneakern je nach Modell direkt nach Release oder nach dem Ausverkauf einzelner Größen, bei LEGO und vielen Sammlerprodukten erst lange nach Produktionsende.",
+      },
+      {
+        type: "p",
+        text: "Lege dir vor dem Kauf eine Ausstiegsregel fest, zum Beispiel: „Verkaufen, sobald der Preis den Zielwert erreicht“ oder „spätestens nach X Wochen verkaufen, auch mit kleinerem Gewinn“. Wer auf den perfekten Moment wartet, verpasst ihn häufig – besonders, wenn ein Hersteller kurzfristig nachproduziert.",
+      },
+      { type: "h2", text: "So reduzierst du das Risiko" },
+      {
+        type: "ol",
+        items: [
+          "Nur kaufen, wenn der aktuelle Marktpreis **deutlich** über dem Break-even liegt – nicht nur knapp.",
+          "Den Verkaufszeitpunkt vorher festlegen und Hype-Phasen nicht aussitzen.",
+          "Stückzahlen klein halten, solange unklar ist, ob ein Restock kommt.",
+          "Echtheit und Zustand dokumentieren: Fotos, Rechnung, Originalverpackung.",
+          "Preisentwicklung und Sell-Through regelmäßig beobachten statt nach Bauchgefühl zu entscheiden.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Arbitrage Radar zeigt Vorbestellungs-Chancen mit Zielpreis aus aktuellen Marktangeboten, Break-even und einer Gewinnwahrscheinlichkeit, die mit der Sell-Through-Rate der letzten 30 Tage gewichtet ist. Im [Test-Dashboard](/demo/) siehst du die drei besten Chancen jeder Kategorie ohne Anmeldung.",
+      },
+      {
+        type: "cta",
+        title: "Vorbestellungen mit Gewinnchance erkennen",
+        text: "Arbitrage Radar vergleicht Vorbestellpreise mit dem Live-Markt und zeigt dir für jede Chance Break-even, Zielpreis und die Wahrscheinlichkeit, mit Gewinn zu verkaufen – von Rot bis Grün.",
+      },
+    ],
+    faq: [
+      {
+        q: "Lohnt sich Sneaker-Resell noch?",
+        a: "Bei einzelnen gefragten Releases kann es sich lohnen, bei vielen Modellen liegt der Wiederverkaufspreis aber nahe oder unter dem Retail-Preis plus Gebühren. Entscheidend sind Modell, Größe und Verkaufszeitpunkt. Rechne vorher den Break-even inklusive Plattformgebühren.",
+      },
+      {
+        q: "Welche LEGO-Sets steigen im Wert?",
+        a: "Häufig genannt werden beliebte, auslaufende Sets mit großer Fangemeinde, eine Garantie gibt es aber nicht. Preissteigerungen zeigen sich typischerweise erst nach Produktionsende und hängen stark vom Zustand der Verpackung ab.",
+      },
+      {
+        q: "Darf ich eine vorbestellte Konsole teurer weiterverkaufen?",
+        a: "Grundsätzlich ja, der Weiterverkauf regulär gekaufter Ware ist erlaubt. Händler können aber Stückzahlen begrenzen oder Bestellungen von Wiederverkäufern stornieren, und Marktplätze können extrem überhöhte Preise in Ausnahmesituationen entfernen. Wer das regelmäßig macht, braucht in der Regel ein Gewerbe.",
+      },
+      {
+        q: "Darf ich Konzerttickets teurer weiterverkaufen?",
+        a: "Das hängt von den Bedingungen des Veranstalters ab. Viele personalisieren Tickets oder verbieten den Weiterverkauf über dem Originalpreis; Verstöße können dazu führen, dass das Ticket ungültig wird. Prüfe die Ticket-AGB, bevor du kaufst.",
+      },
+      {
+        q: "Wie schütze ich mich vor Fälschungen beim Resell?",
+        a: "Kaufe nur bei offiziellen Händlern und bewahre die Rechnung auf. Verkaufe hochpreisige Ware bevorzugt über Plattformen mit Echtheitsprüfung, etwa StockX oder die Echtheitsprüfung von eBay in den unterstützten Kategorien.",
+      },
+    ],
+    related: ["vorbestellung-arbitrage", "amazon-ebay-arbitrage", "reselling-tool"],
+  },
+
+  // ───────────────────────────────────────────────────────────── 6
+  {
+    slug: "ebay-gebuehren-reselling",
+    title: "eBay Gebühren gewerblich 2026: Provision berechnen",
+    description:
+      "eBay-Gebühren für gewerbliche Verkäufer erklärt: Verkaufsprovision, Fixgebühr, Anzeigenkosten und Shop-Abo – mit Beispielrechnung und Tipps für Reseller.",
+    h1: "eBay-Gebühren für gewerbliche Verkäufer: So berechnest du die Provision",
+    intro:
+      "Gewerbliche Verkäufer zahlen auf eBay.de vor allem eine Verkaufsprovision als Prozentsatz vom Gesamtbetrag inklusive Versand sowie eine feste Gebühr pro Bestellung; dazu kommen optional Anzeigenkosten und ein Shop-Abo. Private Verkäufer zahlen seit 2023 in Deutschland in der Regel keine Verkaufsprovision. Die genauen Sätze hängen von Kategorie und Konditionen ab und ändern sich regelmäßig – deshalb erklärt dieser Ratgeber die Bausteine und rechnet mit klar gekennzeichneten Beispielsätzen.",
+    keywords: [
+      "ebay gebühren gewerblich",
+      "ebay verkaufsprovision",
+      "ebay gebühren berechnen",
+      "ebay gebühren 2026",
+      "ebay provision versandkosten",
+      "ebay shop abo",
+    ],
+    published: "2026-10-05",
+    updated: "2026-10-05",
+    readingMinutes: 6,
+    sections: [
+      {
+        type: "tip",
+        title: "Aktuelle Sätze immer bei eBay prüfen",
+        text: "eBay passt Gebühren regelmäßig an, oft je nach Kategorie. Alle Prozentsätze in diesem Artikel sind Beispielwerte zur Veranschaulichung. Verbindlich ist die aktuelle Gebührenübersicht für gewerbliche Verkäufer auf eBay.de.",
+      },
+      { type: "h2", text: "Privat vs. gewerblich: Wer zahlt was?" },
+      {
+        type: "p",
+        text: "Seit 2023 zahlen **private Verkäufer** auf eBay.de für reguläre Verkäufe keine Verkaufsprovision mehr; Kosten entstehen dort im Wesentlichen nur für optionale Zusatzleistungen. **Gewerbliche Verkäufer** zahlen dagegen Provision pro Verkauf. Das verleitet manche dazu, Handelsware über ein Privatkonto zu verkaufen – das ist keine gute Idee: Wer gewerblich handelt, muss sich auch auf eBay als gewerblicher Verkäufer registrieren, mit Impressum, Widerrufsbelehrung und allen Verbraucherrechten. Ab 30 Verkäufen oder 2.000 € Umsatz im Jahr meldet eBay Verkäufer zudem an die Steuerbehörden (DAC7).",
+      },
+      {
+        type: "p",
+        text: "Wann du gewerblich bist und was das steuerlich bedeutet, erklärt der Ratgeber [Reselling: Gewerbe und Steuern](/ratgeber/reselling-gewerbe-steuern/).",
+      },
+      { type: "h2", text: "Die Gebührenbausteine für gewerbliche Verkäufer" },
+      {
+        type: "table",
+        head: ["Baustein", "Wie er berechnet wird", "Pflicht?"],
+        rows: [
+          ["Verkaufsprovision", "Prozentsatz vom Gesamtbetrag inkl. Versand, je nach Kategorie unterschiedlich", "ja, bei Verkauf"],
+          ["Fixgebühr pro Bestellung", "fester Betrag je Bestellung", "ja, bei Verkauf"],
+          ["Anzeigenkosten (Promoted Listings)", "Prozentsatz bei Verkauf über die Anzeige oder Kosten pro Klick", "optional"],
+          ["Shop-Abo", "monatliche Grundgebühr je Shop-Stufe, teils mit Inklusiv-Angeboten und anderen Konditionen", "optional"],
+          ["Angebotsgebühren", "für Angebote über Freikontingent hinaus oder Zusatzoptionen", "teilweise"],
+          ["Internationale Verkäufe", "ggf. zusätzliche Gebühr bei Käufern aus dem Ausland", "situationsabhängig"],
+        ],
+      },
+      { type: "h3", text: "Provision auch auf Versandkosten" },
+      {
+        type: "p",
+        text: "Ein häufig übersehener Punkt: Die Verkaufsprovision bezieht sich auf den **Gesamtbetrag**, den der Käufer zahlt – also Artikelpreis plus Versandkosten (und je nach Regelung weitere Bestandteile). Wer niedrige Artikelpreise mit hohen Versandkosten kombiniert, spart deshalb keine Provision.",
+      },
+      { type: "h3", text: "Staffelungen und Höchstbeträge" },
+      {
+        type: "p",
+        text: "In vielen Kategorien gilt der Provisionssatz nur bis zu einem bestimmten Betrag; für den darüber liegenden Teil des Verkaufspreises kann ein niedrigerer Satz gelten. Bei hochpreisigen Artikeln lohnt es sich daher besonders, die aktuelle Staffel deiner Kategorie nachzuschlagen.",
+      },
+      { type: "h2", text: "eBay-Gebühren berechnen: Beispielrechnung" },
+      {
+        type: "p",
+        text: "**Beispielrechnung mit 11 % + 0,35 €** und optionaler Anzeige mit 3 % Anzeigensatz: Ein Artikel wird für 120,00 € plus 6,99 € Versand verkauft, der Käufer zahlt also 126,99 €.",
+      },
+      {
+        type: "table",
+        head: ["Position", "Rechnung", "Betrag"],
+        rows: [
+          ["Gesamtbetrag", "120,00 + 6,99", "126,99 €"],
+          ["Verkaufsprovision (Beispiel 11 %)", "126,99 × 0,11", "13,97 €"],
+          ["Fixgebühr (Beispiel)", "pro Bestellung", "0,35 €"],
+          ["Anzeigenkosten (Beispiel 3 %)", "126,99 × 0,03", "3,81 €"],
+          ["**Gebühren gesamt**", "", "**18,13 €**"],
+          ["Anteil am Gesamtbetrag", "18,13 ÷ 126,99", "ca. 14,3 %"],
+        ],
+      },
+      {
+        type: "p",
+        text: "Ohne Anzeige wären es 14,32 € bzw. rund 11,3 %. Die Anzeige lohnt sich also nur, wenn sie den Verkauf spürbar beschleunigt oder einen höheren Preis ermöglicht.",
+      },
+      { type: "h3", text: "Wie die Fixgebühr bei kleinen Preisen wirkt" },
+      {
+        type: "p",
+        text: "Weil die Fixgebühr unabhängig vom Preis ist, belastet sie günstige Artikel prozentual stärker. Mit den Beispielsätzen 11 % + 0,35 € (Preise inkl. Versand):",
+      },
+      {
+        type: "table",
+        head: ["Gesamtbetrag", "Provision 11 %", "Fixgebühr", "Gebühren gesamt", "effektiver Satz"],
+        rows: [
+          ["20,00 €", "2,20 €", "0,35 €", "2,55 €", "12,8 %"],
+          ["50,00 €", "5,50 €", "0,35 €", "5,85 €", "11,7 %"],
+          ["100,00 €", "11,00 €", "0,35 €", "11,35 €", "11,4 %"],
+          ["250,00 €", "27,50 €", "0,35 €", "27,85 €", "11,1 %"],
+        ],
+      },
+      {
+        type: "tip",
+        title: "Kleinteile bündeln",
+        text: "Bei sehr günstigen Artikeln fressen Fixgebühr und Versand schnell die Marge. Bündel mehrere Teile zu einem Angebot oder setze eine Mindestpreisgrenze für deine Einkäufe.",
+      },
+      { type: "h3", text: "Gebühren in der Buchhaltung" },
+      {
+        type: "p",
+        text: "eBay stellt gewerblichen Verkäufern regelmäßig Rechnungen über die angefallenen Gebühren aus. Diese Gebühren sind für dich Betriebsausgaben und mindern deinen Gewinn. Bist du regelbesteuert, prüfe auf der Rechnung, ob und wie Umsatzsteuer ausgewiesen ist – davon hängt ab, ob du Vorsteuer ziehen kannst oder die Umsatzsteuer selbst schuldest. Lade die Rechnungen monatlich herunter und lege sie zu deinen Belegen, damit die Einnahmen-Überschuss-Rechnung am Jahresende vollständig ist.",
+      },
+      { type: "h2", text: "Lohnt sich ein eBay-Shop-Abo?" },
+      {
+        type: "p",
+        text: "Ein Shop-Abo kostet eine monatliche Grundgebühr und bietet je nach Stufe Inklusiv-Angebote, Marketing-Werkzeuge und teilweise andere Gebührenkonditionen. Ob es sich rechnet, hängt von deiner Anzahl an Angeboten und Verkäufen ab. Faustregel: Vergleiche die Abo-Kosten mit den Angebotsgebühren und Konditionen, die du ohne Abo hättest – auf Basis deiner tatsächlichen Monatszahlen, nicht der erhofften.",
+      },
+      { type: "h2", text: "So senkst du deine Gebührenlast" },
+      {
+        type: "ul",
+        items: [
+          "**Kategorie korrekt wählen:** Provisionssätze unterscheiden sich je Kategorie; eine falsche Kategorie kann teurer sein und schadet zudem der Auffindbarkeit.",
+          "**Anzeigen gezielt einsetzen:** nur für Artikel mit genug Marge oder langsamem Abverkauf.",
+          "**Versand realistisch kalkulieren:** Überhöhte Versandkosten erhöhen die Provision und schrecken Käufer ab.",
+          "**Verkäuferstandards halten:** Bei schlechten Verkäuferbewertungen kann eBay zusätzliche Gebühren erheben.",
+          "**Gebührenrechnungen auswerten:** Monatlich prüfen, welche Kosten pro Artikel tatsächlich angefallen sind.",
+        ],
+      },
+      { type: "h2", text: "Was sonst noch vom Verkaufserlös abgeht" },
+      {
+        type: "p",
+        text: "Neben den eBay-Gebühren gibt es weitere Kosten, die du pro Verkauf einplanen solltest. Sie stehen nicht auf der Gebührenrechnung, schmälern aber genauso deinen Gewinn:",
+      },
+      {
+        type: "ul",
+        items: [
+          "**Versandkosten** inklusive Versicherung für höherpreisige Artikel",
+          "**Verpackungsmaterial** sowie die Kosten für die Teilnahme an einem dualen System nach dem Verpackungsgesetz",
+          "**Retouren:** Als gewerblicher Verkäufer musst du Verbrauchern ein Widerrufsrecht einräumen; Rücksendungen kosten Porto und manchmal Wert",
+          "**Umsatzsteuer**, sofern du nicht Kleinunternehmer bist",
+          "**Währungsumrechnung** bei Auszahlungen in Fremdwährung, falls du international verkaufst",
+        ],
+      },
+      {
+        type: "p",
+        text: "Ein realistischer Blick: Bei vielen Artikeln landen Gebühren, Versand und Verpackung zusammen schnell bei einem spürbaren Anteil des Verkaufspreises. Deshalb sollte die Preisdifferenz zwischen Einkauf und Verkauf deutlich größer sein als die Provision allein.",
+      },
+      { type: "h3", text: "eBay oder Amazon?" },
+      {
+        type: "p",
+        text: "Auch Amazon berechnet gewerblichen Verkäufern Verkaufsgebühren als Prozentsatz vom Verkaufspreis, je nach Kategorie, dazu kommen Kontogebühren und bei Versand durch Amazon (FBA) Lager- und Versandgebühren. Welcher Kanal günstiger ist, hängt vom Produkt ab. Vergleiche deshalb immer den Nettoerlös nach allen Kosten, nicht nur den Provisionssatz.",
+      },
+      { type: "h2", text: "Gebühren in die Kalkulation einbauen" },
+      {
+        type: "p",
+        text: "Gebühren sind nur ein Teil der Rechnung. Wie du daraus den Break-even-Preis und deine Marge ableitest, zeigt der Ratgeber [Reselling-Gewinn berechnen](/ratgeber/reselling-gewinn-berechnen/). Wenn du zwischen eBay und Amazon abwägst, findest du die Unterschiede auf der Seite [Amazon-eBay-Arbitrage](/amazon-ebay-arbitrage/).",
+      },
+      {
+        type: "p",
+        text: "Arbitrage Radar rechnet Marktplatzgebühren, Versand und Steuern automatisch in den Break-even jeder Chance ein. Du verbindest dein eigenes eBay-Konto über die offizielle eBay-Anmeldung (OAuth) und stellst Angebote mit einem Klick ein. Im [Test-Dashboard](/demo/) siehst du ohne Anmeldung, wie das aussieht; ein Konto legst du unter [Registrieren](/registrieren/) an.",
+      },
+      {
+        type: "cta",
+        title: "Gebühren nie wieder vergessen",
+        text: "Arbitrage Radar kalkuliert jeden Deal inklusive Provision, Versand und Steuern, zeigt dir die Gewinnwahrscheinlichkeit und stellt Angebote per Klick in dein eigenes eBay-Konto ein.",
+      },
+    ],
+    faq: [
+      {
+        q: "Wie hoch sind die eBay-Gebühren für gewerbliche Verkäufer?",
+        a: "Sie bestehen aus einer kategorieabhängigen Verkaufsprovision in Prozent vom Gesamtbetrag inklusive Versand und einer Fixgebühr pro Bestellung, dazu optional Anzeigenkosten und ein Shop-Abo. Die aktuellen Sätze ändern sich regelmäßig und stehen auf der Gebührenseite von eBay.de.",
+      },
+      {
+        q: "Zahlen private Verkäufer bei eBay Gebühren?",
+        a: "Private Verkäufer zahlen auf eBay.de seit 2023 für reguläre Verkäufe keine Verkaufsprovision. Kosten können für optionale Zusatzleistungen anfallen. Wer jedoch gewerblich handelt, muss ein gewerbliches Konto nutzen.",
+      },
+      {
+        q: "Berechnet eBay Provision auf die Versandkosten?",
+        a: "Ja, bei gewerblichen Verkäufern wird die Verkaufsprovision auf den Gesamtbetrag erhoben, den der Käufer zahlt, also einschließlich Versand. Hohe Versandkosten senken die Provision deshalb nicht.",
+      },
+      {
+        q: "Wie berechne ich meine eBay-Gebühren?",
+        a: "Multipliziere den Gesamtbetrag inklusive Versand mit dem Provisionssatz deiner Kategorie und addiere die Fixgebühr pro Bestellung. Nutzt du Anzeigen, kommt der Anzeigensatz hinzu. Beispiel mit 11 % + 0,35 €: Bei 100 € Gesamtbetrag sind das 11,35 €.",
+      },
+      {
+        q: "Lohnt sich ein eBay-Shop für Reseller?",
+        a: "Das hängt von deinem Volumen ab. Vergleiche die monatliche Grundgebühr mit den Angebotsgebühren und Konditionen ohne Abo, basierend auf deinen tatsächlichen Verkaufszahlen. Für sehr wenige Angebote lohnt es sich meist nicht.",
+      },
+    ],
+    related: ["amazon-ebay-arbitrage", "reselling-tool", "arbitrage-software"],
   },
 ];
