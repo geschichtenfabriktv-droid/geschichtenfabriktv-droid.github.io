@@ -89,7 +89,7 @@
     const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
     const pr = $('#progress'); if (pr) pr.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
     const hd = $('#header');
-    if (hd) { hd.classList.toggle('solid', y > 40); hd.classList.toggle('hide', y > 500 && y > lastY + 4 && !document.body.classList.contains('menu-open')); if (y < lastY - 4) hd.classList.remove('hide'); }
+    if (hd) { const on = hd.classList.contains('solid'); if (!on && y > 80) hd.classList.add('solid'); else if (on && y < 30) hd.classList.remove('solid'); }
     lastY = y; ticking = false;
   }
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -199,10 +199,10 @@
     IL.arrive && IL.arrive();
     const seen = sessionStorage.getItem('il-seen') || arriving; sessionStorage.setItem('il-seen', '1');
     if (seen) { const l0 = $('#loader'); if (l0) l0.remove(); }
-    const wait = reduce ? 0 : seen ? 250 : 2000;
-    const go = () => setTimeout(finishLoad, wait);
-    if (document.readyState === 'complete') go(); else addEventListener('load', go);
-    setTimeout(finishLoad, 6500); // Sicherheitsnetz bei langsamer Verbindung
+    const wait = reduce ? 0 : seen ? 150 : 700;
+    const hi = $('#hero img'); const imgReady = new Promise((r) => { if (!hi || hi.complete) r(); else { hi.addEventListener('load', r); hi.addEventListener('error', r); } });
+    Promise.all([document.fonts && document.fonts.ready ? document.fonts.ready : 0, imgReady]).then(() => setTimeout(finishLoad, wait));
+    setTimeout(finishLoad, 3500); // Sicherheitsnetz bei langsamer Verbindung
     if (location.hash) setTimeout(() => { const t = $(decodeURIComponent(location.hash)); t && (IL.lenis ? IL.scrollTo(t, { duration: 0.01 }) : t.scrollIntoView()); }, wait + 150);
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', boot) : boot();

@@ -1,9 +1,9 @@
 /* =====================================================================
    Inner Landscapes – Design-System v4
    ===================================================================== */
-@font-face{font-family:"Fraunces";src:url(/fonts/Fraunces.ttf) format("truetype");font-weight:100 900;font-style:normal;font-display:swap}
-@font-face{font-family:"Fraunces";src:url(/fonts/Fraunces-Italic.ttf) format("truetype");font-weight:100 900;font-style:italic;font-display:swap}
-@font-face{font-family:"Inter";src:url(/fonts/Inter.ttf) format("truetype");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(/fonts/Fraunces.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Fraunces";src:url(/fonts/Fraunces-Italic.woff2) format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Inter";src:url(/fonts/Inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
 
 
 :root{
@@ -73,8 +73,8 @@ html.arrive .loader{display:none}
 
 /* ===== Header & Menü ===== */
 .site-header{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--hh);display:flex;align-items:center;justify-content:space-between;padding:0 var(--gut);color:#f6eddd;transition:background .6s,transform .7s var(--ease),height .5s,backdrop-filter .6s}
-.site-header.solid{background:rgba(21,17,14,.84);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);height:64px}
-.site-header.hide{transform:translateY(-100%)}
+.site-header.solid{background:rgba(21,17,14,.88);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3)}
+.site-header.hide{transform:none}
 .brand{display:flex;align-items:center;gap:12px;font:400 21px var(--serif);letter-spacing:.01em}
 .brand svg{width:32px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;overflow:visible}
 .brand svg .dot{fill:var(--ember);stroke:none}
@@ -185,9 +185,9 @@ html.arrive .loader{display:none}
 .chapter-eyebrow{position:absolute;inset:auto 0 22px 0;color:var(--gold);z-index:42;text-align:center;display:block}
 .chapter-eyebrow::before{display:none}
 .pword{align-items:center;justify-content:center;text-align:center;padding:0 var(--gut)}
-.pword::before{background:radial-gradient(60% 55% at 50% 50%,rgba(10,6,5,.5),transparent 75%)}
-.pword b{display:block;font:italic 300 clamp(54px,13vw,220px)/.95 var(--serif);letter-spacing:-.03em;color:#faf5ea;text-shadow:0 6px 80px rgba(0,0,0,.5);font-variation-settings:'opsz' 144,'SOFT' 100,'WONK' 0;white-space:nowrap}
-.pword>span{display:block;max-width:34ch;margin:22px auto 0;font-size:clamp(15px,1.5vw,20px);font-weight:300;color:rgba(246,237,221,.94);text-shadow:0 1px 24px rgba(0,0,0,.7)}
+.pword::before{display:none}
+.pword b{display:block;font:italic 300 clamp(54px,13vw,220px)/.95 var(--serif);letter-spacing:-.03em;color:#faf5ea;text-shadow:0 2px 36px rgba(0,0,0,.28);font-variation-settings:'opsz' 144,'SOFT' 100,'WONK' 0;white-space:nowrap}
+.pword>span{display:block;max-width:34ch;margin:22px auto 0;font-size:clamp(15px,1.5vw,20px);font-weight:400;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55),0 0 26px rgba(0,0,0,.5)}
 .pword-sm b{font-size:clamp(46px,9vw,150px)}
 .ch{display:inline-block}
 .ch>span{display:inline-block;opacity:0;transform:translate3d(0,46%,0);will-change:transform,opacity}
@@ -813,3 +813,10 @@ html{overflow-x:clip}
 @keyframes pulseRing{0%,70%,100%{box-shadow:0 10px 30px -10px rgba(196,98,58,.9),0 0 0 0 rgba(196,98,58,.5)}85%{box-shadow:0 10px 30px -10px rgba(196,98,58,.9),0 0 0 12px rgba(196,98,58,0)}}
 
 @media(max-width:430px){.brand span{display:none}}
+
+/* ===== v11: ruhiger Header, kleinere Reservierungsleiste ===== */
+.site-header{transition:background .4s;transform:translateZ(0);-webkit-transform:translateZ(0);will-change:background;backface-visibility:hidden}
+.sticky-cta{gap:16px;padding:6px 6px 6px 20px;bottom:16px;font-size:13px;box-shadow:0 14px 40px -14px rgba(0,0,0,.6)}
+.sticky-cta .btn,.sticky-cta .btn-small{height:40px;padding:0 20px;font-size:13.5px}
+.sticky-info b{font-size:13px}.sticky-info span{font-size:12px}
+@media(max-width:600px){.sticky-cta{left:50%;right:auto;width:auto;max-width:calc(100% - 24px);transform:translate(-50%,160%);bottom:calc(10px + env(safe-area-inset-bottom));padding:5px 5px 5px 16px;gap:10px}.sticky-cta.show{transform:translate(-50%,0)}.sticky-info span{font-size:12px;white-space:nowrap}.sticky-cta .btn{height:38px;padding:0 16px;font-size:13px}}

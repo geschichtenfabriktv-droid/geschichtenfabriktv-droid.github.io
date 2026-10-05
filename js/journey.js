@@ -464,7 +464,8 @@ void main(){
     P.stage.insertBefore(host, $('.pgrade', P.stage));
     hero = { P, host, inn: $('.hm-in', host), box: $('.hm-map', host), map: null, loading: false, shown: false, o: 1, last: 0, t0: 0, u: 0, uSm: 0, t: { map: null, host: $('.hm-in', host), styled: false } };
     G.skyBg(hero.inn, 0.12);
-    hero.ready = true; IL.heroDebug = () => hero; heroUpdate(innerHeight); setTimeout(() => heroUpdate(innerHeight), 600);
+    IL.heroDebug = () => hero; const cn = navigator.connection; if (cn && (cn.saveData || /(^|-)2g/.test(cn.effectiveType || ''))) return;
+    const t = setInterval(() => { if (document.body.classList.contains('loaded')) { clearInterval(t); setTimeout(() => { hero.ready = true; heroUpdate(innerHeight); }, 900); } }, 250);
   }
   function heroUpdate(vh) {
     if (!hero || !hero.ready) return; const P = hero.P;
