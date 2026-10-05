@@ -578,7 +578,7 @@ export const LANDINGS: LandingPage[] = [
   // ---------------------------------------------------------------------------
   {
     slug: "vorbestellung-arbitrage",
-    title: "Limitierte Vorbestellungen wiederverkaufen – Resell-Radar",
+    title: "Limitierte Vorbestellungen gewinnbringend wiederverkaufen",
     description:
       "Vorbestellen und teurer verkaufen: Erkenne limitierte Konsolen, Sneaker und LEGO-Sets mit Resell-Potenzial früh und bewerte das Risiko. Demo testen.",
     eyebrow: "Vorbestellungen",
@@ -650,7 +650,7 @@ export const LANDINGS: LandingPage[] = [
       { type: "h2", text: "Wie Arbitrage Radar Vorbestellungen bewertet" },
       {
         type: "p",
-        text: "Bei bereits erhältlicher Ware gibt es einen laufenden Markt. Bei Vorbestellungen fehlt dieser noch, deshalb arbeitet die Bewertung mit den Daten, die vor Release verfügbar sind: frühe Angebote auf Marktplätzen, Preise vergleichbarer Editionen und die Verfügbarkeit bei Händlern. Daraus entsteht ein geschätzter Zielpreis. Die Gewinnwahrscheinlichkeit gibt an, wie wahrscheinlich dieser Preis nach Gebühren, Versand und Steuern mindestens deinen Break-even plus Mindestgewinn erreicht – mindestens 5 € oder 5 % des Einkaufs. Weil vor Release mehr Unsicherheit besteht, fallen die Werte hier tendenziell vorsichtiger aus als bei sofort lieferbarer Ware. Nach Erscheinen aktualisiert sich die Einschätzung mit echten Marktdaten.",
+        text: "Bei bereits erhältlicher Ware gibt es einen laufenden Markt. Bei Vorbestellungen fehlt dieser noch, deshalb arbeitet die Bewertung mit den Daten, die vor Release verfügbar sind: aktuelle Angebotspreise auf Marktplätzen (etwa frühe Angebote auf eBay) und der erwartete Preistrend bis nach Release. Daraus entsteht ein geschätzter Zielpreis. Die Gewinnwahrscheinlichkeit gibt an, wie wahrscheinlich dieser Preis nach Gebühren, Versand und Steuern mindestens deinen Break-even plus Mindestgewinn erreicht – mindestens 5 € oder 5 % des Einkaufs. Weil die Unsicherheit mit dem Abstand zum Release wächst, rechnet das Modell mit einer breiteren Preisstreuung, und die Werte fallen tendenziell vorsichtiger aus als bei sofort lieferbarer Ware. Nach Erscheinen aktualisiert sich die Einschätzung mit echten Marktdaten.",
       },
       { type: "h2", text: "Vom Vorbestellen bis zum Verkauf" },
       {
