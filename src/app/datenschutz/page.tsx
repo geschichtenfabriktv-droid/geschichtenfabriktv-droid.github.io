@@ -126,7 +126,7 @@ export default function DatenschutzPage() {
         <li>Widerruf erteilter Einwilligungen mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO), z. B. durch Trennen einer Verbindung,</li>
         <li>
           Beschwerde bei einer Datenschutz-Aufsichtsbehörde, etwa beim Unabhängigen Landeszentrum für Datenschutz
-          Schleswig-Holstein (ULD), Kiel.
+          Schleswig-Holstein (ULD).
         </li>
       </ul>
 
