@@ -15,3 +15,5 @@ Disallow: /arbitrage/registrieren/
 Disallow: /arbitrage/passwort-vergessen/
 Disallow: /arbitrage/passwort-zuruecksetzen/
 
+Host: https://geschichtenfabriktv-droid.github.io
+Sitemap: https://geschichtenfabriktv-droid.github.io/arbitrage/sitemap.xml
