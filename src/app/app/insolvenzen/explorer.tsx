@@ -80,7 +80,7 @@ export function LotExplorer() {
           <h2 id="justiz" className="mb-3 text-xl font-semibold tracking-tight">
             Laufende Justiz- und Insolvenzauktionen ({market.auctions.length})
           </h2>
-          <AuctionList auctions={market.auctions} search />
+          <AuctionList auctions={market.auctions} filters />
         </section>
       )}
       {market && !market.demo && market.lots.length === 0 && market.auctions.length === 0 && market.locked.lots === 0 && (

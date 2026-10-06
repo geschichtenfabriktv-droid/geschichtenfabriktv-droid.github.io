@@ -16,12 +16,13 @@ import { useMarket } from "@/lib/client/use-market";
 import { getCategory, isCategoryId } from "@/lib/domain/categories";
 import type { AnalyzedDeal, CategoryId } from "@/lib/domain/types";
 
-type SortKey = "wahrscheinlichkeit" | "gewinn" | "roi" | "neu";
+type SortKey = "wahrscheinlichkeit" | "gewinn" | "roi" | "preis" | "neu";
 
 const SORTS: Record<SortKey, { label: string; compare: (a: AnalyzedDeal, b: AnalyzedDeal) => number }> = {
   wahrscheinlichkeit: { label: "Wahrscheinlichkeit", compare: (a, b) => b.analysis.probability - a.analysis.probability },
   gewinn: { label: "Gewinn in €", compare: (a, b) => b.analysis.expectedProfit - a.analysis.expectedProfit },
   roi: { label: "Rendite", compare: (a, b) => b.analysis.roi - a.analysis.roi },
+  preis: { label: "Einkaufspreis aufsteigend", compare: (a, b) => a.source.price + a.source.shipping - (b.source.price + b.source.shipping) },
   neu: { label: "Neueste", compare: (a, b) => b.detectedAt.localeCompare(a.detectedAt) },
 };
 
@@ -41,6 +42,17 @@ export function DealExplorer() {
   const [sort, setSort] = useState<SortKey>("wahrscheinlichkeit");
   const [onlyDouble, setOnlyDouble] = useState(false);
   const [minProb, setMinProb] = useState<number | null>(null);
+  const [source, setSource] = useState("Alle");
+  const sources = useMemo(() => [...new Set((market?.deals ?? []).map((d) => d.source.platform))].sort(), [market]);
+  const dirty = query !== "" || sort !== "wahrscheinlichkeit" || onlyDouble || minProb !== null || source !== "Alle" || category !== "alle";
+  const reset = () => {
+    setQuery("");
+    setSort("wahrscheinlichkeit");
+    setOnlyDouble(false);
+    setMinProb(null);
+    setSource("Alle");
+    if (category !== "alle") router.replace(pathname, { scroll: false });
+  };
   const effectiveMin = minProb ?? settings.minProbability;
 
   const select = (id: CategoryId | "alle") => {
@@ -60,11 +72,12 @@ export function DealExplorer() {
     const q = query.trim().toLowerCase();
     return market.deals
       .filter((d) => category === "alle" || d.categoryId === category)
+      .filter((d) => source === "Alle" || d.source.platform === source)
       .filter((d) => !onlyDouble || d.analysis.doubleUp)
       .filter((d) => d.analysis.probability >= effectiveMin)
       .filter((d) => !q || `${d.title} ${d.brand} ${d.source.platform} ${d.target.platform}`.toLowerCase().includes(q))
       .sort(SORTS[sort].compare);
-  }, [market, category, onlyDouble, effectiveMin, query, sort]);
+  }, [market, category, source, onlyDouble, effectiveMin, query, sort]);
 
   const heading = category === "alle" ? "Alle Chancen" : getCategory(category).name;
 
@@ -91,6 +104,26 @@ export function DealExplorer() {
             />
           </label>
           <div className="no-scrollbar flex gap-2 overflow-x-auto">
+            {sources.length > 1 && (
+              <label className="relative shrink-0">
+                <span className="sr-only">Einkaufsquelle</span>
+                <select
+                  value={source}
+                  onChange={(e) => setSource(e.target.value)}
+                  className="h-11 appearance-none rounded-[10px] bg-white pr-9 pl-4 text-[13px] font-medium ring-1 ring-line outline-none focus:ring-ink"
+                >
+                  <option value="Alle">Alle Quellen</option>
+                  {sources.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+                <span aria-hidden className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-[10px] text-muted">
+                  ▼
+                </span>
+              </label>
+            )}
             <label className="relative shrink-0">
               <span className="sr-only">Sortieren nach</span>
               <select
@@ -154,12 +187,24 @@ export function DealExplorer() {
         <div className="rounded-[var(--radius-card)] bg-white px-6 py-16 text-center ring-1 ring-line">
           <p className="font-display text-3xl">Keine Treffer</p>
           <p className="mt-2 text-sm text-muted">Lockere die Filter oder wähle eine andere Kategorie.</p>
+          {dirty && (
+            <button type="button" onClick={reset} className="mt-4 text-sm font-medium underline underline-offset-4">
+              Filter zurücksetzen
+            </button>
+          )}
         </div>
       ) : (
         <>
-          <p className="mb-3 text-[13px] text-muted" aria-live="polite">
-            {results.length} {results.length === 1 ? "Chance" : "Chancen"}
-          </p>
+          <div className="mb-3 flex items-center justify-between text-[13px] text-muted" aria-live="polite">
+            <span>
+              {results.length} {results.length === 1 ? "Chance" : "Chancen"}
+            </span>
+            {dirty && (
+              <button type="button" onClick={reset} className="font-medium text-ink underline underline-offset-4">
+                Filter zurücksetzen
+              </button>
+            )}
+          </div>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {results.map((d, i) => (
               <DealCard key={d.id} deal={d} now={market.scannedAt} index={i} href={routes.deal(d.id)} />
