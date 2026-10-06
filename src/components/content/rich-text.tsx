@@ -72,8 +72,8 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
           }
           case "tip":
             return (
-              <aside key={i} className="not-prose my-8 rounded-[24px] bg-good-soft p-6">
-                <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#0b7a43]">{b.title}</p>
+              <aside key={i} className="not-prose my-8 rounded-[var(--radius-card)] bg-tag-soft p-6">
+                <p className="text-[15px] font-bold">{b.title}</p>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink">
                   <Inline text={b.text} />
                 </p>
@@ -108,16 +108,14 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
             );
           case "cta":
             return (
-              <aside key={i} className="not-prose my-10 rounded-[28px] bg-ink p-8 text-white">
-                <p className="font-display text-[32px] leading-[1.05] tracking-tight">{b.title}</p>
-                <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white/70">
+              <aside key={i} className="not-prose my-10 rounded-[var(--radius-card)] bg-tag p-8 text-ink">
+                <p className="font-display text-[28px] leading-[1.08]">{b.title}</p>
+                <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-tag-ink">
                   <Inline text={b.text} />
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <LinkButton href="/demo/" variant="inverse">
-                    Test-Dashboard ansehen <IconArrowRight size={16} />
-                  </LinkButton>
-                  <LinkButton href="/preise/" className="!bg-white/10 hover:!bg-white/20">
+                  <LinkButton href="/demo/">Test-Dashboard ansehen</LinkButton>
+                  <LinkButton href="/preise/" variant="secondary" className="!ring-ink">
                     Preise ansehen
                   </LinkButton>
                 </div>

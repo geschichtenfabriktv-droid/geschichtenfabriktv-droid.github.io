@@ -49,14 +49,13 @@ export default async function ArticleRoute({ params }: Props) {
   return (
     <SiteLayout>
       <JsonLd data={graph(articleLd({ path, h1: a.h1, description: a.description, published: a.published, updated: a.updated }), breadcrumbLd(trail), faqLd(a.faq))} />
-      <article className="mx-auto max-w-[1320px] px-4 pt-10 pb-24 sm:px-6 md:pt-14 lg:px-10">
+      <article className="mx-auto max-w-[1240px] px-4 pt-10 pb-24 sm:px-6 md:pt-14 lg:px-10">
         <Breadcrumbs trail={trail} />
         <header className="mt-10 max-w-4xl">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Ratgeber</p>
-          <h1 className="mt-4 font-display text-[40px] leading-[1] tracking-tight md:text-[68px]">{a.h1}</h1>
+          <h1 className="font-display text-[36px] leading-[1.06] md:text-[54px]">{a.h1}</h1>
           <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-ink-2">{a.intro}</p>
           <p className="mt-6 text-[13px] text-muted">
-            Aktualisiert am <time dateTime={a.updated}>{dateDe(a.updated)}</time> · {a.readingMinutes} Min. Lesezeit · Redaktion Arbitrage Radar
+            Aktualisiert am <time dateTime={a.updated}>{dateDe(a.updated)}</time>, {a.readingMinutes} Minuten Lesezeit
           </p>
         </header>
         <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
@@ -70,7 +69,7 @@ export default async function ArticleRoute({ params }: Props) {
           <aside className="hidden lg:block">
             <div className="sticky top-28 space-y-4">
               <Toc blocks={a.sections} />
-              <div className="rounded-[24px] p-6 ring-1 ring-line">
+              <div className="rounded-[var(--radius-card)] p-6 ring-1 ring-line">
                 <p className="font-semibold">Chancen ansehen</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-ink-2">Gewinnwahrscheinlichkeit, Break-even und Zielpreis an Beispieldaten, kostenlos im Test-Dashboard.</p>
                 <LinkButton href="/demo/" className="mt-4 w-full">

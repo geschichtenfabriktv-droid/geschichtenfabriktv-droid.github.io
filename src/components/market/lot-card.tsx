@@ -10,11 +10,11 @@ export function LotCard({ lot, now, index = 0, href }: { lot: AnalyzedLot; now: 
   return (
     <Link
       href={href}
-      className="group flex flex-col rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)] hover:ring-line-strong animate-rise"
+      className="group flex flex-col rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line transition-all duration-300 hover:ring-line-strong"
       style={{ animationDelay: `${Math.min(index, 12) * 40}ms` }}
     >
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+        <p className="text-[13px] font-medium text-muted">
           {lot.lotType} · {lot.city}
         </p>
         <Badge tone="outline" className="shrink-0">

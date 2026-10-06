@@ -171,7 +171,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
                     {deal.source.stock} verfügbar bei {deal.source.platform}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 rounded-full ring-1 ring-line">
+                <div className="flex items-center gap-1 rounded-[10px] ring-1 ring-line">
                   <button type="button" aria-label="Weniger" className="grid size-10 place-items-center rounded-full hover:bg-canvas disabled:opacity-30" disabled={qty <= 1} onClick={() => setQty((q) => q - 1)}>
                     <IconMinus size={16} />
                   </button>
@@ -183,7 +183,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
                   </button>
                 </div>
               </div>
-              <dl className="mt-4 space-y-2 rounded-2xl bg-canvas p-4 text-sm">
+              <dl className="mt-4 space-y-2 rounded-xl bg-canvas p-4 text-sm">
                 <Row label="Stückpreis inkl. Versand" value={eur(unitCost)} />
                 <Row label="Gesamt" value={eur(total)} strong />
                 <Row label="Freies Budget" value={eur(budgetLeft)} tone={overBudget ? "bad" : undefined} />
@@ -205,7 +205,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
                         type="button"
                         aria-pressed={on}
                         onClick={() => setPlatforms((cur) => (on ? cur.filter((x) => x !== p) : [...cur, p]))}
-                        className={`h-9 rounded-full px-3.5 text-[13px] font-medium transition ${on ? "bg-ink text-white" : "ring-1 ring-line text-ink-2 hover:ring-line-strong"}`}
+                        className={`h-9 rounded-[9px] px-3.5 text-[13px] font-medium transition ${on ? "bg-ink text-white" : "ring-1 ring-line text-ink-2 hover:ring-line-strong"}`}
                       >
                         {p}
                       </button>
@@ -216,12 +216,12 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
 
               <label className="block">
                 <span className="text-sm font-medium">Verkaufspreis</span>
-                <div className="mt-2 flex items-center rounded-2xl ring-1 ring-line focus-within:ring-ink">
+                <div className="mt-2 flex items-center rounded-xl ring-1 ring-line focus-within:ring-ink">
                   <input
                     inputMode="decimal"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="tabular h-12 w-full rounded-2xl bg-transparent px-4 text-lg font-semibold outline-none"
+                    className="tabular h-12 w-full rounded-xl bg-transparent px-4 text-lg font-semibold outline-none"
                     aria-describedby="price-hint"
                   />
                   <span className="pr-4 text-muted">€</span>
@@ -233,7 +233,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
                 </span>
               </label>
 
-              <label className="flex cursor-pointer items-center justify-between gap-4 rounded-2xl ring-1 ring-line p-4">
+              <label className="flex cursor-pointer items-center justify-between gap-4 rounded-xl ring-1 ring-line p-4">
                 <span>
                   <span className="block text-sm font-medium">Preisuntergrenze merken</span>
                   <span className="block text-[12px] text-muted">
@@ -244,7 +244,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
                 <span aria-hidden className="relative h-7 w-12 shrink-0 rounded-full bg-line-strong transition peer-checked:bg-ink peer-focus-visible:outline-2 peer-focus-visible:outline-ink after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition peer-checked:after:translate-x-5" />
               </label>
 
-              <dl className="space-y-2 rounded-2xl bg-canvas p-4 text-sm">
+              <dl className="space-y-2 rounded-xl bg-canvas p-4 text-sm">
                 <Row label="Gewinn je Stück (nach Gebühren)" value={signedEur(profitPerUnit)} strong tone={profitPerUnit < 0 ? "bad" : "good"} />
                 {mode === "autopilot" && <Row label={`Gewinn bei ${qty} Stück`} value={signedEur(profitPerUnit * qty)} />}
               </dl>
@@ -252,7 +252,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
           )}
 
           {problem && (
-            <p className="rounded-2xl bg-bad-soft p-4 text-[13px] text-[#b42a22]">
+            <p className="rounded-xl bg-bad-soft p-4 text-[13px] text-[#b42a22]">
               {problem}{" "}
               {/verbunden/i.test(problem) && (
                 <Link href="/konto/verbindungen/" className="font-semibold underline">

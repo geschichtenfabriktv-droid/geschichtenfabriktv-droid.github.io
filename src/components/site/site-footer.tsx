@@ -55,25 +55,21 @@ const COLUMNS = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-white">
-      <div className="mx-auto grid max-w-[1320px] gap-12 px-4 py-16 sm:px-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(5,1fr)] lg:px-10">
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-16 sm:px-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(5,1fr)] lg:px-10">
         <div>
           <Brand />
           <p className="mt-4 max-w-xs text-[14px] leading-relaxed text-ink-2">
             Arbitrage-Chancen, Vorbestellungen und Insolvenzmassen finden, bewerten und auf Knopfdruck handeln.
           </p>
-          <p className="mt-6 flex flex-wrap gap-2 text-[12px] text-muted">
-            <span className="rounded-full ring-1 ring-line px-2.5 py-1">Hosting in der EU</span>
-            <span className="rounded-full ring-1 ring-line px-2.5 py-1">Datenschutz nach DSGVO</span>
-            <span className="rounded-full ring-1 ring-line px-2.5 py-1">Zahlung über Mollie</span>
-          </p>
+          <p className="mt-6 max-w-xs text-[13px] leading-relaxed text-muted">Server in der EU, Datenschutz nach DSGVO, Zahlung über Mollie.</p>
         </div>
         {COLUMNS.map((c) => (
           <nav key={c.title} aria-label={c.title}>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-muted">{c.title}</p>
+            <p className="text-[14px] font-semibold text-ink">{c.title}</p>
             <ul className="mt-4 space-y-2.5">
               {c.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-[14px] text-ink-2 transition hover:text-ink">
+                  <Link href={l.href} className="text-[14px] text-ink-2 transition-colors hover:text-ink hover:underline">
                     {l.label}
                   </Link>
                 </li>
@@ -83,7 +79,7 @@ export function SiteFooter() {
         ))}
       </div>
       <div className="border-t border-line">
-        <div className="mx-auto flex max-w-[1320px] flex-col gap-2 px-4 py-6 text-[12px] text-muted sm:px-6 md:flex-row md:justify-between lg:px-10">
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-2 px-4 py-6 text-[12px] text-muted sm:px-6 md:flex-row md:justify-between lg:px-10">
           <p>© {new Date().getFullYear()} Arbitrage Radar</p>
           <p>Gewinnwahrscheinlichkeiten sind Schätzungen auf Basis von Marktdaten, keine Garantie und keine Anlageberatung.</p>
         </div>

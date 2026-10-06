@@ -5,11 +5,11 @@ export function CardLinks({ title, items }: { title: string; items: { href: stri
   if (!items.length) return null;
   return (
     <section className="mt-16">
-      <h2 className="font-display text-[32px] leading-none tracking-tight md:text-[40px]">{title}</h2>
+      <h2 className="font-display text-[26px] leading-[1.08] md:text-[32px]">{title}</h2>
       <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         {items.map((it) => (
           <li key={it.href} className="min-w-0">
-            <Link href={it.href} className="group flex h-full flex-col rounded-[24px] bg-white p-6 ring-1 ring-line transition hover:ring-ink">
+            <Link href={it.href} className="group flex h-full flex-col rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-line transition hover:ring-ink">
               <span className="flex items-start justify-between gap-3 text-[17px] font-semibold tracking-tight">
                 {it.label}
                 <IconArrowUpRight size={18} className="shrink-0 text-muted transition group-hover:text-ink" />

@@ -65,7 +65,7 @@ export function Sheet({ open, onClose, title, subtitle, children }: Props) {
         </div>
         <div className="flex items-start justify-between gap-4 px-6">
           <div>
-            <h2 className="font-display text-[28px] leading-tight tracking-tight">{title}</h2>
+            <h2 className="font-display text-[22px] leading-tight">{title}</h2>
             {subtitle && <p className="mt-1 text-sm text-muted">{subtitle}</p>}
           </div>
           <button type="button" onClick={onClose} className="-mr-2 grid size-10 shrink-0 place-items-center rounded-full text-ink-2 hover:bg-canvas" aria-label="Schließen">

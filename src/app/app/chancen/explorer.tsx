@@ -86,7 +86,7 @@ export function DealExplorer() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Produkt, Marke oder Plattform suchen"
-              className="h-11 w-full rounded-full bg-white pr-4 pl-10 text-sm ring-1 ring-line outline-none placeholder:text-muted focus:ring-ink"
+              className="h-11 w-full rounded-[10px] bg-white pr-4 pl-10 text-sm ring-1 ring-line outline-none placeholder:text-muted focus:ring-ink"
             />
           </label>
           <div className="no-scrollbar flex gap-2 overflow-x-auto">
@@ -95,7 +95,7 @@ export function DealExplorer() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortKey)}
-                className="h-11 appearance-none rounded-full bg-white pr-9 pl-4 text-[13px] font-medium ring-1 ring-line outline-none focus:ring-ink"
+                className="h-11 appearance-none rounded-[10px] bg-white pr-9 pl-4 text-[13px] font-medium ring-1 ring-line outline-none focus:ring-ink"
               >
                 {Object.entries(SORTS).map(([k, v]) => (
                   <option key={k} value={k}>
@@ -107,14 +107,14 @@ export function DealExplorer() {
                 ▼
               </span>
             </label>
-            <div className="flex shrink-0 rounded-full bg-white p-1 ring-1 ring-line" role="group" aria-label="Mindest-Wahrscheinlichkeit">
+            <div className="flex shrink-0 rounded-[12px] bg-white p-1 ring-1 ring-line" role="group" aria-label="Mindest-Wahrscheinlichkeit">
               {MIN_PROB.map((m) => (
                 <button
                   key={m}
                   type="button"
                   aria-pressed={effectiveMin === m}
                   onClick={() => setMinProb(m)}
-                  className={`h-9 rounded-full px-3 text-[12px] font-medium transition ${effectiveMin === m ? "bg-ink text-white" : "text-ink-2 hover:text-ink"}`}
+                  className={`h-9 rounded-[9px] px-3 text-[12px] font-medium transition ${effectiveMin === m ? "bg-ink text-white" : "text-ink-2 hover:text-ink"}`}
                 >
                   {m === 0 ? "Alle" : `ab ${m * 100} %`}
                 </button>
@@ -124,7 +124,7 @@ export function DealExplorer() {
               type="button"
               aria-pressed={onlyDouble}
               onClick={() => setOnlyDouble((v) => !v)}
-              className={`h-11 shrink-0 rounded-full px-4 text-[13px] font-medium ring-1 transition ${onlyDouble ? "bg-ink text-white ring-ink" : "bg-white text-ink-2 ring-line hover:text-ink"}`}
+              className={`h-11 shrink-0 rounded-[10px] px-4 text-[13px] font-medium ring-1 transition ${onlyDouble ? "bg-ink text-white ring-ink" : "bg-white text-ink-2 ring-line hover:text-ink"}`}
             >
               2× Preis
             </button>
@@ -134,7 +134,7 @@ export function DealExplorer() {
 
       {error && <p className="mb-4 text-sm text-bad">{error}</p>}
       {market && market.locked.deals > 0 && (
-        <Link href="/konto/" className="mb-4 flex items-center justify-between gap-3 rounded-2xl bg-white p-4 text-sm ring-1 ring-line hover:ring-ink">
+        <Link href="/konto/" className="mb-4 flex items-center justify-between gap-3 rounded-xl bg-white p-4 text-sm ring-1 ring-line hover:ring-ink">
           <span>
             <strong>{market.locked.deals === 1 ? "1 weitere Chance" : `${market.locked.deals} weitere Chancen`}</strong> in Kategorien, die dein Tarif nicht enthält.
           </span>
@@ -163,13 +163,13 @@ export function DealExplorer() {
 
       <Link
         href={routes.lots}
-        className="group mt-10 flex items-center justify-between gap-4 rounded-[var(--radius-card)] bg-ink p-6 text-white transition hover:bg-ink/90"
+        className="group mt-10 flex items-center justify-between gap-4 rounded-[var(--radius-card)] bg-tag p-6 text-ink transition-colors hover:bg-[#ffcc1a]"
       >
         <span>
-          <span className="block text-[12px] font-semibold uppercase tracking-[0.16em] text-white/50">Insolvenzmassen</span>
-          <span className="mt-1 block font-display text-2xl md:text-3xl">Warenlager, Maschinen und Rechte unter Wert</span>
+          <span className="block font-display text-[22px] md:text-[26px]">Insolvenzmassen</span>
+          <span className="mt-1 block text-[15px] text-tag-ink">Warenlager, Maschinen und Rechte unter Wert</span>
         </span>
-        <IconArrowRight className="shrink-0 transition group-hover:translate-x-1" />
+        <IconArrowRight className="shrink-0" />
       </Link>
     </>
   );

@@ -21,7 +21,7 @@ export async function ogImage({ eyebrow, title }: { eyebrow: string; title: stri
           <div style={{ display: "flex", fontSize: 20, letterSpacing: 6, color: "#8a8a8f", marginTop: 8 }}>RADAR</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", fontSize: 22, letterSpacing: 4, textTransform: "uppercase", color: "#8a8a8f" }}>{eyebrow}</div>
+          <div style={{ display: "flex", fontSize: 22, color: "#8a8a8f" }}>{eyebrow}</div>
           <div style={{ display: "flex", marginTop: 18, fontFamily: "Serif", fontSize: size, lineHeight: 1.02, color: "#0b0b0c", maxWidth: 1000 }}>{title}</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>

@@ -51,17 +51,7 @@ export function Overview() {
         title={
           <>
             {greeting(scannedAt)}.{" "}
-            {strong.length === 0 ? (
-              <span className="italic text-muted">Gerade keine starken Chancen.</span>
-            ) : strong.length === 1 ? (
-              <>
-                <span className="italic text-muted">1 starke Chance</span> wartet.
-              </>
-            ) : (
-              <>
-                <span className="italic text-muted">{strong.length} starke Chancen</span> warten.
-              </>
-            )}
+            {strong.length === 0 ? "Gerade keine starken Chancen." : strong.length === 1 ? "1 starke Chance wartet." : `${strong.length} starke Chancen warten.`}
           </>
         }
       >
@@ -70,7 +60,7 @@ export function Overview() {
 
       <section aria-label="Kennzahlen" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {kpis.map((k, i) => (
-          <div key={k.label} className="rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line animate-rise" style={{ animationDelay: `${i * 50}ms` }}>
+          <div key={k.label} className="rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line" style={{ animationDelay: `${i * 50}ms` }}>
             <p className="text-[12px] font-medium text-muted">{k.label}</p>
             <p className="tabular mt-2 text-[26px] font-semibold tracking-tight md:text-[32px]">{k.value}</p>
             <p className="mt-1 text-[12px] leading-snug text-muted">{k.note}</p>
@@ -92,7 +82,7 @@ export function Overview() {
             <Link
               key={c.id}
               href={c.id === "insolvenz" ? routes.lots : `${routes.list}?kategorie=${c.id}`}
-              className="group flex flex-col rounded-[var(--radius-card)] bg-white p-4 ring-1 sm:p-5 ring-line transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)] animate-rise"
+              className="group flex flex-col rounded-[var(--radius-card)] bg-white p-4 ring-1 sm:p-5 ring-line transition-all duration-300"
               style={{ animationDelay: `${i * 35}ms` }}
             >
               <div className="flex items-start justify-between gap-3">

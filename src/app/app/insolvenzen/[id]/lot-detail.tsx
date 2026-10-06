@@ -69,13 +69,13 @@ export function LotDetail({ id }: { id: string }) {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
         <div className="min-w-0 space-y-6">
-          <header className="animate-rise">
+          <header>
             <div className="flex flex-wrap gap-2">
               <Badge tone="outline">{lot.lotType}</Badge>
               <Badge tone="warn">{countdown(lot.auctionEnd, market.scannedAt)}</Badge>
               <Badge tone="neutral">Beispieldaten (fiktiv)</Badge>
             </div>
-            <h1 className="mt-4 font-display text-[38px] leading-[1.04] tracking-tight md:text-[54px]">{lot.title}</h1>
+            <h1 className="mt-4 font-display text-[30px] leading-[1.1] md:text-[42px]">{lot.title}</h1>
             <p className="mt-3 text-[15px] text-ink-2">
               {lot.debtor} · {lot.court} · Az. {lot.caseNumber}
             </p>
@@ -98,7 +98,7 @@ export function LotDetail({ id }: { id: string }) {
                 { k: "Aufgeld", v: percent(lot.buyerPremium) },
                 { k: "Logistik", v: eur(lot.logisticsCost, { cents: false }) },
               ].map((s) => (
-                <div key={s.k} className="rounded-2xl bg-canvas p-4">
+                <div key={s.k} className="rounded-xl bg-canvas p-4">
                   <dt className="text-[12px] text-muted">{s.k}</dt>
                   <dd className="tabular mt-1 text-base font-semibold">{s.v}</dd>
                 </div>
@@ -113,7 +113,7 @@ export function LotDetail({ id }: { id: string }) {
         </div>
 
         <aside className="lg:sticky lg:top-10 lg:self-start">
-          <div className="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line md:p-6 animate-rise">
+          <div className="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line md:p-6">
             <p className="text-[13px] font-medium text-muted">Gewinnwahrscheinlichkeit</p>
             <ProbabilityBar probability={a.probability} size="lg" className="mt-2" />
             <p className="mt-3 text-[12px] leading-relaxed text-muted">Beim aktuellen Gebot, mit mindestens 10 % Überschuss nach Aufgeld und Logistik.</p>
@@ -147,7 +147,7 @@ export function LotDetail({ id }: { id: string }) {
 
       <Sheet open={open} onClose={close} title={done ? "Bietlimit gespeichert" : "Bietlimit festlegen"} subtitle={done ? undefined : "Bis zu diesem Gebot lohnt sich die Masse"}>
         {done ? (
-          <div className="animate-rise">
+          <div>
             <div className="grid size-14 place-items-center rounded-full bg-good-soft text-good">
               <IconCheck size={26} />
             </div>
@@ -160,12 +160,12 @@ export function LotDetail({ id }: { id: string }) {
           <div className="space-y-5">
             <label className="block">
               <span className="text-sm font-medium">Maximalgebot</span>
-              <div className="mt-2 flex items-center rounded-2xl ring-1 ring-line focus-within:ring-ink">
+              <div className="mt-2 flex items-center rounded-xl ring-1 ring-line focus-within:ring-ink">
                 <input
                   inputMode="decimal"
                   value={bid ?? amountInput(a.recommendedPrice, 0)}
                   onChange={(e) => setBid(e.target.value)}
-                  className="tabular h-12 w-full rounded-2xl bg-transparent px-4 text-lg font-semibold outline-none"
+                  className="tabular h-12 w-full rounded-xl bg-transparent px-4 text-lg font-semibold outline-none"
                 />
                 <span className="pr-4 text-muted">€</span>
               </div>
@@ -173,7 +173,7 @@ export function LotDetail({ id }: { id: string }) {
                 {bidValid ? `Empfohlen ${eur(a.recommendedPrice, { cents: false })}` : `Mindestens das aktuelle Gebot von ${eur(lot.currentBid, { cents: false })}.`}
               </span>
             </label>
-            <dl className="space-y-2 rounded-2xl bg-canvas p-4 text-sm">
+            <dl className="space-y-2 rounded-xl bg-canvas p-4 text-sm">
               <div className="flex justify-between">
                 <dt className="text-ink-2">Kosten inkl. Aufgeld & Logistik</dt>
                 <dd className="tabular">{eur(costAtBid, { cents: false })}</dd>

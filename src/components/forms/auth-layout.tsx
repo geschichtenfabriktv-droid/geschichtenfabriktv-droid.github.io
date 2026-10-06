@@ -9,7 +9,7 @@ export function AuthLayout({ title, subtitle, children, aside }: { title: string
       <div className="flex flex-col px-4 py-6 sm:px-10">
         <Brand />
         <div className="mx-auto flex w-full max-w-[420px] flex-1 flex-col justify-center py-12">
-          <h1 className="font-display text-[44px] leading-none tracking-tight">{title}</h1>
+          <h1 className="font-display text-[34px] leading-[1.08]">{title}</h1>
           {subtitle && <div className="mt-3 text-[15px] text-ink-2">{subtitle}</div>}
           <div className="mt-8">{children}</div>
         </div>
@@ -19,18 +19,15 @@ export function AuthLayout({ title, subtitle, children, aside }: { title: string
           <Link href="/agb/" className="hover:text-ink">AGB</Link>
         </p>
       </div>
-      <aside className="relative hidden overflow-hidden bg-ink p-12 text-white lg:flex lg:flex-col lg:justify-end">
-        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_20%,rgba(17,160,90,0.28),transparent_70%)]" />
-        <div className="relative">
+      <aside className="relative hidden overflow-hidden bg-tag p-12 text-ink lg:flex lg:flex-col lg:justify-end">
+        <div className="relative max-w-lg">
           {aside ?? (
             <>
-              <p className="font-display text-[56px] leading-[0.98] tracking-tight">
-                Gewinne finden, <span className="italic text-white/50">bevor der Markt sie sieht.</span>
-              </p>
-              <ul className="mt-10 space-y-3 text-[15px] text-white/80">
-                {["Gewinnwahrscheinlichkeit für jede Chance", "Kaufen & Einstellen auf Knopfdruck", "Eigene Marktplatz-Konten sicher verbunden", "Server in der EU (Frankfurt)"].map((t) => (
+              <p className="font-display text-[48px] leading-[1.02]">Gewinne finden, bevor der Markt sie sieht.</p>
+              <ul className="mt-10 space-y-3 border-t-2 border-ink pt-8 text-[16px] font-medium">
+                {["Gewinnwahrscheinlichkeit für jede Chance", "Einstellen auf eBay mit einem Klick", "Eigene Marktplatz-Konten sicher verbunden", "Server in der EU (Frankfurt)"].map((t) => (
                   <li key={t} className="flex items-center gap-3">
-                    <IconCheck size={16} className="text-[#5ee39b]" /> {t}
+                    <IconCheck size={17} /> {t}
                   </li>
                 ))}
               </ul>
@@ -44,7 +41,7 @@ export function AuthLayout({ title, subtitle, children, aside }: { title: string
 
 export function StaticNotice() {
   return (
-    <div className="rounded-[24px] bg-canvas p-6 ring-1 ring-line">
+    <div className="rounded-[var(--radius-card)] bg-canvas p-6">
       <p className="font-semibold">Kundenkonten starten in Kürze</p>
       <p className="mt-2 text-[14px] leading-relaxed text-ink-2">
         Diese Vorschau zeigt Webseite und Test-Dashboard. Anmeldung, Abo und Bezahlung sind auf der Live-Version aktiv.

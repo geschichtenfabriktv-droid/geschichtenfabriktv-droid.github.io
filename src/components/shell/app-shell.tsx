@@ -57,9 +57,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             );
           })}
         </nav>
-        <div className="mt-auto rounded-2xl bg-canvas p-4">
+        <div className="mt-auto rounded-xl bg-canvas p-4">
           <p className="flex items-center gap-2 text-[13px] font-semibold">
-            <span className="size-2 rounded-full bg-good animate-pulse-dot" aria-hidden /> Dashboard aktiv
+            <span className="size-2 rounded-full bg-good" aria-hidden /> Dashboard
           </p>
           {user ? (
             <p className="mt-1 truncate text-[12px] leading-relaxed text-muted">
@@ -75,7 +75,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-line bg-white/85 px-4 backdrop-blur-xl lg:hidden">
         <Brand href="/" />
         <span className="flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-[11px] font-semibold text-ink-2">
-          <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {getPlan(user?.plan)?.name ?? "Konto"}
+          <span className="size-1.5 rounded-full bg-good" aria-hidden /> {getPlan(user?.plan)?.name ?? "Konto"}
         </span>
       </header>
 
@@ -117,8 +117,8 @@ export function PageHeader({ eyebrow, title, children }: { eyebrow?: string; tit
   return (
     <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        {eyebrow && <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-muted">{eyebrow}</p>}
-        <h1 className="mt-2 font-display text-[40px] leading-[1.02] tracking-tight md:text-[52px]">{title}</h1>
+        {eyebrow && <p className="text-[14px] text-muted">{eyebrow}</p>}
+        <h1 className="mt-1 font-display text-[28px] leading-[1.1] md:text-[36px]">{title}</h1>
       </div>
       {children && <div className="flex flex-wrap items-center gap-2">{children}</div>}
     </div>

@@ -34,24 +34,18 @@ export function SiteHeader() {
 
   return (
     <>
-      <div className="bg-ink px-4 py-2 text-center text-[12px] font-medium text-white/80">
-        <span className="text-white">Neu:</span> Vorbestell-Radar zeigt Releases mit Wiederverkaufspotenzial.{" "}
-        <Link href="/demo/" className="underline decoration-white/40 underline-offset-2 hover:text-white">
-          Kostenlos ansehen
-        </Link>
-      </div>
-      <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled || open ? "border-b border-line bg-white/85 backdrop-blur-xl" : "border-b border-transparent bg-white"}`}>
-        <div className="mx-auto flex h-16 max-w-[1320px] items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-10">
+      <header className={`sticky top-0 z-40 bg-white transition-[border-color] duration-200 ${scrolled || open ? "border-b border-line" : "border-b border-transparent"}`}>
+        <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6 lg:h-[72px] lg:px-10">
           <Brand />
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Seitennavigation">
             {LINKS.map((l) => (
-              <Link key={l.href} href={l.href} className="text-sm font-medium text-ink-2 transition hover:text-ink">
+              <Link key={l.href} href={l.href} className="text-[15px] font-medium text-ink-2 underline decoration-transparent decoration-2 underline-offset-[6px] transition-colors hover:text-ink hover:decoration-tag">
                 {l.label}
               </Link>
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <Link href="/login/" className="hidden h-9 items-center rounded-full px-4 text-[13px] font-medium text-ink-2 hover:bg-canvas hover:text-ink sm:inline-flex">
+            <Link href="/login/" className="hidden h-9 items-center rounded-[var(--radius-control)] px-3 text-[14px] font-medium text-ink-2 hover:bg-canvas hover:text-ink sm:inline-flex">
               Anmelden
             </Link>
             <LinkButton href="/preise/" size="sm">
@@ -59,7 +53,7 @@ export function SiteHeader() {
             </LinkButton>
             <button
               type="button"
-              className="grid size-10 place-items-center rounded-full ring-1 ring-line lg:hidden"
+              className="grid size-10 place-items-center rounded-[var(--radius-control)] ring-1 ring-inset ring-line-strong lg:hidden"
               aria-label={open ? "Menü schließen" : "Menü öffnen"}
               aria-expanded={open}
               onClick={() => setOpen((o) => !o)}
@@ -75,10 +69,10 @@ export function SiteHeader() {
           </div>
         </div>
         {open && (
-          <div className="fixed inset-x-0 top-[96px] bottom-0 z-40 overflow-y-auto bg-white px-4 pt-4 pb-10 animate-fade lg:hidden">
+          <div className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-white px-4 pt-4 pb-10 animate-fade lg:hidden">
             <nav className="flex flex-col" aria-label="Mobile Navigation">
               {LINKS.map((l) => (
-                <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="border-b border-line py-4 font-display text-3xl tracking-tight">
+                <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="border-b border-line py-4 font-display text-[26px]">
                   {l.label}
                 </Link>
               ))}

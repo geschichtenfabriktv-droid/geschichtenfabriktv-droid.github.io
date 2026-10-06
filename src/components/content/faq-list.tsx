@@ -4,7 +4,7 @@ import { Inline } from "./rich-text";
 export function FaqList({ faq, title = "Häufige Fragen" }: { faq: Faq[]; title?: string }) {
   return (
     <section aria-labelledby="faq-titel" className="mt-16">
-      <h2 id="faq-titel" className="font-display text-[36px] leading-none tracking-tight md:text-[48px]">
+      <h2 id="faq-titel" className="font-display text-[30px] leading-[1.08] md:text-[38px]">
         {title}
       </h2>
       <div className="mt-8 divide-y divide-line border-y border-line">

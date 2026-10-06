@@ -5,19 +5,19 @@ type Variant = "primary" | "secondary" | "ghost" | "inverse";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium tracking-tight transition-all duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40";
+  "inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] font-semibold tracking-[-0.01em] transition-colors duration-150 disabled:pointer-events-none disabled:opacity-40";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-ink text-white hover:bg-ink/85 shadow-[0_1px_0_rgb(255_255_255/0.12)_inset]",
-  secondary: "bg-white text-ink ring-1 ring-line-strong hover:ring-ink/40 hover:bg-canvas",
+  primary: "bg-ink text-white hover:bg-[#2a2f47]",
+  secondary: "bg-white text-ink ring-1 ring-inset ring-line-strong hover:ring-ink",
   ghost: "text-ink-2 hover:bg-canvas hover:text-ink",
-  inverse: "bg-white text-ink hover:bg-white/90",
+  inverse: "bg-white text-ink hover:bg-tag",
 };
 
 const sizes: Record<Size, string> = {
   sm: "h-9 px-4 text-[13px]",
   md: "h-11 px-5 text-sm",
-  lg: "h-13 px-7 text-[15px]",
+  lg: "h-12 px-6 text-[15px]",
 };
 
 export function buttonClass(variant: Variant = "primary", size: Size = "md", extra = "") {

@@ -27,16 +27,16 @@ export default function RatgeberIndex() {
           hasPart: ARTICLES.map((a) => ({ "@type": "Article", headline: a.h1, url: absoluteUrl(articlePath(a.slug)) })),
         })}
       />
-      <div className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1240px] px-4 pt-10 sm:px-6 lg:px-10">
         <Breadcrumbs trail={trail} />
       </div>
       <PageIntro eyebrow="Ratgeber" title="Wissen für Reseller.">
         Wie Online-Arbitrage funktioniert, wie du Gewinn und Gebühren richtig rechnest und worauf du bei Gewerbe, Steuern und Insolvenzversteigerungen achten musst.
       </PageIntro>
-      <ul className="mx-auto grid max-w-[1320px] grid-cols-1 gap-4 px-4 pb-24 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-10">
+      <ul className="mx-auto grid max-w-[1240px] grid-cols-1 gap-4 px-4 pb-24 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-10">
         {ARTICLES.map((a) => (
           <li key={a.slug} className="min-w-0">
-            <Link href={articlePath(a.slug)} className="group flex h-full flex-col rounded-[28px] bg-white p-7 ring-1 ring-line transition hover:ring-ink">
+            <Link href={articlePath(a.slug)} className="group flex h-full flex-col rounded-[var(--radius-card)] bg-white p-7 ring-1 ring-line transition hover:ring-ink">
               <span className="text-[12px] text-muted">{a.readingMinutes} Min. Lesezeit</span>
               <span className="mt-3 flex items-start justify-between gap-3 text-[22px] font-semibold leading-tight tracking-tight">
                 {a.h1}

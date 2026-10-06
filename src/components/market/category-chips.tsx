@@ -19,7 +19,7 @@ export function CategoryChips({ categories, active, total, onSelect }: Props) {
         type="button"
         onClick={() => onSelect(id)}
         aria-pressed={selected}
-        className={`flex h-10 shrink-0 items-center gap-2 rounded-full px-4 text-[13px] font-medium transition-all duration-200 ${
+        className={`flex h-10 shrink-0 items-center gap-2 rounded-[10px] px-4 text-[13px] font-medium transition-all duration-200 ${
           selected ? "bg-ink text-white shadow-sm" : "bg-white text-ink-2 ring-1 ring-line hover:ring-line-strong hover:text-ink"
         }`}
       >

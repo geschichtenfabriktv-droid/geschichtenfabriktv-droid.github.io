@@ -56,21 +56,21 @@ export default function PreisePage() {
   return (
     <SiteLayout>
       <JsonLd data={graph(softwareLd(), faqLd(FAQ), breadcrumbLd([{ name: "Start", path: "/" }, { name: "Preise", path: "/preise/" }]))} />
-      <PageIntro eyebrow="Preise" title={<>Einfach. Fair. <span className="italic text-muted">Monatlich kündbar.</span></>}>
+      <PageIntro eyebrow="Preise" title="Drei Tarife, monatlich kündbar">
         Ein einziger guter Deal deckt den Monatspreis. Starte mit dem Tarif, der zu deinem Volumen passt, und wechsle jederzeit.
       </PageIntro>
 
-      <section className="mx-auto max-w-[1320px] px-4 pb-20 sm:px-6 lg:px-10">
+      <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-10">
         <PricingCards headingLevel={2} />
       </section>
 
       <section className="border-t border-line bg-canvas">
-        <div className="mx-auto max-w-[1320px] px-4 py-20 sm:px-6 lg:px-10">
-          <h2 className="font-display text-[40px] leading-none tracking-tight md:text-[56px]">Erweiterungen</h2>
+        <div className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-10">
+          <h2 className="font-display text-[32px] leading-[1.08] md:text-[44px]">Erweiterungen</h2>
           <p className="mt-3 max-w-xl text-ink-2">Buchbar zu jedem passenden Tarif, monatlich kündbar mit dem Abo.</p>
           <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {ADDONS.map((a) => (
-              <div key={a.id} className="rounded-[24px] bg-white p-6 ring-1 ring-line">
+              <div key={a.id} className="rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-line">
                 <p className="text-lg font-semibold tracking-tight">{a.name}</p>
                 <p className="mt-1 text-[14px] text-ink-2">{a.description}</p>
                 <p className="tabular mt-6 text-2xl font-semibold">
@@ -84,9 +84,9 @@ export default function PreisePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1320px] px-4 py-20 sm:px-6 lg:px-10">
-        <h2 className="font-display text-[40px] leading-none tracking-tight md:text-[56px]">Alle Funktionen im Vergleich</h2>
-        <div className="relative mt-10 overflow-x-auto rounded-[24px] ring-1 ring-line">
+      <section className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-10">
+        <h2 className="font-display text-[32px] leading-[1.08] md:text-[44px]">Alle Funktionen im Vergleich</h2>
+        <div className="relative mt-10 overflow-x-auto rounded-[var(--radius-card)] ring-1 ring-line">
           <table className="w-full min-w-[640px] text-left text-[14px]">
             <thead className="bg-canvas">
               <tr>
@@ -115,9 +115,9 @@ export default function PreisePage() {
       </section>
 
       <section className="border-t border-line">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
+        <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
           <div>
-            <h2 className="font-display text-[40px] leading-none tracking-tight md:text-[56px]">Fragen zum Abo</h2>
+            <h2 className="font-display text-[32px] leading-[1.08] md:text-[44px]">Fragen zum Abo</h2>
             <LinkButton href="/demo/" variant="secondary" className="mt-8">
               Erst kostenlos ansehen
             </LinkButton>

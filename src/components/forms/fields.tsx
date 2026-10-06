@@ -11,7 +11,7 @@ export function Field({ label, hint, error, ...props }: InputHTMLAttributes<HTML
         id={id}
         {...props}
         aria-invalid={Boolean(error) || undefined}
-        className="mt-1.5 h-12 w-full rounded-2xl bg-white px-4 text-[15px] ring-1 ring-line outline-none transition placeholder:text-muted focus:ring-2 focus:ring-ink aria-[invalid]:ring-bad"
+        className="mt-1.5 h-12 w-full rounded-xl bg-white px-4 text-[15px] ring-1 ring-line outline-none transition placeholder:text-muted focus:ring-2 focus:ring-ink aria-[invalid]:ring-bad"
       />
       {hint && <span className="mt-1.5 block text-[12px] text-muted">{hint}</span>}
     </label>
@@ -29,7 +29,7 @@ export function Checkbox({ children, ...props }: InputHTMLAttributes<HTMLInputEl
 
 export function FormMessage({ tone = "bad", children }: { tone?: "bad" | "good"; children: ReactNode }) {
   return (
-    <p role={tone === "bad" ? "alert" : "status"} className={`rounded-2xl p-4 text-[13px] ${tone === "bad" ? "bg-bad-soft text-[#b42a22]" : "bg-good-soft text-[#0b7a43]"}`}>
+    <p role={tone === "bad" ? "alert" : "status"} className={`rounded-xl p-4 text-[13px] ${tone === "bad" ? "bg-bad-soft text-[#b42a22]" : "bg-good-soft text-[#0b7a43]"}`}>
       {children}
     </p>
   );

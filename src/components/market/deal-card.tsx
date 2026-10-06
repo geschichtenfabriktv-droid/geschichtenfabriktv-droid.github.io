@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { IconArrowRight, IconCalendar } from "@/components/ui/icons";
+import { IconCalendar } from "@/components/ui/icons";
 import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { getCategory } from "@/lib/domain/categories";
 import type { AnalyzedDeal } from "@/lib/domain/types";
@@ -11,13 +11,13 @@ export function DealCard({ deal, now, index = 0, href }: { deal: AnalyzedDeal; n
   return (
     <Link
       href={href}
-      className="group relative flex flex-col rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)] hover:ring-line-strong animate-rise"
+      className="group relative flex flex-col rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line transition-[box-shadow] duration-150 hover:ring-ink"
       style={{ animationDelay: `${Math.min(index, 12) * 40}ms` }}
     >
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">{getCategory(deal.categoryId).name}</p>
+        <p className="text-[13px] font-medium text-muted">{getCategory(deal.categoryId).name}</p>
         <div className="flex shrink-0 gap-1.5">
-          {a.doubleUp && <Badge tone="ink">2× Preis</Badge>}
+          {a.doubleUp && <Badge tone="tag">2× Preis</Badge>}
           {deal.limited && !a.doubleUp && <Badge tone="outline">Limitiert</Badge>}
         </div>
       </div>
@@ -57,9 +57,6 @@ export function DealCard({ deal, now, index = 0, href }: { deal: AnalyzedDeal; n
 
       <ProbabilityBar probability={a.probability} size="sm" className="mt-4" />
 
-      <span className="absolute right-5 bottom-5 hidden translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:block">
-        <IconArrowRight size={16} />
-      </span>
     </Link>
   );
 }

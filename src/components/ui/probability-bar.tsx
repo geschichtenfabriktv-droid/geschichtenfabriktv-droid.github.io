@@ -8,13 +8,15 @@ interface Props {
   probability: number;
   size?: "sm" | "md" | "lg";
   className?: string;
+  /** Füllt die Leiste einmal beim Laden (nur im Hero). */
+  animate?: boolean;
 }
 
 /**
  * Gewinnwahrscheinlichkeit als Leiste von Rot nach Grün. Der Verlauf ist über die volle Breite
  * fixiert, die Füllung zeigt also immer die Farbe, die zum Prozentwert gehört.
  */
-export function ProbabilityBar({ probability, size = "md", className = "" }: Props) {
+export function ProbabilityBar({ probability, size = "md", className = "", animate = false }: Props) {
   const value = Math.round(Math.min(1, Math.max(0, probability)) * 100);
   const level = chanceLevel(probability);
   const height = size === "lg" ? "h-3" : size === "md" ? "h-2" : "h-1.5";
@@ -45,7 +47,7 @@ export function ProbabilityBar({ probability, size = "md", className = "" }: Pro
         className={`relative mt-2 w-full overflow-hidden rounded-full bg-line ${height}`}
       >
         <div
-          className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-700 ease-out"
+          className={`absolute inset-y-0 left-0 rounded-full transition-[width] duration-700 ease-out ${animate ? "animate-fill" : ""}`}
           style={{
             width: `${Math.max(value, 3)}%`,
             backgroundImage: "var(--probability-gradient)",

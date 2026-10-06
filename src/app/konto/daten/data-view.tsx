@@ -74,7 +74,7 @@ export function DataView() {
           Lade alle Daten herunter, die wir zu deinem Konto speichern (Auskunft und Datenübertragbarkeit nach Art. 15 und 20 DSGVO). Zugangsschlüssel deiner
           Marktplätze sind aus Sicherheitsgründen nicht enthalten.
         </p>
-        <a href="/api/account/export/" download className="mt-4 inline-flex h-11 items-center rounded-full px-5 text-sm font-medium ring-1 ring-line-strong hover:bg-canvas">
+        <a href="/api/account/export/" download className="mt-4 inline-flex h-11 items-center rounded-[10px] px-5 text-sm font-medium ring-1 ring-line-strong hover:bg-canvas">
           Daten als JSON herunterladen
         </a>
       </section>

@@ -135,7 +135,7 @@ export function ConnectionsView() {
       <Sheet open={target !== null} onClose={() => setTarget(null)} title={`${target?.name ?? ""} verbinden`} subtitle="Einwilligung zur Datenverarbeitung">
         {target && (
           <div className="space-y-5">
-            <dl className="space-y-3 rounded-2xl bg-canvas p-4 text-[13px]">
+            <dl className="space-y-3 rounded-xl bg-canvas p-4 text-[13px]">
               <div>
                 <dt className="font-semibold">Zweck</dt>
                 <dd className="text-ink-2">{target.purpose}.</dd>

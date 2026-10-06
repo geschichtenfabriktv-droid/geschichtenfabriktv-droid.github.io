@@ -6,19 +6,13 @@ import { SITE_URL } from "@/lib/site";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 // Selbst gehostet und vorgeladen, mit angepassten Ersatzschrift-Metriken gegen Layoutverschiebung (CLS).
-const inter = localFont({
-  src: "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
+const archivo = localFont({
+  src: "../../node_modules/@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2",
   weight: "100 900",
-  variable: "--font-inter",
+  style: "normal",
+  variable: "--font-archivo",
   display: "swap",
-});
-const serif = localFont({
-  src: [
-    { path: "../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2", style: "normal", weight: "400" },
-    { path: "../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2", style: "italic", weight: "400" },
-  ],
-  variable: "--font-serif",
-  display: "swap",
+  declarations: [{ prop: "font-stretch", value: "62% 125%" }],
 });
 
 export const metadata: Metadata = {
@@ -53,7 +47,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={`${inter.variable} ${serif.variable}`}>
+    <html lang="de" className={archivo.variable}>
       <body>{children}</body>
     </html>
   );

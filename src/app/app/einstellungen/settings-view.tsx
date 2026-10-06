@@ -34,7 +34,7 @@ export function SettingsView() {
           <label className="mt-6 block">
             <span className="text-sm font-medium">Budget für Einkäufe</span>
             <div className="mt-2 flex gap-2">
-              <div className="flex flex-1 items-center rounded-2xl ring-1 ring-line focus-within:ring-ink">
+              <div className="flex flex-1 items-center rounded-xl ring-1 ring-line focus-within:ring-ink">
                 <input
                   inputMode="numeric"
                   value={budgetValue}
@@ -51,14 +51,14 @@ export function SettingsView() {
 
           <fieldset className="mt-6">
             <legend className="text-sm font-medium">Standard-Filter Gewinnwahrscheinlichkeit</legend>
-            <div className="mt-2 inline-flex rounded-full bg-canvas p-1">
+            <div className="mt-2 inline-flex rounded-[12px] bg-canvas p-1">
               {[0, 0.45, 0.7].map((m) => (
                 <button
                   key={m}
                   type="button"
                   aria-pressed={settings.minProbability === m}
                   onClick={() => portfolio.updateSettings({ minProbability: m })}
-                  className={`h-9 rounded-full px-4 text-[13px] font-medium transition ${settings.minProbability === m ? "bg-ink text-white" : "text-ink-2"}`}
+                  className={`h-9 rounded-[9px] px-4 text-[13px] font-medium transition ${settings.minProbability === m ? "bg-ink text-white" : "text-ink-2"}`}
                 >
                   {m === 0 ? "Alle" : `ab ${m * 100} %`}
                 </button>
@@ -81,7 +81,7 @@ export function SettingsView() {
                         defaultPlatforms: on ? settings.defaultPlatforms.filter((x) => x !== p) : [...settings.defaultPlatforms, p],
                       })
                     }
-                    className={`h-9 rounded-full px-3.5 text-[13px] font-medium transition ${on ? "bg-ink text-white" : "ring-1 ring-line text-ink-2"}`}
+                    className={`h-9 rounded-[9px] px-3.5 text-[13px] font-medium transition ${on ? "bg-ink text-white" : "ring-1 ring-line text-ink-2"}`}
                   >
                     {p}
                   </button>
@@ -90,7 +90,7 @@ export function SettingsView() {
             </div>
           </fieldset>
 
-          <label className="mt-6 flex cursor-pointer items-center justify-between gap-4 rounded-2xl ring-1 ring-line p-4">
+          <label className="mt-6 flex cursor-pointer items-center justify-between gap-4 rounded-xl ring-1 ring-line p-4">
             <span>
               <span className="block text-sm font-medium">Preisuntergrenze standardmäßig merken</span>
               <span className="block text-[12px] text-muted">Neue Inserate speichern den Break-even als Untergrenze. Preise werden nicht automatisch angepasst.</span>

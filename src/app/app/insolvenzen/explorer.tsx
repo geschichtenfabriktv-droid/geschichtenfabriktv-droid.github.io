@@ -24,7 +24,7 @@ export function LotExplorer() {
 
   return (
     <>
-      <PageHeader eyebrow="Insolvenzmassen" title={<>Werte aus Verfahren, <span className="italic text-muted">unter Gutachterpreis.</span></>}>
+      <PageHeader eyebrow="Insolvenzmassen" title="Werte aus Verfahren, unter Gutachterpreis">
         <ScanStatus scannedAt={market?.scannedAt} scanning={scanning} onRefresh={refresh} />
       </PageHeader>
 
@@ -40,7 +40,7 @@ export function LotExplorer() {
             type="button"
             aria-pressed={type === t}
             onClick={() => setType(t)}
-            className={`h-10 shrink-0 rounded-full px-4 text-[13px] font-medium transition ${type === t ? "bg-ink text-white" : "bg-white text-ink-2 ring-1 ring-line hover:text-ink"}`}
+            className={`h-10 shrink-0 rounded-[10px] px-4 text-[13px] font-medium transition ${type === t ? "bg-ink text-white" : "bg-white text-ink-2 ring-1 ring-line hover:text-ink"}`}
           >
             {t}
           </button>
@@ -54,7 +54,7 @@ export function LotExplorer() {
             { k: "Gutachterwert", v: eur(totalAppraised, { cents: false }) },
             { k: "Aktuelle Gebote", v: eur(totalBids, { cents: false }) },
           ].map((s) => (
-            <div key={s.k} className="rounded-2xl bg-white p-4 ring-1 ring-line">
+            <div key={s.k} className="rounded-xl bg-white p-4 ring-1 ring-line">
               <p className="text-[12px] text-muted">{s.k}</p>
               <p className="tabular mt-1 text-base font-semibold md:text-xl">{s.v}</p>
             </div>
@@ -66,7 +66,7 @@ export function LotExplorer() {
         <div className="mb-6 rounded-[var(--radius-card)] bg-ink p-6 text-white">
           <p className="font-display text-3xl">Insolvenz-Finder freischalten</p>
           <p className="mt-2 text-sm text-white/70">{market.locked.lots === 1 ? "1 Verfahren wartet" : `${market.locked.lots} Verfahren warten`}. Im Tarif Business enthalten oder als Erweiterung zu Starter und Pro buchbar.</p>
-          <Link href="/konto/" className="mt-5 inline-flex h-10 items-center rounded-full bg-white px-5 text-sm font-medium text-ink">Im Konto hinzubuchen</Link>
+          <Link href="/konto/" className="mt-5 inline-flex h-10 items-center rounded-[10px] bg-white px-5 text-sm font-medium text-ink">Im Konto hinzubuchen</Link>
         </div>
       )}
       {!market ? (

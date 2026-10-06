@@ -43,14 +43,13 @@ export default async function LandingPageRoute({ params }: Props) {
     <SiteLayout>
       <JsonLd data={graph(breadcrumbLd(trail), softwareLd(), faqLd(page.faq))} />
       <article>
-        <header className="mx-auto max-w-[1320px] px-4 pt-10 sm:px-6 md:pt-14 lg:px-10">
+        <header className="mx-auto max-w-[1240px] px-4 pt-10 sm:px-6 md:pt-14 lg:px-10">
           <Breadcrumbs trail={trail} />
-          <p className="mt-10 text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">{page.eyebrow}</p>
-          <h1 className="mt-4 max-w-5xl font-display text-[44px] leading-[0.98] tracking-tight md:text-[80px]">{page.h1}</h1>
+          <h1 className="mt-10 max-w-4xl font-display text-[38px] leading-[1.04] md:text-[60px]">{page.h1}</h1>
           <p className="mt-6 max-w-2xl text-[18px] leading-relaxed text-ink-2">{page.intro}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <LinkButton href="/demo/" size="lg">
-              Kostenlos Chancen ansehen <IconArrowRight size={17} />
+              Test-Dashboard öffnen
             </LinkButton>
             <LinkButton href="/preise/" size="lg" variant="secondary">
               Preise ab 29 €
@@ -58,7 +57,7 @@ export default async function LandingPageRoute({ params }: Props) {
           </div>
           <ul className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {page.benefits.map((b) => (
-              <li key={b.title} className="rounded-[24px] bg-canvas p-6">
+              <li key={b.title} className="rounded-[var(--radius-card)] bg-canvas p-6">
                 <span className="grid size-9 place-items-center rounded-full bg-white ring-1 ring-line">
                   <IconCheck size={16} />
                 </span>
@@ -69,7 +68,7 @@ export default async function LandingPageRoute({ params }: Props) {
           </ul>
         </header>
 
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-10 lg:py-24">
           <div className="min-w-0 max-w-3xl">
             <Blocks blocks={page.sections} />
             <FaqList faq={page.faq} />
@@ -77,7 +76,7 @@ export default async function LandingPageRoute({ params }: Props) {
           <aside className="hidden lg:block">
             <div className="sticky top-28 space-y-4">
               <Toc blocks={page.sections} />
-              <div className="rounded-[24px] p-6 ring-1 ring-line">
+              <div className="rounded-[var(--radius-card)] p-6 ring-1 ring-line">
                 <p className="font-semibold">Erst ansehen, dann entscheiden</p>
                 <p className="mt-2 text-[14px] leading-relaxed text-ink-2">Das Test-Dashboard zeigt die Top-3-Chancen je Kategorie, ohne Anmeldung.</p>
                 <LinkButton href="/demo/" className="mt-4 w-full">
@@ -88,7 +87,7 @@ export default async function LandingPageRoute({ params }: Props) {
           </aside>
         </div>
 
-        <div className="mx-auto max-w-[1320px] px-4 pb-24 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-[1240px] px-4 pb-24 sm:px-6 lg:px-10">
           <CardLinks title="Weiterlesen im Ratgeber" items={related} />
           <CardLinks title="Weitere Lösungen" items={others.slice(0, 3)} />
         </div>

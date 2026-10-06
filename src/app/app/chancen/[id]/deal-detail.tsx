@@ -72,7 +72,7 @@ export function DealDetail({ id }: { id: string }) {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
         <div className="min-w-0 space-y-6">
-          <header className="animate-rise">
+          <header>
             <div className="flex flex-wrap gap-2">
               <Badge tone="outline">{deal.brand}</Badge>
               {a.doubleUp && <Badge tone="ink">2× Preis-Kandidat</Badge>}
@@ -80,7 +80,7 @@ export function DealDetail({ id }: { id: string }) {
               {deal.kind === "vorbestellung" && <Badge tone="warn">Vorbestellung</Badge>}
               {deal.kind === "dienstleistung" && <Badge tone="neutral">Dienstleistung</Badge>}
             </div>
-            <h1 className="mt-4 font-display text-[38px] leading-[1.04] tracking-tight md:text-[54px]">{deal.title}</h1>
+            <h1 className="mt-4 font-display text-[30px] leading-[1.1] md:text-[42px]">{deal.title}</h1>
             <p className="mt-3 text-[15px] text-ink-2">
               Gefunden {relativeTime(deal.detectedAt, market.scannedAt)} bei {deal.source.platform}
               {deal.releaseDate && <> · Release am {dateDe(deal.releaseDate)}</>}
@@ -115,7 +115,7 @@ export function DealDetail({ id }: { id: string }) {
               { k: "Abverkauf 30 T.", v: percent(a.sellThrough30d) },
               { k: "Bis Verkauf", v: `~${a.estimatedDaysToSell} Tage` },
             ].map((s) => (
-              <div key={s.k} className="rounded-2xl bg-white p-4 ring-1 ring-line">
+              <div key={s.k} className="rounded-xl bg-white p-4 ring-1 ring-line">
                 <p className="text-[12px] text-muted">{s.k}</p>
                 <p className="tabular mt-1 text-lg font-semibold">{s.v}</p>
               </div>
@@ -159,7 +159,7 @@ export function DealDetail({ id }: { id: string }) {
         </div>
 
         <aside className="lg:sticky lg:top-10 lg:self-start">
-          <div className="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line md:p-6 animate-rise">
+          <div className="rounded-[var(--radius-card)] bg-white p-5 shadow-[var(--shadow-card)] ring-1 ring-line md:p-6">
             <p className="text-[13px] font-medium text-muted">Gewinnwahrscheinlichkeit</p>
             <ProbabilityBar probability={a.probability} size="lg" className="mt-2" />
             <p className="mt-3 text-[12px] leading-relaxed text-muted">

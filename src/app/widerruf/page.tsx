@@ -46,7 +46,7 @@ export default function WiderrufPage() {
 
       <h2>Muster-Widerrufsformular</h2>
       <p>(Wenn du den Vertrag widerrufen willst, fülle bitte dieses Formular aus und sende es zurück.)</p>
-      <div className="mt-4 rounded-2xl bg-canvas p-5 ring-1 ring-line">
+      <div className="mt-4 rounded-xl bg-canvas p-5 ring-1 ring-line">
         <p className="mt-0">
           An: <LegalAddress />
         </p>

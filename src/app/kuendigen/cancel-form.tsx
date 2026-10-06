@@ -36,7 +36,7 @@ export function CancelForm() {
 
   if (done) {
     return (
-      <div className="rounded-[24px] bg-good-soft p-6 text-[#0b7a43]" role="status">
+      <div className="rounded-[var(--radius-card)] bg-good-soft p-6 text-[#0b7a43]" role="status">
         <p className="text-[17px] font-semibold">Kündigung eingegangen</p>
         <p className="mt-2 text-[14px]">
           Eingang: {new Date(done.receivedAt).toLocaleString("de-DE")} · Referenz: {done.reference}
@@ -47,7 +47,7 @@ export function CancelForm() {
   }
 
   return (
-    <form onSubmit={submit} className="max-w-xl space-y-4 rounded-[24px] p-6 ring-1 ring-line">
+    <form onSubmit={submit} className="max-w-xl space-y-4 rounded-[var(--radius-card)] p-6 ring-1 ring-line">
       <fieldset>
         <legend className="text-[13px] font-medium">Art der Kündigung</legend>
         <div className="mt-2 grid gap-2 sm:grid-cols-3">
@@ -60,7 +60,7 @@ export function CancelForm() {
           ).map(([k, label]) => (
             <label
               key={k}
-              className={`cursor-pointer rounded-2xl p-3 text-[13px] ring-1 transition ${kind === k ? "bg-ink text-white ring-ink" : "ring-line hover:ring-line-strong"}`}
+              className={`cursor-pointer rounded-xl p-3 text-[13px] ring-1 transition ${kind === k ? "bg-ink text-white ring-ink" : "ring-line hover:ring-line-strong"}`}
             >
               <input type="radio" name="kind" value={k} checked={kind === k} onChange={() => setKind(k)} className="sr-only" />
               {label}
@@ -79,7 +79,7 @@ export function CancelForm() {
             rows={3}
             maxLength={1000}
             required
-            className="mt-1.5 w-full rounded-2xl bg-white p-4 text-[15px] ring-1 ring-line outline-none focus:ring-2 focus:ring-ink"
+            className="mt-1.5 w-full rounded-xl bg-white p-4 text-[15px] ring-1 ring-line outline-none focus:ring-2 focus:ring-ink"
           />
         </label>
       )}

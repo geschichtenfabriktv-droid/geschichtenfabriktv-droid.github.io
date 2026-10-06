@@ -49,7 +49,7 @@ export function CheckoutForm({ initialPlan, initialInterval, email, paymentsRead
       </header>
       <main className="mx-auto grid max-w-[1100px] grid-cols-1 gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_400px]">
         <section className="min-w-0 space-y-6">
-          <h1 className="font-display text-[44px] leading-none tracking-tight">Tarif buchen</h1>
+          <h1 className="font-display text-[34px] leading-[1.08]">Tarif buchen</h1>
           <IntervalToggle value={interval} onChange={setInterval} />
           <div className="grid gap-3 sm:grid-cols-3" role="radiogroup" aria-label="Tarif">
             {PLANS.map((x) => (
@@ -92,7 +92,7 @@ export function CheckoutForm({ initialPlan, initialInterval, email, paymentsRead
         </section>
 
         <aside className="lg:sticky lg:top-6 lg:self-start">
-          <div className="rounded-[24px] bg-white p-6 shadow-[var(--shadow-card)] ring-1 ring-line">
+          <div className="rounded-[var(--radius-card)] bg-white p-6 shadow-[var(--shadow-card)] ring-1 ring-line">
             <p className="text-[13px] text-muted">Zusammenfassung</p>
             <dl className="mt-4 space-y-2 text-[14px]">
               <div className="flex justify-between">

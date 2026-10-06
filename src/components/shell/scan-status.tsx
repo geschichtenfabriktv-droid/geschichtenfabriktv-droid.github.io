@@ -16,7 +16,7 @@ export function ScanStatus({ scannedAt, scanning, onRefresh }: { scannedAt?: Dat
       type="button"
       onClick={onRefresh}
       disabled={scanning}
-      className="inline-flex h-10 items-center gap-2 rounded-full bg-white px-4 text-[13px] font-medium text-ink-2 ring-1 ring-line transition hover:text-ink hover:ring-line-strong disabled:opacity-60"
+      className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-white px-4 text-[13px] font-medium text-ink-2 ring-1 ring-line transition hover:text-ink hover:ring-line-strong disabled:opacity-60"
     >
       <IconRefresh size={15} className={scanning ? "animate-spin" : ""} />
       {scanning ? "Aktualisiere …" : scannedAt ? `Aktualisiert ${relativeTime(scannedAt.toISOString(), now)}` : "Aktualisieren"}

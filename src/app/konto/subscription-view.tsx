@@ -81,7 +81,7 @@ export function SubscriptionView() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-[13px] text-muted">Dein Tarif</p>
-            <p className="mt-1 font-display text-[40px] leading-none tracking-tight">{current?.name ?? "Noch kein Tarif"}</p>
+            <p className="mt-1 font-display text-[32px] leading-[1.08]">{current?.name ?? "Noch kein Tarif"}</p>
             {current && (
               <p className="mt-2 text-[14px] text-ink-2">
                 {eur(priceFor(current.id, u.planInterval ?? "monat", u.addons))} {u.planInterval === "jahr" ? "jährlich" : "monatlich"}
@@ -110,7 +110,7 @@ export function SubscriptionView() {
             Abbuchung.
           </p>
           {u.pendingPlan && (
-            <p className="mt-3 rounded-2xl bg-canvas px-4 py-3 text-[13px] text-ink-2">
+            <p className="mt-3 rounded-xl bg-canvas px-4 py-3 text-[13px] text-ink-2">
               Vorgemerkt ab {u.currentPeriodEnd ? dateDe(u.currentPeriodEnd) : "der nächsten Abbuchung"}: {getPlan(u.pendingPlan)?.name}
             </p>
           )}
@@ -121,7 +121,7 @@ export function SubscriptionView() {
                 type="button"
                 aria-pressed={selPlan === p.id}
                 onClick={() => setPlan(p.id)}
-                className={`rounded-2xl p-4 text-left transition ${selPlan === p.id ? "bg-ink text-white" : "ring-1 ring-line hover:ring-ink"}`}
+                className={`rounded-xl p-4 text-left transition ${selPlan === p.id ? "bg-ink text-white" : "ring-1 ring-line hover:ring-ink"}`}
               >
                 <p className="font-semibold">{p.name}</p>
                 <p className="tabular text-[13px] opacity-70">{eur(u.planInterval === "jahr" ? p.yearly : p.monthly, { cents: false })}</p>

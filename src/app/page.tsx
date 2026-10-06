@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { faqLd, graph, organizationLd, pageMetadata, softwareLd, websiteLd } from "@/lib/seo";
 import Link from "next/link";
-import { Reveal } from "@/components/site/reveal";
+import { PriceTag } from "@/components/site/price-tag";
 import { PricingCards } from "@/components/site/pricing-cards";
 import { SiteLayout } from "@/components/site/site-layout";
-import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/button";
-import { IconArrowRight, IconArrowUpRight, IconBolt, IconCalendar, IconCheck, IconGavel, IconRadar, IconShield } from "@/components/ui/icons";
+import { IconArrowUpRight } from "@/components/ui/icons";
 import { ProbabilityBar } from "@/components/ui/probability-bar";
 import { getAnalyzedDeals, getAnalyzedLots, summarizeCategories } from "@/lib/data/repository";
 import { eur, signedEur } from "@/lib/format";
@@ -19,35 +18,33 @@ export const metadata: Metadata = pageMetadata({
   description: "Finde Arbitrage-Deals, Vorbestell-Chancen und Insolvenzmassen mit Gewinnwahrscheinlichkeit in Prozent. Kostenlos im Test-Dashboard ansehen.",
 });
 
-const SOURCES = ["eBay", "Amazon"];
-
 const FEATURES = [
   {
-    icon: IconRadar,
+    key: "arbitrage",
     title: "Arbitrage-Finder",
     text: "Vergleicht Händlerpreise mit den Marktpreisen auf eBay und Amazon und rechnet Gebühren und Versand direkt ein.",
   },
   {
-    icon: IconCalendar,
+    key: "vorbestellung",
     title: "Vorbestell-Radar",
     text: "Zeigt limitierte Releases, die zum Normalpreis vorbestellbar sind, und schätzt, ob sie auf dem Zweitmarkt mehr erzielen – manche bis zum doppelten Preis.",
   },
   {
-    icon: IconGavel,
+    key: "insolvenz",
     title: "Insolvenz-Finder",
     text: "Bewertet Insolvenzmasse-Posten mit Maximalgebot – also bis zu welchem Gebot sich ein Los noch lohnt.",
   },
   {
-    icon: IconBolt,
+    key: "autopilot",
     title: "Autopilot",
     text: "Öffnet das Händlerangebot und stellt die Ware mit einem Klick auf eBay ein.",
   },
 ];
 
 const STEPS = [
-  { n: "01", title: "Erfassen", text: "Händlerangebote, Vorbestellungen und Insolvenzposten werden Produkten eindeutig zugeordnet und mit Marktpreisen verknüpft." },
-  { n: "02", title: "Bewerten", text: "Für jede Chance entsteht eine Marktanalyse: Preisverteilung, Nachfrage, Konkurrenz, Trend und alle Gebühren." },
-  { n: "03", title: "Handeln", text: "Ein Klick öffnet das Händlerangebot, ein zweiter stellt die Ware auf eBay ein. Den Kauf beim Händler schließt du selbst ab." },
+  { n: "1", title: "Erfassen", text: "Händlerangebote, Vorbestellungen und Insolvenzposten werden Produkten eindeutig zugeordnet und mit Marktpreisen verknüpft." },
+  { n: "2", title: "Bewerten", text: "Für jede Chance entsteht eine Marktanalyse: Preisverteilung, Nachfrage, Konkurrenz, Trend und alle Gebühren." },
+  { n: "3", title: "Handeln", text: "Ein Klick öffnet das Händlerangebot, ein zweiter stellt die Ware auf eBay ein. Den Kauf beim Händler schließt du selbst ab." },
 ];
 
 const FAQ = [
@@ -81,129 +78,59 @@ export default async function Home() {
   const now = new Date();
   const [deals, lots] = await Promise.all([getAnalyzedDeals(now), getAnalyzedLots(now)]);
   const categories = summarizeCategories(deals, lots);
-  const hero = deals.find((d) => d.id === "aj1-chicago-reimagined") ?? deals[0];
-  const preorder = deals.find((d) => d.kind === "vorbestellung" && d.analysis.doubleUp);
-  const examples = [deals.find((d) => d.analysis.chance === "hoch"), deals.find((d) => d.analysis.chance === "mittel"), deals.find((d) => d.analysis.chance === "niedrig")].filter(
+  const hero = deals.find((d) => d.id === "aj1-chicago-reimagined") ?? deals.find((d) => d.analysis.chance === "hoch") ?? deals[0];
+  const examples = [deals.find((d) => d.analysis.chance === "hoch" && d.id !== hero?.id), deals.find((d) => d.analysis.chance === "mittel"), deals.find((d) => d.analysis.chance === "niedrig")].filter(
     (d): d is NonNullable<typeof d> => Boolean(d),
   );
+  const counts: Record<string, string> = {
+    arbitrage: `${deals.filter((d) => d.kind !== "vorbestellung").length} Chancen im Test-Dashboard`,
+    vorbestellung: `${deals.filter((d) => d.kind === "vorbestellung").length} Releases im Test-Dashboard`,
+    insolvenz: `${lots.length} Beispiel-Posten im Test-Dashboard`,
+    autopilot: "ab Tarif Pro",
+  };
 
   return (
     <SiteLayout>
       <JsonLd data={graph(organizationLd(), websiteLd(), softwareLd(), faqLd(FAQ))} />
 
-      {/* Hero */}
-      <section className="relative">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-14 px-4 pt-10 pb-32 sm:px-6 md:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10 lg:px-10 lg:pt-20 lg:pb-32">
-          <div className="animate-rise">
-            <Badge tone="outline" className="!px-3 !py-1.5">
-              <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {deals.length + lots.length} Chancen im Test-Dashboard
-            </Badge>
-            <h1 className="mt-6 font-display text-[54px] leading-[0.95] tracking-[-0.02em] sm:text-[76px] lg:text-[104px]">
-              Gewinne finden, <span className="italic text-muted">bevor der Markt sie sieht.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-ink-2 md:text-lg">
-              Arbitrage Radar erkennt Preisgefälle, Vorbestell-Chancen und Insolvenzmassen, analysiert den Markt und zeigt dir für jede Gelegenheit, wie
-              wahrscheinlich sie sich lohnt. Kaufen und Einstellen auf Knopfdruck.
+      {/* Hero: Aussage links, Preisschild rechts */}
+      <section>
+        <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-14 px-4 pt-12 pb-24 sm:px-6 md:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-10 lg:pt-24 lg:pb-32">
+          <div>
+            <h1 className="font-display text-[40px] leading-[1.03] sm:text-[58px] lg:text-[68px]">Gewinne finden, bevor der Markt sie sieht.</h1>
+            <p className="mt-6 max-w-[34rem] text-[17px] leading-relaxed text-ink-2 md:text-[18px]">
+              Arbitrage Radar vergleicht Händlerpreise mit den Marktpreisen auf eBay und Amazon, rechnet alle Gebühren ein und zeigt dir für jede Chance, wie
+              wahrscheinlich sie sich lohnt.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <LinkButton href="/demo/" size="lg">
-                Kostenlos ansehen <IconArrowRight size={17} />
+                Test-Dashboard öffnen
               </LinkButton>
               <LinkButton href="/preise/" variant="secondary" size="lg">
                 Tarife ansehen
               </LinkButton>
             </div>
-            <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-muted">
-              <span className="inline-flex items-center gap-1.5"><IconCheck size={14} className="text-good" /> Test-Dashboard ohne Anmeldung</span>
-              <span className="inline-flex items-center gap-1.5"><IconCheck size={14} className="text-good" /> 14 Tage Geld zurück</span>
-              <span className="inline-flex items-center gap-1.5"><IconCheck size={14} className="text-good" /> Monatlich kündbar</span>
-            </p>
+            <p className="mt-5 text-[14px] text-muted">Ohne Anmeldung ansehen. 14 Tage Geld-zurück-Garantie, monatlich kündbar.</p>
           </div>
-
-          {/* Produktbühne */}
           {hero && (
-            <div className="relative mx-auto w-full max-w-[460px] animate-rise [animation-delay:150ms]">
-              <div aria-hidden className="absolute -inset-10 -z-10 rounded-[48px] bg-[radial-gradient(60%_60%_at_60%_40%,#f1f1ee_0%,transparent_70%)]" />
-              <div className="rounded-[28px] bg-white p-6 shadow-[var(--shadow-float)] ring-1 ring-line">
-                <div className="flex items-center justify-between">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">Sneaker & Mode</p>
-                </div>
-                <p className="mt-3 text-xl font-semibold leading-snug tracking-tight">{hero.title}</p>
-                <p className="mt-1 text-[13px] text-muted">
-                  {hero.source.platform} → {hero.target.platform}
-                </p>
-                <div className="mt-6 grid grid-cols-3 gap-3 border-t border-line pt-4">
-                  {[
-                    ["Einkauf", eur(hero.analysis.totalCost)],
-                    ["Verkauf", eur(hero.analysis.recommendedPrice)],
-                    ["Gewinn", signedEur(hero.analysis.expectedProfit)],
-                  ].map(([k, v]) => (
-                    <div key={k}>
-                      <p className="text-[11px] text-muted">{k}</p>
-                      <p className="tabular mt-0.5 font-semibold">{v}</p>
-                    </div>
-                  ))}
-                </div>
-                <ProbabilityBar probability={hero.analysis.probability} size="md" className="mt-5" />
-                <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-ink py-3.5 text-sm font-medium text-white">
-                  <IconBolt size={16} /> Autopilot: Angebot öffnen & einstellen
-                </div>
-              </div>
-
-              <div className="absolute -top-10 -right-2 rounded-2xl bg-white px-4 py-3 shadow-[var(--shadow-float)] ring-1 ring-line sm:-right-10">
-                <p className="flex items-center gap-2 text-[13px] font-semibold">
-                  <span className="grid size-6 place-items-center rounded-full bg-good-soft text-good">
-                    <IconCheck size={14} />
-                  </span>
-                  Auf {hero.target.platform} eingestellt
-                </p>
-                <p className="mt-0.5 pl-8 text-[11px] text-muted">Beispiel aus dem Test-Dashboard</p>
-              </div>
-
-              {preorder && (
-                <div className="absolute -bottom-24 -left-2 w-[230px] rounded-2xl bg-ink p-4 text-white shadow-[var(--shadow-float)] sm:-left-12">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">Vorbestellung · 2× Preis</p>
-                  <p className="mt-1.5 line-clamp-2 text-[13px] font-medium leading-snug">{preorder.title.replace(" (Vorbestellung)", "")}</p>
-                  <p className="tabular mt-2 text-[13px] text-white/70">
-                    {eur(preorder.source.price)} → <span className="font-semibold text-white">{eur(preorder.market.medianPrice)}</span>
-                  </p>
-                </div>
-              )}
-            </div>
+            <PriceTag deal={hero} note="Beispiel aus dem Test-Dashboard" className="mx-auto w-full max-w-[500px] lg:rotate-[-2deg]" />
           )}
         </div>
       </section>
 
-      {/* Quellen-Laufband */}
-      <section aria-label="Marktpreis-Quellen" className="border-y border-line bg-canvas py-5">
-        <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-center gap-x-8 gap-y-2 px-4 text-[13px] font-medium text-muted sm:px-6 lg:px-10">
-          <span className="text-ink">Vergleicht Händlerpreise mit den Marktpreisen auf</span>
-          {SOURCES.map((s) => (
-            <span key={s}>{s}</span>
-          ))}
-        </div>
-      </section>
-
       {/* Funktionen */}
-      <section id="funktionen" className="scroll-mt-20">
-        <div className="mx-auto max-w-[1320px] px-4 py-24 sm:px-6 lg:px-10 lg:py-36">
-          <Reveal>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Funktionen</p>
-            <h2 className="mt-4 max-w-3xl font-display text-[44px] leading-[1] tracking-tight md:text-[68px]">
-              Vier Wege zum Gewinn. <span className="italic text-muted">Ein Dashboard.</span>
-            </h2>
-          </Reveal>
-          <div className="mt-16 grid gap-px overflow-hidden rounded-[28px] bg-line ring-1 ring-line md:grid-cols-2">
-            {FEATURES.map((f, i) => (
-              <Reveal key={f.title} delay={i * 80} className="bg-white">
-                <article className="flex h-full flex-col p-8 md:p-10">
-                  <span className="grid size-12 place-items-center rounded-2xl bg-canvas">
-                    <f.icon size={22} />
-                  </span>
-                  <h3 className="mt-8 text-2xl font-semibold tracking-tight">{f.title}</h3>
-                  <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-2">{f.text}</p>
-                </article>
-              </Reveal>
+      <section id="funktionen" className="scroll-mt-20 border-t border-line">
+        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
+          <h2 className="max-w-3xl font-display text-[34px] leading-[1.05] md:text-[48px]">Vier Wege zum Gewinn in einem Dashboard</h2>
+          <div className="mt-14 grid gap-x-16 md:grid-cols-2">
+            {FEATURES.map((f) => (
+              <article key={f.title} className="border-t border-line py-8">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                  <h3 className="text-[22px] font-bold tracking-[-0.015em] [font-stretch:110%]">{f.title}</h3>
+                  <p className="text-[13px] font-medium text-muted">{counts[f.key]}</p>
+                </div>
+                <p className="mt-3 max-w-[46ch] text-[16px] leading-relaxed text-ink-2">{f.text}</p>
+              </article>
             ))}
           </div>
         </div>
@@ -211,140 +138,96 @@ export default async function Home() {
 
       {/* Analyse */}
       <section id="analyse" className="scroll-mt-20 bg-canvas">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-14 px-4 py-24 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-10 lg:py-36">
-          <Reveal>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Marktanalyse</p>
-            <h2 className="mt-4 font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">
-              Von Rot bis Grün. <span className="italic text-muted">Auf einen Blick.</span>
-            </h2>
-            <p className="mt-6 max-w-lg text-[16px] leading-relaxed text-ink-2">
-              Jede Chance bekommt eine Gewinnwahrscheinlichkeit in Prozent. Dahinter stehen nachvollziehbare Marktmechanik und keine Bauchgefühle: wie breit die
-              Verkaufspreise streuen, wie schnell Ware abverkauft wird, wie viel Konkurrenz es gibt, wohin der Trend zeigt und was Gebühren und Versand
-              kosten.
+        <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-14 px-4 py-24 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-10 lg:py-32">
+          <div>
+            <h2 className="font-display text-[34px] leading-[1.05] md:text-[48px]">Von Rot bis Grün auf einen Blick</h2>
+            <p className="mt-6 max-w-[34rem] text-[17px] leading-relaxed text-ink-2">
+              Jede Chance bekommt eine Gewinnwahrscheinlichkeit in Prozent. Sie ergibt sich aus der Streuung der Verkaufspreise, dem Abverkauf, der
+              Konkurrenz, dem Trend und den Kosten für Gebühren und Versand. Jede Bewertung zeigt dir auch, welche Faktoren gegen den Kauf sprechen.
             </p>
-            <ul className="mt-8 grid gap-3 text-[15px] sm:grid-cols-2">
-              {["Preisverteilung & Trend", "Nachfrage & Konkurrenz", "Gebühren & Versand", "Break-even & Zielpreis"].map((t) => (
-                <li key={t} className="flex items-center gap-2.5">
-                  <IconCheck size={16} className="text-good" /> {t}
+          </div>
+          <div className="rounded-[var(--radius-card)] bg-white p-2 shadow-[var(--shadow-card)]">
+            <ul className="divide-y divide-line">
+              {examples.map((d) => (
+                <li key={d.id} className="px-5 py-5">
+                  <div className="mb-3 flex items-baseline justify-between gap-4">
+                    <p className="truncate text-[15px] font-semibold">{d.title}</p>
+                    <p className="tabular shrink-0 text-[14px] font-semibold">{signedEur(d.analysis.expectedProfit)}</p>
+                  </div>
+                  <ProbabilityBar probability={d.analysis.probability} />
                 </li>
               ))}
             </ul>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="space-y-4 rounded-[28px] bg-white p-6 shadow-[var(--shadow-card)] ring-1 ring-line md:p-8">
-              {examples.map((d) => (
-                <div key={d.id} className="rounded-2xl p-4 ring-1 ring-line">
-                  <div className="mb-3 flex items-baseline justify-between gap-4">
-                    <p className="truncate text-[15px] font-semibold">{d.title}</p>
-                    <p className="tabular shrink-0 text-[13px] text-muted">{signedEur(d.analysis.expectedProfit)}</p>
-                  </div>
-                  <ProbabilityBar probability={d.analysis.probability} />
-                </div>
-              ))}
-              <div className="flex items-center gap-3 pt-2 text-[12px] text-muted">
-                <span>0 %</span>
-                <span className="h-1.5 flex-1 rounded-full [background-image:var(--probability-gradient)]" aria-hidden />
-                <span>100 %</span>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Kategorien */}
-      <section id="kategorien" className="scroll-mt-20">
-        <div className="mx-auto max-w-[1320px] px-4 py-24 sm:px-6 lg:px-10 lg:py-36">
-          <Reveal className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Kategorien</p>
-              <h2 className="mt-4 max-w-2xl font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">
-                Sortiert, wie du denkst. <span className="italic text-muted">Ein Klick genügt.</span>
-              </h2>
-            </div>
-            <LinkButton href="/demo/" variant="secondary">
-              Im Test-Dashboard ansehen
-            </LinkButton>
-          </Reveal>
-          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((c, i) => (
-              <Reveal key={c.id} delay={(i % 3) * 70}>
-                <Link
-                  href={c.id === "insolvenz" ? "/demo/insolvenzen/" : `/demo/?kategorie=${c.id}`}
-                  className={`group flex h-full flex-col rounded-[24px] p-6 ring-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-float)] ${
-                    c.id === "insolvenz" ? "bg-ink text-white ring-ink" : "bg-white ring-line"
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <span className={`tabular text-[12px] font-semibold ${c.id === "insolvenz" ? "text-white/50" : "text-muted"}`}>{String(i + 1).padStart(2, "0")}</span>
-                    <IconArrowUpRight size={18} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </div>
-                  <h3 className="mt-10 font-display text-[32px] leading-none tracking-tight">{c.name}</h3>
-                  <p className={`mt-3 text-[14px] leading-snug ${c.id === "insolvenz" ? "text-white/65" : "text-ink-2"}`}>{c.claim}</p>
-                </Link>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* Ablauf */}
-      <section id="ablauf" className="scroll-mt-20 border-t border-line">
-        <div className="mx-auto max-w-[1320px] px-4 py-24 sm:px-6 lg:px-10 lg:py-36">
-          <Reveal>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Ablauf</p>
-            <h2 className="mt-4 max-w-3xl font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">
-              Erfassen. Bewerten. <span className="italic text-muted">Handeln.</span>
-            </h2>
-          </Reveal>
-          <ol className="mt-16 grid gap-10 md:grid-cols-3 md:gap-8">
-            {STEPS.map((s, i) => (
-              <li key={s.n} className="border-t border-ink pt-6">
-                <Reveal delay={i * 100}>
-                  <span className="tabular font-display text-[56px] leading-none text-muted">{s.n}</span>
-                  <h3 className="mt-6 text-2xl font-semibold tracking-tight">{s.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-ink-2">{s.text}</p>
-                </Reveal>
+      {/* Kategorien als Liste mit echten Zahlen */}
+      <section id="kategorien" className="scroll-mt-20">
+        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <h2 className="max-w-2xl font-display text-[34px] leading-[1.05] md:text-[48px]">Neun Kategorien, jede mit eigener Marktlogik</h2>
+            <LinkButton href="/demo/" variant="secondary">
+              Alle im Test-Dashboard ansehen
+            </LinkButton>
+          </div>
+          <ul className="mt-12 border-t border-ink">
+            {categories.map((c) => (
+              <li key={c.id} className="border-b border-line">
+                <Link
+                  href={c.id === "insolvenz" ? "/demo/insolvenzen/" : `/demo/?kategorie=${c.id}`}
+                  className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-5 transition-colors hover:bg-canvas md:grid-cols-[minmax(0,15rem)_1fr_auto_auto] md:px-3"
+                >
+                  <span className="text-[19px] font-bold tracking-[-0.01em] [font-stretch:108%]">{c.name}</span>
+                  <span className="col-span-2 row-start-2 text-[15px] text-ink-2 md:col-span-1 md:row-start-auto">{c.claim}</span>
+                  <span className="tabular col-start-2 row-start-1 text-[14px] text-muted md:col-start-auto md:row-start-auto">
+                    {c.count} {c.count === 1 ? "Chance" : "Chancen"}
+                  </span>
+                  <IconArrowUpRight size={18} className="hidden text-muted transition-colors group-hover:text-ink md:block" />
+                </Link>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 
-      {/* Sicherheit */}
-      <section className="bg-canvas">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-8 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-10">
-          {[
-            ["Keine automatischen Käufe", "Gekauft wird nur, wenn du selbst beim Händler bestellst – auch mit Autopilot."],
-            ["Break-even im Blick", "Jede Chance zeigt den Preis, ab dem du nach Gebühren und Versand im Plus bist."],
-            ["Volle Transparenz", "Jede Bewertung zeigt die Faktoren, die für und gegen den Kauf sprechen."],
-          ].map(([t, d]) => (
-            <Reveal key={t}>
-              <div className="flex gap-4">
-                <IconShield size={22} className="mt-0.5 shrink-0" />
-                <div>
-                  <h3 className="font-semibold">{t}</h3>
-                  <p className="mt-1 text-[14px] leading-relaxed text-ink-2">{d}</p>
-                </div>
+      {/* Ablauf: echte Reihenfolge, daher nummeriert */}
+      <section id="ablauf" className="scroll-mt-20 border-t border-line">
+        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
+          <h2 className="max-w-3xl font-display text-[34px] leading-[1.05] md:text-[48px]">So kommt eine Chance auf deinen Bildschirm</h2>
+          <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-10">
+            {STEPS.map((s) => (
+              <li key={s.n}>
+                <span className="tabular grid size-11 place-items-center rounded-full bg-tag font-display text-[20px]">{s.n}</span>
+                <h3 className="mt-5 text-[22px] font-bold tracking-[-0.015em] [font-stretch:110%]">{s.title}</h3>
+                <p className="mt-3 max-w-[38ch] text-[16px] leading-relaxed text-ink-2">{s.text}</p>
+              </li>
+            ))}
+          </ol>
+          <dl className="mt-20 grid gap-8 border-t border-line pt-10 md:grid-cols-3">
+            {[
+              ["Keine automatischen Käufe", "Gekauft wird nur, wenn du selbst beim Händler bestellst, auch mit Autopilot."],
+              ["Break-even im Blick", "Jede Chance zeigt den Preis, ab dem du nach Gebühren und Versand im Plus bist."],
+              ["Nachvollziehbar", "Jede Bewertung zeigt die Faktoren, die für und gegen den Kauf sprechen."],
+            ].map(([t, d]) => (
+              <div key={t}>
+                <dt className="font-semibold">{t}</dt>
+                <dd className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{d}</dd>
               </div>
-            </Reveal>
-          ))}
+            ))}
+          </dl>
         </div>
       </section>
 
       {/* Preise */}
-      <section id="preise" className="scroll-mt-20 border-t border-line bg-canvas">
-        <div className="mx-auto max-w-[1320px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
-          <Reveal className="text-center">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Preise</p>
-            <h2 className="mx-auto mt-4 max-w-3xl font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">
-              Ein guter Deal <span className="italic text-muted">zahlt den Monat.</span>
-            </h2>
-          </Reveal>
+      <section id="preise" className="scroll-mt-20 bg-canvas">
+        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
+          <h2 className="max-w-3xl font-display text-[34px] leading-[1.05] md:text-[48px]">Ein guter Deal zahlt den Monat</h2>
           <div className="mt-12">
             <PricingCards />
           </div>
-          <p className="mt-8 text-center">
-            <Link href="/preise/" className="text-sm font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+          <p className="mt-8">
+            <Link href="/preise/" className="text-[15px] font-semibold text-ink underline decoration-line-strong decoration-2 hover:decoration-ink">
               Alle Funktionen und Erweiterungen vergleichen
             </Link>
           </p>
@@ -353,45 +236,41 @@ export default async function Home() {
 
       {/* FAQ */}
       <section id="faq" className="scroll-mt-20">
-        <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-10 lg:py-36">
-          <Reveal>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">FAQ</p>
-            <h2 className="mt-4 font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">Gut zu wissen.</h2>
-          </Reveal>
+        <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-10 px-4 py-24 sm:px-6 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16 lg:px-10 lg:py-32">
+          <h2 className="font-display text-[34px] leading-[1.05] md:text-[48px]">Häufige Fragen</h2>
           <div className="divide-y divide-line border-y border-line">
             {FAQ.map((f) => (
-              <details key={f.q} className="group py-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-semibold tracking-tight [&::-webkit-details-marker]:hidden">
+              <details key={f.q} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
                   {f.q}
-                  <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-full ring-1 ring-line transition group-open:rotate-45">
+                  <span aria-hidden className="grid size-7 shrink-0 place-items-center rounded-md text-[18px] leading-none ring-1 ring-line-strong transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
-                <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-2">{f.a}</p>
+                <p className="mt-3 max-w-[62ch] text-[16px] leading-relaxed text-ink-2">{f.a}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Abschluss */}
-      <section className="px-4 pb-16 sm:px-6 lg:px-10">
-        <div className="mx-auto max-w-[1320px] overflow-hidden rounded-[32px] bg-ink px-6 py-20 text-center text-white md:py-28">
-          <h2 className="mx-auto max-w-4xl font-display text-[48px] leading-[0.98] tracking-tight md:text-[88px]">
-            Der nächste Deal <span className="italic text-white/50">läuft schon.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-lg text-[16px] text-white/65">Sieh dir im Test-Dashboard kostenlos an, wie Arbitrage Radar Chancen bewertet, und starte, wenn du überzeugt bist.</p>
-          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-            <LinkButton href="/demo/" variant="inverse" size="lg">
-              Test-Dashboard öffnen <IconArrowRight size={17} />
+      {/* Abschluss: gelbe Fläche */}
+      <section className="bg-tag">
+        <div className="mx-auto flex max-w-[1240px] flex-col gap-8 px-4 py-20 sm:px-6 md:flex-row md:items-end md:justify-between lg:px-10 lg:py-24">
+          <div>
+            <h2 className="max-w-2xl font-display text-[38px] leading-[1.02] md:text-[56px]">Der nächste Deal läuft schon.</h2>
+            <p className="mt-4 max-w-[34rem] text-[17px] text-tag-ink">Sieh dir im Test-Dashboard an, wie Arbitrage Radar Chancen bewertet, und starte, wenn du überzeugt bist.</p>
+          </div>
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <LinkButton href="/demo/" size="lg">
+              Test-Dashboard öffnen
             </LinkButton>
-            <LinkButton href="/preise/" size="lg" className="!bg-white/10 hover:!bg-white/20">
+            <LinkButton href="/preise/" variant="secondary" size="lg" className="!ring-ink">
               Tarif wählen
             </LinkButton>
           </div>
         </div>
       </section>
-
     </SiteLayout>
   );
 }

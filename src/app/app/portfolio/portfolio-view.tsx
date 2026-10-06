@@ -39,7 +39,7 @@ export function PortfolioView() {
         ))}
       </section>
 
-      <div className="mt-8 inline-flex rounded-full bg-white p-1 ring-1 ring-line" role="tablist">
+      <div className="mt-8 inline-flex rounded-[12px] bg-white p-1 ring-1 ring-line" role="tablist">
         {(["bestellungen", "inserate"] as const).map((t) => (
           <button
             key={t}
@@ -47,7 +47,7 @@ export function PortfolioView() {
             aria-selected={tab === t}
             type="button"
             onClick={() => setTab(t)}
-            className={`h-10 rounded-full px-5 text-sm font-medium capitalize transition ${tab === t ? "bg-ink text-white" : "text-ink-2 hover:text-ink"}`}
+            className={`h-10 rounded-[9px] px-5 text-sm font-medium capitalize transition ${tab === t ? "bg-ink text-white" : "text-ink-2 hover:text-ink"}`}
           >
             {t} <span className="tabular ml-1 opacity-60">{t === "bestellungen" ? orders.length : listings.length}</span>
           </button>
@@ -63,7 +63,7 @@ export function PortfolioView() {
               const step = ORDER_FLOW.indexOf(o.status);
               const next = ORDER_FLOW[step + 1];
               return (
-                <article key={o.id} className="flex flex-col gap-4 rounded-2xl bg-white p-5 ring-1 ring-line md:flex-row md:items-center">
+                <article key={o.id} className="flex flex-col gap-4 rounded-xl bg-white p-5 ring-1 ring-line md:flex-row md:items-center">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge tone={o.status === "eingetroffen" ? "good" : "neutral"}>{o.mode === "gebot" ? "Bietlimit" : ORDER_LABEL[o.status]}</Badge>
@@ -77,7 +77,7 @@ export function PortfolioView() {
                   <div className="flex items-center gap-2">
                     <p className="tabular mr-2 font-semibold">{eur(o.unitCost * o.quantity)}</p>
                     {next && o.mode === "kauf" && (
-                      <button type="button" onClick={() => portfolio.setOrderStatus(o.id, next)} className="h-9 rounded-full px-4 text-[13px] font-medium ring-1 ring-line hover:ring-ink">
+                      <button type="button" onClick={() => portfolio.setOrderStatus(o.id, next)} className="h-9 rounded-[9px] px-4 text-[13px] font-medium ring-1 ring-line hover:ring-ink">
                         Als {ORDER_LABEL[next].toLowerCase()} markieren
                       </button>
                     )}
@@ -93,7 +93,7 @@ export function PortfolioView() {
             <Empty text="Noch keine Inserate. Mit „Einstellen“ legst du eines in Sekunden an." />
           ) : (
             listings.map((l) => (
-              <article key={l.id} className="flex flex-col gap-4 rounded-2xl bg-white p-5 ring-1 ring-line md:flex-row md:items-center">
+              <article key={l.id} className="flex flex-col gap-4 rounded-xl bg-white p-5 ring-1 ring-line md:flex-row md:items-center">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge tone={l.status === "verkauft" ? "good" : l.status === "aktiv" ? "ink" : "neutral"}>{LISTING_LABEL[l.status]}</Badge>
@@ -111,11 +111,11 @@ export function PortfolioView() {
                       <button
                         type="button"
                         onClick={() => portfolio.setListingStatus(l.id, l.status === "aktiv" ? "pausiert" : "aktiv")}
-                        className="h-9 rounded-full px-4 text-[13px] font-medium ring-1 ring-line hover:ring-ink"
+                        className="h-9 rounded-[9px] px-4 text-[13px] font-medium ring-1 ring-line hover:ring-ink"
                       >
                         {l.status === "aktiv" ? "Pausieren" : "Aktivieren"}
                       </button>
-                      <button type="button" onClick={() => portfolio.setListingStatus(l.id, "verkauft")} className="h-9 rounded-full bg-ink px-4 text-[13px] font-medium text-white hover:bg-ink/85">
+                      <button type="button" onClick={() => portfolio.setListingStatus(l.id, "verkauft")} className="h-9 rounded-[9px] bg-ink px-4 text-[13px] font-medium text-white hover:bg-ink/85">
                         Verkauft
                       </button>
                     </>
