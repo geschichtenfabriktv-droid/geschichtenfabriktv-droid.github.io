@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { feedDeals, matches, parseCsv, parseFeed } from "@/server/awin";
 import { parseNetbid } from "@/server/court-auctions";
 import { dailyHistory, keepaDeal, keepaTime } from "@/server/keepa";
+import { dedupe } from "@/server/market-scan";
 
 const now = new Date("2026-10-06T12:00:00Z");
 const toKeepa = (d: Date) => d.getTime() / 60_000 - 21_564_000;
@@ -72,5 +73,18 @@ describe("Länder", () => {
     const { parseEcb } = await import("@/server/fx");
     const rates = parseEcb(`<Cube currency='USD' rate='1.0841'/><Cube currency='CHF' rate='0.9412'/>`);
     expect(rates.get("CHF")).toBe(0.9412);
+  });
+});
+
+describe("Dubletten", () => {
+  it("führt gleiche Kennung oder gleiche Adresse zusammen", () => {
+    const items = [
+      { id: "a", url: "https://www.ebay.de/itm/1?hash=x" },
+      { id: "b", url: "https://www.ebay.de/itm/1" },
+      { id: "a", url: "https://www.ebay.de/itm/2" },
+      { id: "c", url: undefined },
+      { id: "d", url: "https://www.ebay.de/itm/3/" },
+    ];
+    expect(dedupe(items, (i) => i.url).map((i) => i.id)).toEqual(["a", "c", "d"]);
   });
 });

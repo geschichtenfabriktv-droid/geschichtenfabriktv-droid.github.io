@@ -6,7 +6,7 @@ import type { AuctionLink } from "@/lib/domain/types";
  * die die robots.txt der Anbieter ausdrücklich nennt. Übernommen werden ausschließlich Link und der
  * Titel aus der Adresse; Beschreibungen, Bilder und Gebote bleiben beim Anbieter.
  */
-const TTL = 30 * 60_000;
+const TTL = 10 * 60_000;
 const UA = { "User-Agent": "ArbitrageRadar/1.0 (+https://arbitrageradar.de)" };
 /** NetBid führt auch beendete Auktionen in der Sitemap; gezeigt wird nur, was zuletzt geändert wurde. */
 const NETBID_MAX_AGE_DAYS = 14;

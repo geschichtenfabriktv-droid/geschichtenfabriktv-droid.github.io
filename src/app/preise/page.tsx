@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbLd, faqLd, graph, pageMetadata, softwareLd } from "@/lib/seo";
+import { LiveCoverage } from "@/components/site/live-coverage";
 import { PricingCards } from "@/components/site/pricing-cards";
 import { PageIntro, SiteLayout } from "@/components/site/site-layout";
 import { LinkButton } from "@/components/ui/button";
@@ -68,6 +69,8 @@ export default function PreisePage() {
       <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-10">
         <PricingCards headingLevel={2} countriesLive={countriesLive} />
       </section>
+
+      <LiveCoverage className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-10" />
 
       <section className="border-t border-line bg-canvas">
         <div className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-10">

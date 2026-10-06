@@ -3,6 +3,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { faqLd, graph, organizationLd, pageMetadata, softwareLd, websiteLd } from "@/lib/seo";
 import Link from "next/link";
 import { PriceTag } from "@/components/site/price-tag";
+import { LiveCoverage } from "@/components/site/live-coverage";
 import { PricingCards } from "@/components/site/pricing-cards";
 import { COUNTRY_FAQ } from "@/lib/pricing";
 import { env } from "@/server/env";
@@ -125,6 +126,8 @@ export default async function Home() {
           )}
         </div>
       </section>
+
+      <LiveCoverage className="mx-auto -mt-8 max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-10" />
 
       {/* Funktionen */}
       <section id="funktionen" className="scroll-mt-20 border-t border-line">
