@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { CategoryChips } from "@/components/market/category-chips";
 import { DealCard } from "@/components/market/deal-card";
+import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
 import { IconArrowRight, IconSearch } from "@/components/ui/icons";
@@ -143,6 +144,12 @@ export function DealExplorer() {
       )}
       {!market ? (
         <CardSkeleton />
+      ) : !market.demo && market.deals.length === 0 ? (
+        <EmptyMarket
+          title="Gerade keine geprüften Chancen"
+          text="Hier erscheinen nur echte Angebote, die unter dem aktuellen Marktpreis liegen, nie Beispieldaten. Die Liste wird bei jedem Aufruf neu geprüft."
+          sources={market.sources}
+        />
       ) : results.length === 0 ? (
         <div className="rounded-[var(--radius-card)] bg-white px-6 py-16 text-center ring-1 ring-line">
           <p className="font-display text-3xl">Keine Treffer</p>

@@ -82,7 +82,14 @@ export function DealDetail({ id }: { id: string }) {
             </div>
             <h1 className="mt-4 font-display text-[30px] leading-[1.1] md:text-[42px]">{deal.title}</h1>
             <p className="mt-3 text-[15px] text-ink-2">
-              Gefunden {relativeTime(deal.detectedAt, market.scannedAt)} bei {deal.source.platform}
+              Gefunden {relativeTime(deal.detectedAt, market.scannedAt)} bei{" "}
+              {deal.source.url ? (
+                <a href={deal.source.url} target="_blank" rel="noopener noreferrer nofollow" className="underline underline-offset-2 hover:text-ink">
+                  {deal.source.platform}
+                </a>
+              ) : (
+                deal.source.platform
+              )}
               {deal.releaseDate && <> · Release am {dateDe(deal.releaseDate)}</>}
             </p>
           </header>
@@ -91,26 +98,28 @@ export function DealDetail({ id }: { id: string }) {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <h2 id="chart" className="text-[13px] font-medium text-muted">
-                  Marktpreis, 90 Tage
+                  {m.history.length ? "Marktpreis, 90 Tage" : m.live ? "Marktpreis (Median der aktuellen eBay-Angebote)" : "Marktpreis"}
                 </h2>
                 <p className="tabular mt-1 text-3xl font-semibold tracking-tight">{eur(m.medianPrice)}</p>
               </div>
-              <Badge tone={m.trend30d > 0.02 ? "good" : m.trend30d < -0.02 ? "bad" : "neutral"}>{signedPercent(m.trend30d)} in 30 Tagen</Badge>
+              {m.trend30d !== null && <Badge tone={m.trend30d > 0.02 ? "good" : m.trend30d < -0.02 ? "bad" : "neutral"}>{signedPercent(m.trend30d)} in 30 Tagen</Badge>}
             </div>
-            <div className="mt-6">
-              <PriceChart
-                history={m.history}
-                references={[
-                  { value: a.totalCost, label: "Einkauf", tone: "ink" },
-                  { value: a.breakEvenPrice, label: "Break-even", tone: "muted" },
-                ]}
-              />
-            </div>
+            {m.history.length > 0 && (
+              <div className="mt-6">
+                <PriceChart
+                  history={m.history}
+                  references={[
+                    { value: a.totalCost, label: "Einkauf", tone: "ink" },
+                    { value: a.breakEvenPrice, label: "Break-even", tone: "muted" },
+                  ]}
+                />
+              </div>
+            )}
           </section>
 
           <section className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Marktdaten">
             {[
-              { k: "Verkäufe 30 T.", v: number(m.sales30d) },
+              { k: "Verkäufe 30 T.", v: m.sales30d === null ? "–" : number(m.sales30d) },
               { k: "Aktive Angebote", v: number(m.activeListings) },
               { k: "Abverkauf 30 T.", v: percent(a.sellThrough30d) },
               { k: "Bis Verkauf", v: `~${a.estimatedDaysToSell} Tage` },
@@ -131,7 +140,7 @@ export function DealDetail({ id }: { id: string }) {
 
           <section className="rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line md:p-6" aria-labelledby="comps">
             <h2 id="comps" className="mb-4 text-lg font-semibold tracking-tight">
-              Vergleichsverkäufe
+              {m.live ? "Aktuelle Vergleichsangebote auf eBay" : "Vergleichsverkäufe"}
             </h2>
             <div>
               <table className="w-full text-[13px] md:text-sm">
@@ -139,7 +148,7 @@ export function DealDetail({ id }: { id: string }) {
                   <tr className="text-left text-[12px] text-muted">
                     <th className="pb-2 font-medium">Plattform</th>
                     <th className="pb-2 font-medium">Zustand</th>
-                    <th className="pb-2 font-medium">Verkauft</th>
+                    <th className="pb-2 font-medium">{m.live ? "Angebot" : "Verkauft"}</th>
                     <th className="pb-2 text-right font-medium">Preis</th>
                   </tr>
                 </thead>
@@ -148,7 +157,17 @@ export function DealDetail({ id }: { id: string }) {
                     <tr key={i}>
                       <td className="py-3">{c.platform}</td>
                       <td className="py-3 text-ink-2">{c.condition}</td>
-                      <td className="py-3 text-ink-2">vor {c.soldDaysAgo} T.</td>
+                      <td className="py-3 text-ink-2">
+                        {c.url ? (
+                          <a href={c.url} target="_blank" rel="noopener noreferrer nofollow" className="underline underline-offset-2 hover:text-ink">
+                            ansehen
+                          </a>
+                        ) : c.soldDaysAgo === null ? (
+                          "aktiv"
+                        ) : (
+                          `vor ${c.soldDaysAgo} T.`
+                        )}
+                      </td>
                       <td className="tabular py-3 text-right font-medium">{eur(c.price)}</td>
                     </tr>
                   ))}

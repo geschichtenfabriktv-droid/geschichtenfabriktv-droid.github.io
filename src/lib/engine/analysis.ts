@@ -40,14 +40,16 @@ export function analyzeDeal(deal: Deal, now: Date = new Date()): Analysis {
   const keepRate = 1 - target.feeRate;
   const breakEvenPrice = (totalCost + target.fixedFee + target.shipping) / keepRate;
 
-  const sellThrough30d = sellThroughRate(market.sales30d, market.activeListings);
-  const daysToSell = clamp(Math.round((30 * market.activeListings) / Math.max(1, market.sales30d) / 2), 1, 120);
+  // Ohne Verkaufszahlen wird vorsichtig mit halber Abverkaufsquote und 30 Tagen bis zum Verkauf gerechnet.
+  const sellThrough30d = market.sales30d === null ? 0.5 : sellThroughRate(market.sales30d, market.activeListings);
+  const daysToSell =
+    market.sales30d === null ? 30 : clamp(Math.round((30 * market.activeListings) / Math.max(1, market.sales30d) / 2), 1, 120);
 
   const daysToRelease = deal.releaseDate
     ? Math.max(0, Math.ceil((new Date(deal.releaseDate).getTime() - now.getTime()) / DAY_MS))
     : 0;
   const horizonDays = daysToRelease + daysToSell;
-  const trend = clamp(market.trend30d, -0.3, 0.3);
+  const trend = clamp(market.trend30d ?? 0, -0.3, 0.3);
   const expectedPrice = market.medianPrice * (1 + trend * Math.min(1, horizonDays / 30) * 0.5);
 
   // Vorbestellungen sind unsicherer: Die Streuung wächst mit der Zeit bis zum Release.
@@ -71,21 +73,27 @@ export function analyzeDeal(deal: Deal, now: Date = new Date()): Analysis {
     impact: margin > 0.15 ? "positiv" : margin > 0 ? "neutral" : "negativ",
     detail: `Marktpreis liegt ${pct(margin)} über dem Break-even von ${eur(breakEvenPrice)}.`,
   });
-  factors.push({
-    label: "Nachfrage",
-    impact: sellThrough30d > 0.6 ? "positiv" : sellThrough30d > 0.3 ? "neutral" : "negativ",
-    detail: `${market.sales30d} Verkäufe in 30 Tagen bei ${market.activeListings} aktiven Angeboten.`,
-  });
-  factors.push({
-    label: "Preistrend",
-    impact: market.trend30d > 0.02 ? "positiv" : market.trend30d < -0.02 ? "negativ" : "neutral",
-    detail: `${pct(market.trend30d)} in den letzten 30 Tagen.`,
-  });
+  factors.push(
+    market.sales30d === null
+      ? { label: "Nachfrage", impact: "neutral", detail: `${market.activeListings} aktive Angebote; Verkaufszahlen liefert die Quelle nicht, daher vorsichtig gerechnet.` }
+      : {
+          label: "Nachfrage",
+          impact: sellThrough30d > 0.6 ? "positiv" : sellThrough30d > 0.3 ? "neutral" : "negativ",
+          detail: `${market.sales30d} Verkäufe in 30 Tagen bei ${market.activeListings} aktiven Angeboten.`,
+        },
+  );
+  if (market.trend30d !== null) {
+    factors.push({
+      label: "Preistrend",
+      impact: market.trend30d > 0.02 ? "positiv" : market.trend30d < -0.02 ? "negativ" : "neutral",
+      detail: `${pct(market.trend30d)} in den letzten 30 Tagen.`,
+    });
+  }
   const volatility = market.priceStdDev / market.medianPrice;
   factors.push({
     label: "Preisschwankung",
     impact: volatility < 0.08 ? "positiv" : volatility < 0.18 ? "neutral" : "negativ",
-    detail: `Verkaufspreise streuen um ±${Math.round(volatility * 100)} %.`,
+    detail: `${market.sales30d === null ? "Angebotspreise" : "Verkaufspreise"} streuen um ±${Math.round(volatility * 100)} %.`,
   });
   if (deal.releaseDate) {
     factors.push({
@@ -100,7 +108,7 @@ export function analyzeDeal(deal: Deal, now: Date = new Date()): Analysis {
   if (deal.limited) {
     factors.push({ label: "Limitierung", impact: "positiv", detail: "Limitierte Auflage, Angebot wird knapper." });
   }
-  if (source.stock <= 3) {
+  if (source.stock !== null && source.stock <= 3) {
     factors.push({ label: "Verfügbarkeit", impact: "neutral", detail: `Nur noch ${source.stock} Stück beim Händler.` });
   }
 

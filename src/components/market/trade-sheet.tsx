@@ -37,7 +37,7 @@ const TITLES: Record<TradeMode, [string, string]> = {
 export function TradeSheet({ deal, mode, onClose }: Props) {
   const a = deal.analysis;
   const { settings, orders } = usePortfolio();
-  const maxQty = Math.max(1, Math.min(deal.source.stock, 10));
+  const maxQty = Math.max(1, Math.min(deal.source.stock ?? 10, 10));
   const [qty, setQty] = useState(1);
   const [price, setPrice] = useState(amountInput(a.recommendedPrice));
   const [platforms, setPlatforms] = useState<string[]>([deal.target.platform]);
@@ -168,7 +168,7 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
                 <div>
                   <p className="text-sm font-medium">Menge</p>
                   <p className="text-[12px] text-muted">
-                    {deal.source.stock} verfügbar bei {deal.source.platform}
+                    {deal.source.stock === null ? `Verfügbarkeit bei ${deal.source.platform} prüfen` : `${deal.source.stock} verfügbar bei ${deal.source.platform}`}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 rounded-[10px] ring-1 ring-line">

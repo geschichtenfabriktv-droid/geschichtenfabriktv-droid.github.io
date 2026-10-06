@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { DealCard } from "@/components/market/deal-card";
 import { LotCard } from "@/components/market/lot-card";
+import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
 import { IconArrowRight } from "@/components/ui/icons";
@@ -34,7 +35,7 @@ export function Overview() {
   const { deals, lots, categories, scannedAt } = market;
   const strong = deals.filter((d) => d.analysis.chance === "hoch");
   const potential = strong.reduce((s, d) => s + d.analysis.expectedProfit, 0);
-  const avgProbability = deals.reduce((s, d) => s + d.analysis.probability, 0) / deals.length;
+  const avgProbability = deals.length ? deals.reduce((s, d) => s + d.analysis.probability, 0) / deals.length : 0;
   const doubles = deals.filter((d) => d.analysis.doubleUp).length;
 
   const kpis = [
@@ -67,6 +68,16 @@ export function Overview() {
           </div>
         ))}
       </section>
+
+      {routes.mode === "app" && deals.length + lots.length === 0 && (
+        <section className="mt-6">
+          <EmptyMarket
+            title="Gerade keine geprüften Chancen"
+            text="Hier erscheinen nur echte Angebote aus angebundenen Quellen, nie Beispieldaten. Sobald eine Quelle ein Angebot unter dem Marktpreis findet, steht es hier."
+            sources={market.sources}
+          />
+        </section>
+      )}
 
       <section className="mt-12" aria-labelledby="kat">
         <div className="mb-4 flex items-end justify-between">
@@ -108,40 +119,44 @@ export function Overview() {
         </div>
       </section>
 
-      <section className="mt-12" aria-labelledby="top">
-        <div className="mb-4 flex items-end justify-between">
-          <h2 id="top" className="text-xl font-semibold tracking-tight">
-            Top-Chancen jetzt
-          </h2>
-          <Link href={routes.list} className="text-sm font-medium text-ink-2 hover:text-ink">
-            Alle ansehen
-          </Link>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {deals.slice(0, 6).map((d, i) => (
-            <DealCard key={d.id} deal={d} now={scannedAt} index={i} href={routes.deal(d.id)} />
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-12" aria-labelledby="ins">
-        <div className="mb-4 flex items-end justify-between">
-          <div>
-            <h2 id="ins" className="text-xl font-semibold tracking-tight">
-              Insolvenzmassen
+      {deals.length > 0 && (
+        <section className="mt-12" aria-labelledby="top">
+          <div className="mb-4 flex items-end justify-between">
+            <h2 id="top" className="text-xl font-semibold tracking-tight">
+              Top-Chancen jetzt
             </h2>
-            <p className="mt-0.5 text-[12px] text-muted">Beispieldaten – alle Verfahren sind fiktiv.</p>
+            <Link href={routes.list} className="text-sm font-medium text-ink-2 hover:text-ink">
+              Alle ansehen
+            </Link>
           </div>
-          <Link href={routes.lots} className="text-sm font-medium text-ink-2 hover:text-ink">
-            Alle Verfahren
-          </Link>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {lots.slice(0, 3).map((l, i) => (
-            <LotCard key={l.id} lot={l} now={scannedAt} index={i} href={routes.lot(l.id)} />
-          ))}
-        </div>
-      </section>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {deals.slice(0, 6).map((d, i) => (
+              <DealCard key={d.id} deal={d} now={scannedAt} index={i} href={routes.deal(d.id)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {lots.length > 0 && (
+        <section className="mt-12" aria-labelledby="ins">
+          <div className="mb-4 flex items-end justify-between">
+            <div>
+              <h2 id="ins" className="text-xl font-semibold tracking-tight">
+                Insolvenzmassen
+              </h2>
+              {market.demo && <p className="mt-0.5 text-[12px] text-muted">Beispieldaten – alle Verfahren sind fiktiv.</p>}
+            </div>
+            <Link href={routes.lots} className="text-sm font-medium text-ink-2 hover:text-ink">
+              Alle Verfahren
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {lots.slice(0, 3).map((l, i) => (
+              <LotCard key={l.id} lot={l} now={scannedAt} index={i} href={routes.lot(l.id)} />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

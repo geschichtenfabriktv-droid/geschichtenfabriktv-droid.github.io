@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LotCard } from "@/components/market/lot-card";
+import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
 import { CardSkeleton } from "@/components/ui/skeleton";
@@ -30,7 +31,7 @@ export function LotExplorer() {
 
       <p className="-mt-4 mb-6 max-w-2xl text-[15px] leading-relaxed text-ink-2">
         Der Insolvenz-Finder bewertet Insolvenzmasse-Posten mit Maximalgebot: Er ordnet die Massen nach Art und berechnet, bis zu welchem Gebot sich ein
-        Kauf noch lohnt. Die angezeigten Verfahren sind Beispieldaten.
+        Kauf noch lohnt.{market?.demo && " Die angezeigten Verfahren sind Beispieldaten."}
       </p>
 
       <div className="no-scrollbar -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0" role="toolbar" aria-label="Art der Masse">
@@ -69,6 +70,15 @@ export function LotExplorer() {
           <Link href="/konto/" className="mt-5 inline-flex h-10 items-center rounded-[10px] bg-white px-5 text-sm font-medium text-ink">Im Konto hinzubuchen</Link>
         </div>
       )}
+      {market && !market.demo && market.lots.length === 0 && market.locked.lots === 0 && (
+        <div className="mb-6">
+          <EmptyMarket
+            title="Noch keine Verfahren aus echten Quellen"
+            text="Hier erscheinen nur echte Insolvenz- und Justizauktionen. Die Auktionsplattformen sind noch nicht angebunden; bis dahin zeigen wir lieber nichts als erfundene Verfahren."
+            sources={market.sources.filter((s) => s.id === "insolvenz")}
+          />
+        </div>
+      )}
       {!market ? (
         <CardSkeleton count={3} />
       ) : (
@@ -79,9 +89,11 @@ export function LotExplorer() {
         </div>
       )}
 
-      <p className="mt-8 text-[12px] leading-relaxed text-muted">
-        Beispieldaten: Alle Verfahren, Schuldner und Aktenzeichen sind fiktiv und dienen nur zur Veranschaulichung des Insolvenz-Finders.
-      </p>
+      {market?.demo && (
+        <p className="mt-8 text-[12px] leading-relaxed text-muted">
+          Beispieldaten: Alle Verfahren, Schuldner und Aktenzeichen sind fiktiv und dienen nur zur Veranschaulichung des Insolvenz-Finders.
+        </p>
+      )}
     </>
   );
 }

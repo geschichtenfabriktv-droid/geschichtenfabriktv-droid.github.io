@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { getAnalyzedDeals, getAnalyzedLots, summarizeCategories, type CategorySummary } from "../data/repository";
-import type { AnalyzedDeal, AnalyzedLot } from "../domain/types";
+import type { AnalyzedDeal, AnalyzedLot, MarketSource } from "../domain/types";
 import { api, BACKEND } from "./api";
 
 export interface MarketState {
@@ -11,7 +11,10 @@ export interface MarketState {
   categories: CategorySummary[];
   scannedAt: Date;
   locked: { deals: number; lots: number };
+  /** Beispieldaten (nur Test-Dashboard und statische Vorschau). */
   demo: boolean;
+  /** Herkunft der Daten im Kunden-Dashboard; leer bei Beispieldaten. */
+  sources: MarketSource[];
 }
 
 /** Im Test-Dashboard: je Kategorie die drei besten Chancen. */
@@ -31,16 +34,16 @@ async function scanLocal(demo: boolean): Promise<MarketState> {
     });
     lots = lots.slice(0, DEMO_PER_CATEGORY);
   }
-  return { deals, lots, categories: summarizeCategories(deals, lots), scannedAt: now, locked: { deals: 0, lots: 0 }, demo };
+  return { deals, lots, categories: summarizeCategories(deals, lots), scannedAt: now, locked: { deals: 0, lots: 0 }, demo: true, sources: [] };
 }
 
 async function scanServer(): Promise<MarketState> {
-  const data = await api<{ scannedAt: string; deals: AnalyzedDeal[]; lots: AnalyzedLot[]; locked: { deals: number; lots: number } }>("/api/market/");
+  const data = await api<{ scannedAt: string; deals: AnalyzedDeal[]; lots: AnalyzedLot[]; locked: { deals: number; lots: number }; sources: MarketSource[] }>("/api/market/");
   return { ...data, scannedAt: new Date(data.scannedAt), categories: summarizeCategories(data.deals, data.lots), demo: false };
 }
 
 /**
- * Marktdaten. Im Dashboard mit Konto kommen sie vom Server (inkl. Live-Daten und Tarif-Freigaben),
+ * Marktdaten. Im Dashboard mit Konto kommen sie vom Server, ausschließlich aus echten Quellen,
  * im Test-Dashboard werden die Beispieldaten im Browser berechnet.
  */
 export function useMarket(mode: "app" | "demo" = "app") {

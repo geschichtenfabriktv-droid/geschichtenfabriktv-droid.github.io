@@ -28,7 +28,10 @@ export interface Comparable {
   platform: string;
   price: number;
   condition: "Neu" | "Wie neu" | "Gebraucht";
-  soldDaysAgo: number;
+  /** Tage seit dem Verkauf; null bei aktuellen Angeboten (Live-Daten). */
+  soldDaysAgo: number | null;
+  /** Link zum Angebot (Live-Daten). */
+  url?: string;
 }
 
 export interface Deal {
@@ -42,7 +45,10 @@ export interface Deal {
     platform: string;
     price: number;
     shipping: number;
-    stock: number;
+    /** Verfügbare Menge; null, wenn die Quelle sie nicht nennt. */
+    stock: number | null;
+    /** Link zum Angebot (Live-Daten). */
+    url?: string;
   };
   /** Wo verkauft wird. */
   target: {
@@ -56,10 +62,12 @@ export interface Deal {
     medianPrice: number;
     /** Streuung der erzielten Verkaufspreise (Standardabweichung, EUR). */
     priceStdDev: number;
-    sales30d: number;
+    /** Verkäufe der letzten 30 Tage; null, wenn die Quelle keine Verkaufszahlen liefert. */
+    sales30d: number | null;
     activeListings: number;
     /** Preistrend der letzten 30 Tage, z. B. 0.06 = +6 %. */
-    trend30d: number;
+    trend30d: number | null;
+    /** Leer, wenn kein Preisverlauf vorliegt. */
     history: PricePoint[];
     comparables: Comparable[];
     /** true, wenn Median/Streuung/Angebote aus Live-Daten stammen */
@@ -132,4 +140,12 @@ export interface AnalyzedDeal extends Deal {
 
 export interface AnalyzedLot extends InsolvencyLot {
   analysis: Analysis;
+}
+
+/** Status einer Datenquelle im Kunden-Dashboard. */
+export interface MarketSource {
+  id: string;
+  name: string;
+  live: boolean;
+  note: string | null;
 }

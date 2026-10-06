@@ -73,7 +73,7 @@ export function LotDetail({ id }: { id: string }) {
             <div className="flex flex-wrap gap-2">
               <Badge tone="outline">{lot.lotType}</Badge>
               <Badge tone="warn">{countdown(lot.auctionEnd, market.scannedAt)}</Badge>
-              <Badge tone="neutral">Beispieldaten (fiktiv)</Badge>
+              {market.demo && <Badge tone="neutral">Beispieldaten (fiktiv)</Badge>}
             </div>
             <h1 className="mt-4 font-display text-[30px] leading-[1.1] md:text-[42px]">{lot.title}</h1>
             <p className="mt-3 text-[15px] text-ink-2">
