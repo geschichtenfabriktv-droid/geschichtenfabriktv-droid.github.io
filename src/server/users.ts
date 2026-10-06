@@ -1,7 +1,9 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import type { AddonId, BillingInterval, PlanId } from "@/lib/pricing";
+import { isPlanId } from "@/lib/pricing";
 import { getDb } from "./db";
+import { env } from "./env";
 
 export type SubscriptionStatus = "none" | "pending" | "active" | "canceled" | "past_due";
 
@@ -50,7 +52,7 @@ function parseList(v: unknown): AddonId[] | null {
 
 function map(r: Row): User {
   const addons = typeof r.addons === "string" ? JSON.parse(r.addons) : r.addons;
-  return {
+  const user: User = {
     id: r.id,
     email: r.email,
     name: r.name,
@@ -66,6 +68,12 @@ function map(r: Row): User {
     pendingAddons: parseList(r.pending_addons),
     sessionVersion: r.session_version,
   };
+  // Freigeschaltete Testzugänge: voller Zugriff ohne Zahlung, solange kein bezahltes Abo besteht.
+  const free = env.complimentary.get(r.email.toLowerCase());
+  if (free && isPlanId(free) && !user.mollieSubscriptionId) {
+    Object.assign(user, { plan: free, planInterval: "jahr", status: "active", currentPeriodEnd: null, pendingPlan: null, pendingAddons: null });
+  }
+  return user;
 }
 
 export function normalizeEmail(email: string) {

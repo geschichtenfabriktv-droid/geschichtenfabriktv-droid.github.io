@@ -76,6 +76,18 @@ export const env = {
       .map((e) => e.trim().toLowerCase())
       .filter(Boolean);
   },
+  /**
+   * Freigeschaltete Konten ohne Zahlung (Testzugang, Partner), kommagetrennt. Optional mit Tarif:
+   * `test@example.com:business`. Ohne Angabe gilt Business.
+   */
+  get complimentary(): Map<string, string> {
+    const out = new Map<string, string>();
+    for (const part of (optional("COMPLIMENTARY_EMAILS") ?? "").split(",")) {
+      const [email, plan] = part.trim().toLowerCase().split(":");
+      if (email) out.set(email, plan || "business");
+    }
+    return out;
+  },
   get isProduction() {
     return process.env.NODE_ENV === "production";
   },
