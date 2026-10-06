@@ -1,7 +1,7 @@
 import "server-only";
-import type { AnalyzedDeal, Comparable, Deal } from "@/lib/domain/types";
-import { analyzeDeal } from "@/lib/engine/analysis";
+import type { Comparable, Deal } from "@/lib/domain/types";
 import { env } from "./env";
+import { WATCHLIST, type WatchItem } from "./watchlist";
 
 /**
  * Echte Chancen aus der eBay Browse API (App-Token, nur öffentliche Angebotsdaten, kein Verkäuferkonto):
@@ -15,42 +15,9 @@ const TTL = 30 * 60_000;
 const MAX_PRICE_SHARE = 0.85;
 /** Noch billiger ist meist Zubehör, Defekt oder Betrug. */
 const MIN_PRICE_SHARE = 0.55;
-const EBAY_SELL: Deal["target"] = { platform: "eBay", feeRate: 0.11, fixedFee: 0.35, shipping: 5.49 };
+export const EBAY_SELL: Deal["target"] = { platform: "eBay", feeRate: 0.11, fixedFee: 0.35, shipping: 5.49 };
 
-interface WatchItem {
-  query: string;
-  brand: string;
-  categoryId: Deal["categoryId"];
-}
-
-/** Produkte mit genug Handel auf eBay.de, um einen belastbaren Median zu bilden. */
-export const WATCHLIST: readonly WatchItem[] = [
-  { query: "Sony WH-1000XM5", brand: "Sony", categoryId: "elektronik" },
-  { query: "Apple AirPods Pro 2", brand: "Apple", categoryId: "elektronik" },
-  { query: "Apple Watch Series 10", brand: "Apple", categoryId: "elektronik" },
-  { query: "Garmin Fenix 8", brand: "Garmin", categoryId: "elektronik" },
-  { query: "DJI Mini 4 Pro", brand: "DJI", categoryId: "elektronik" },
-  { query: "Kindle Paperwhite", brand: "Amazon", categoryId: "elektronik" },
-  { query: "iPad Air M2", brand: "Apple", categoryId: "elektronik" },
-  { query: "Nintendo Switch 2", brand: "Nintendo", categoryId: "gaming" },
-  { query: "PlayStation 5 Pro", brand: "Sony", categoryId: "gaming" },
-  { query: "Steam Deck OLED", brand: "Valve", categoryId: "gaming" },
-  { query: "DualSense Edge", brand: "Sony", categoryId: "gaming" },
-  { query: "Meta Quest 3", brand: "Meta", categoryId: "gaming" },
-  { query: "New Balance 2002R", brand: "New Balance", categoryId: "sneaker" },
-  { query: "Nike Air Jordan 1 High OG", brand: "Nike", categoryId: "sneaker" },
-  { query: "Adidas Samba OG", brand: "Adidas", categoryId: "sneaker" },
-  { query: "Pokemon Top Trainer Box", brand: "Pokémon", categoryId: "sammler" },
-  { query: "LEGO Titanic 10294", brand: "LEGO", categoryId: "sammler" },
-  { query: "One Piece Booster Display", brand: "Bandai", categoryId: "sammler" },
-  { query: "Dyson V15 Detect", brand: "Dyson", categoryId: "haushalt" },
-  { query: "Thermomix TM7", brand: "Vorwerk", categoryId: "haushalt" },
-  { query: "De'Longhi Eletta Explore", brand: "De'Longhi", categoryId: "haushalt" },
-  { query: "Makita DLX Combo Set", brand: "Makita", categoryId: "werkzeug" },
-  { query: "Festool TS 55", brand: "Festool", categoryId: "werkzeug" },
-];
-
-interface Stats {
+export interface Stats {
   median: number;
   stdDev: number;
   listings: number;
@@ -65,7 +32,7 @@ interface Listing {
   createdAt?: string;
 }
 
-const cache = new Map<string, { at: number; deals: Deal[] }>();
+const cache = new Map<string, { at: number; deals: Deal[]; stats: Stats | null }>();
 let appToken: { value: string; until: number } | null = null;
 
 /** Für Marktpreise reicht ein App-Zugang aus dem kostenlosen eBay-Entwicklerprogramm. */
@@ -107,11 +74,25 @@ export function summarize(prices: number[]): Stats | null {
 }
 
 /** Wählt aus den Angeboten eines Produkts die echten Unterpreis-Angebote und baut daraus Deals. */
+export const plain = (s: string) => s.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+
+/** Angebote, die zum Produkt passen (Marke im Titel). */
+function relevantListings(item: WatchItem, listings: Listing[]) {
+  const brand = plain(item.brand);
+  return listings.filter((l) => plain(l.title).includes(brand));
+}
+
+/** Marktpreis eines Produkts aus den passenden eBay-Angeboten; null bei zu wenig Angeboten. */
+export function marketStats(item: WatchItem, listings: Listing[], total: number | undefined): Stats | null {
+  const stats = summarize(relevantListings(item, listings).map((l) => l.price + l.shipping));
+  if (!stats || stats.listings < 8) return null;
+  return total ? { ...stats, listings: total } : stats;
+}
+
 export function findDeals(item: WatchItem, listings: Listing[], total: number | undefined, now: Date): Deal[] {
-  const brand = item.brand.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
-  const relevant = listings.filter((l) => l.title.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(brand));
-  const stats = summarize(relevant.map((l) => l.price + l.shipping));
-  if (!stats || stats.listings < 8) return [];
+  const relevant = relevantListings(item, listings);
+  const stats = marketStats(item, listings, total);
+  if (!stats) return [];
   const comparables: Comparable[] = relevant
     .slice()
     .sort((a, b) => Math.abs(a.price + a.shipping - stats.median) - Math.abs(b.price + b.shipping - stats.median))
@@ -136,7 +117,7 @@ export function findDeals(item: WatchItem, listings: Listing[], total: number | 
         medianPrice: stats.median,
         priceStdDev: stats.stdDev,
         sales30d: null,
-        activeListings: total ?? stats.listings,
+        activeListings: stats.listings,
         trend30d: null,
         history: [],
         comparables,
@@ -156,9 +137,9 @@ interface BrowseItem {
   itemCreationDate?: string;
 }
 
-async function scanItem(item: WatchItem, now: Date): Promise<Deal[]> {
+async function scanItem(item: WatchItem, now: Date): Promise<{ deals: Deal[]; stats: Stats | null }> {
   const hit = cache.get(item.query);
-  if (hit && Date.now() - hit.at < TTL) return hit.deals;
+  if (hit && Date.now() - hit.at < TTL) return hit;
   const url = new URL(`${apiHost()}/buy/browse/v1/item_summary/search`);
   url.searchParams.set("q", item.query);
   url.searchParams.set("filter", "conditions:{NEW},buyingOptions:{FIXED_PRICE},itemLocationCountry:DE,priceCurrency:EUR");
@@ -175,23 +156,26 @@ async function scanItem(item: WatchItem, now: Date): Promise<Deal[]> {
     const shipping = Number(i.shippingOptions?.[0]?.shippingCost?.value ?? 0);
     return [{ itemId: i.itemId, title: i.title, price, shipping: Number.isFinite(shipping) ? shipping : 0, url: i.itemWebUrl, createdAt: i.itemCreationDate }];
   });
-  const deals = findDeals(item, listings, data.total, now);
-  cache.set(item.query, { at: Date.now(), deals });
-  return deals;
+  const entry = { at: Date.now(), deals: findDeals(item, listings, data.total, now), stats: marketStats(item, listings, data.total) };
+  cache.set(item.query, entry);
+  return entry;
 }
 
 export interface EbayScan {
-  deals: AnalyzedDeal[];
+  deals: Deal[];
   /** Produkte, deren Abfrage fehlgeschlagen ist. */
   failed: number;
+  /** eBay-Marktpreis je Produkt der Beobachtungsliste (Schlüssel: query). */
+  stats: Map<string, Stats>;
 }
 
 export async function scanEbay(now: Date): Promise<EbayScan> {
   const results = await Promise.allSettled(WATCHLIST.map((item) => scanItem(item, now)));
-  const deals = results.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
+  const deals = results.flatMap((r) => (r.status === "fulfilled" ? r.value.deals : []));
   const failed = results.filter((r) => r.status === "rejected").length;
-  return {
-    deals: deals.map((d) => ({ ...d, analysis: analyzeDeal(d, now) })).sort((a, b) => b.analysis.probability - a.analysis.probability),
-    failed,
-  };
+  const stats = new Map<string, Stats>();
+  results.forEach((r, i) => {
+    if (r.status === "fulfilled" && r.value.stats) stats.set(WATCHLIST[i]!.query, r.value.stats);
+  });
+  return { stats, deals, failed };
 }

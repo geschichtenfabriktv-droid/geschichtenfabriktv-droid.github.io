@@ -51,8 +51,8 @@ export function AuctionList({ auctions, limit, search = false }: { auctions: Auc
         {shown.length === 0 && <li className="px-4 py-6 text-sm text-muted">Keine Auktion passt zur Suche.</li>}
       </ul>
       <p className="mt-2 text-[12px] leading-relaxed text-muted">
-        Quelle: justiz-auktion.de, die Versteigerungsplattform der Justiz für Gerichte, Staatsanwaltschaften und Insolvenzverwalter. Gebote, Fotos und
-        Bedingungen stehen beim Anbieter.
+        Quellen: justiz-auktion.de (Versteigerungsplattform der Justiz für Gerichte, Staatsanwaltschaften und Insolvenzverwalter) und netbid.com
+        (Industrie- und Insolvenzauktionen). Gebote, Fotos und Bedingungen stehen beim Anbieter.
       </p>
     </div>
   );

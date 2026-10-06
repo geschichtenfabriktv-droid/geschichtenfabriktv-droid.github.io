@@ -4,7 +4,7 @@ import Link from "next/link";
 import { DealCard } from "@/components/market/deal-card";
 import { LotCard } from "@/components/market/lot-card";
 import { AuctionList } from "@/components/market/auction-list";
-import { EmptyMarket } from "@/components/market/source-status";
+import { EmptyMarket, SourceList } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
 import { IconArrowRight } from "@/components/ui/icons";
@@ -88,8 +88,8 @@ export function Overview() {
         <section className="mt-6">
           <EmptyMarket
             title="Noch keine Produkt-Chancen"
-            text="Produkt-Chancen erscheinen nur aus echten Marktpreisen, nie aus Beispieldaten. Sobald eBay angebunden ist und ein Angebot deutlich unter dem Marktpreis liegt, steht es hier."
-            sources={market.sources.filter((s) => s.id === "ebay")}
+            text="Produkt-Chancen erscheinen nur aus echten Marktpreisen, nie aus Beispieldaten. Sobald eine Preisquelle verbunden ist und ein Angebot deutlich unter dem Marktpreis liegt, steht es hier."
+            sources={market.sources.filter((s) => ["ebay", "keepa", "awin"].includes(s.id))}
           />
         </section>
       )}
@@ -169,6 +169,16 @@ export function Overview() {
             {lots.slice(0, 3).map((l, i) => (
               <LotCard key={l.id} lot={l} now={scannedAt} index={i} href={routes.lot(l.id)} />
             ))}
+          </div>
+        </section>
+      )}
+      {!market.demo && market.sources.length > 0 && (
+        <section className="mt-12" aria-labelledby="quellen">
+          <h2 id="quellen" className="mb-3 text-xl font-semibold tracking-tight">
+            Datenquellen
+          </h2>
+          <div className="rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line">
+            <SourceList sources={market.sources} />
           </div>
         </section>
       )}

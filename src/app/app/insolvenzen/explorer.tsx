@@ -88,7 +88,7 @@ export function LotExplorer() {
           <EmptyMarket
             title="Gerade keine Auktionen abrufbar"
             text="Hier erscheinen nur echte Insolvenz- und Justizauktionen, nie erfundene Verfahren."
-            sources={market.sources.filter((s) => s.id === "insolvenz")}
+            sources={market.sources.filter((s) => s.id === "justiz" || s.id === "netbid")}
           />
         </div>
       )}

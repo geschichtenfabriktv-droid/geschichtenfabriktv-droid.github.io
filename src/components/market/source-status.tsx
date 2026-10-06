@@ -9,17 +9,24 @@ export function EmptyMarket({ title, text, sources }: { title: string; text: str
     <div className="rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-line">
       <p className="text-lg font-semibold tracking-tight">{title}</p>
       <p className="mt-1 max-w-2xl text-sm leading-relaxed text-ink-2">{text}</p>
-      {sources.length > 0 && (
-        <ul className="mt-4 space-y-2 text-sm">
-          {sources.map((s) => (
-            <li key={s.id} className="flex flex-wrap items-baseline gap-x-2">
-              <span className={`inline-block size-2 shrink-0 rounded-full ${s.live ? "bg-good" : "bg-line"}`} aria-hidden />
-              <span className="font-medium">{s.name}</span>
-              <span className="text-muted">{s.live ? "liefert Live-Daten" : "keine Daten"}{s.note ? ` · ${s.note}` : ""}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      {sources.length > 0 && <SourceList sources={sources} className="mt-4" />}
     </div>
+  );
+}
+
+export function SourceList({ sources, className = "" }: { sources: MarketSource[]; className?: string }) {
+  return (
+    <ul className={`space-y-2 text-sm ${className}`}>
+      {sources.map((s) => (
+        <li key={s.id} className="flex flex-wrap items-baseline gap-x-2">
+          <span className={`inline-block size-2 shrink-0 rounded-full ${s.live ? "bg-good" : "bg-line"}`} aria-hidden />
+          <span className="font-medium">{s.name}</span>
+          <span className="text-muted">
+            {s.live ? "verbunden, liefert Live-Daten" : "nicht verbunden"}
+            {s.note && s.note !== "Nicht verbunden." ? ` · ${s.note}` : ""}
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }
