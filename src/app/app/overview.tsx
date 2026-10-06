@@ -4,6 +4,7 @@ import Link from "next/link";
 import { DealCard } from "@/components/market/deal-card";
 import { LotCard } from "@/components/market/lot-card";
 import { AuctionList } from "@/components/market/auction-list";
+import { CountryPicker } from "@/components/market/country-picker";
 import { EmptyMarket, SourceList } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
@@ -60,6 +61,8 @@ export function Overview() {
         <ScanStatus scannedAt={scannedAt} scanning={scanning} onRefresh={refresh} />
       </PageHeader>
 
+      {!market.demo && <CountryPicker />}
+
       <section aria-label="Kennzahlen" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {kpis.map((k, i) => (
           <div key={k.label} className="rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line" style={{ animationDelay: `${i * 50}ms` }}>
@@ -89,7 +92,7 @@ export function Overview() {
           <EmptyMarket
             title="Noch keine Produkt-Chancen"
             text="Produkt-Chancen erscheinen nur aus echten Marktpreisen, nie aus Beispieldaten. Sobald eine Preisquelle verbunden ist und ein Angebot deutlich unter dem Marktpreis liegt, steht es hier."
-            sources={market.sources.filter((s) => ["ebay", "keepa", "awin"].includes(s.id))}
+            sources={market.sources.filter((s) => s.id.startsWith("ebay") || s.id === "keepa" || s.id === "awin")}
           />
         </section>
       )}

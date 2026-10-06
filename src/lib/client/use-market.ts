@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getAnalyzedDeals, getAnalyzedLots, summarizeCategories, type CategorySummary } from "../data/repository";
 import type { AnalyzedDeal, AnalyzedLot, AuctionLink, MarketSource } from "../domain/types";
 import { api, BACKEND } from "./api";
+import { useCountries } from "./countries";
 
 export interface MarketState {
   deals: AnalyzedDeal[];
@@ -17,6 +18,8 @@ export interface MarketState {
   sources: MarketSource[];
   /** Laufende Justiz- und Insolvenzauktionen als Links (nur Kunden-Dashboard). */
   auctions: AuctionLink[];
+  /** Länder, für die die Daten geladen wurden. */
+  countries: string[];
 }
 
 /** Im Test-Dashboard: je Kategorie die drei besten Chancen. */
@@ -36,11 +39,11 @@ async function scanLocal(demo: boolean): Promise<MarketState> {
     });
     lots = lots.slice(0, DEMO_PER_CATEGORY);
   }
-  return { deals, lots, categories: summarizeCategories(deals, lots), scannedAt: now, locked: { deals: 0, lots: 0 }, demo: true, sources: [], auctions: [] };
+  return { deals, lots, categories: summarizeCategories(deals, lots), scannedAt: now, locked: { deals: 0, lots: 0 }, demo: true, sources: [], auctions: [], countries: ["DE"] };
 }
 
-async function scanServer(): Promise<MarketState> {
-  const data = await api<{ scannedAt: string; deals: AnalyzedDeal[]; lots: AnalyzedLot[]; locked: { deals: number; lots: number }; sources: MarketSource[]; auctions: AuctionLink[] }>("/api/market/");
+async function scanServer(countries: readonly string[]): Promise<MarketState> {
+  const data = await api<{ scannedAt: string; deals: AnalyzedDeal[]; lots: AnalyzedLot[]; locked: { deals: number; lots: number }; sources: MarketSource[]; auctions: AuctionLink[]; countries: string[] }>(`/api/market/?laender=${countries.join(",")}`);
   return { ...data, scannedAt: new Date(data.scannedAt), categories: summarizeCategories(data.deals, data.lots), demo: false };
 }
 
@@ -49,7 +52,9 @@ async function scanServer(): Promise<MarketState> {
  * im Test-Dashboard werden die Beispieldaten im Browser berechnet.
  */
 export function useMarket(mode: "app" | "demo" = "app") {
-  const key = mode === "demo" || !BACKEND ? `local:${mode}` : "server";
+  const { countries } = useCountries();
+  const server = mode !== "demo" && BACKEND;
+  const key = server ? `server:${countries.join(",")}` : `local:${mode}`;
   const [state, setState] = useState<MarketState | null>(cache?.key === key ? cache.state : null);
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,7 +63,7 @@ export function useMarket(mode: "app" | "demo" = "app") {
     setScanning(true);
     setError(null);
     try {
-      const next = key === "server" ? await scanServer() : await scanLocal(mode === "demo");
+      const next = server ? await scanServer(countries) : await scanLocal(mode === "demo");
       cache = { key, state: next };
       setState(next);
     } catch (e) {
@@ -66,7 +71,8 @@ export function useMarket(mode: "app" | "demo" = "app") {
     } finally {
       setScanning(false);
     }
-  }, [key, mode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- `key` enthält die Länder
+  }, [key, mode, server]);
 
   useEffect(() => {
     if (cache?.key !== key) void refresh();

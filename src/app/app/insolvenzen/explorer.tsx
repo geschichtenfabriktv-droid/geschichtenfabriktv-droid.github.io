@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LotCard } from "@/components/market/lot-card";
 import { AuctionList } from "@/components/market/auction-list";
+import { CountryPicker } from "@/components/market/country-picker";
 import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
@@ -31,6 +32,8 @@ export function LotExplorer() {
       <PageHeader eyebrow="Insolvenzmassen" title="Werte aus Verfahren, unter Gutachterpreis">
         <ScanStatus scannedAt={market?.scannedAt} scanning={scanning} onRefresh={refresh} />
       </PageHeader>
+
+      {market && !market.demo && <CountryPicker />}
 
       <p className="-mt-4 mb-6 max-w-2xl text-[15px] leading-relaxed text-ink-2">
         Der Insolvenz-Finder bewertet Insolvenzmasse-Posten mit Maximalgebot: Er ordnet die Massen nach Art und berechnet, bis zu welchem Gebot sich ein
@@ -86,8 +89,12 @@ export function LotExplorer() {
       {market && !market.demo && market.lots.length === 0 && market.auctions.length === 0 && market.locked.lots === 0 && (
         <div className="mb-6">
           <EmptyMarket
-            title="Gerade keine Auktionen abrufbar"
-            text="Hier erscheinen nur echte Insolvenz- und Justizauktionen, nie erfundene Verfahren."
+            title={market.countries.includes("DE") ? "Gerade keine Auktionen abrufbar" : "Für Österreich und die Schweiz noch keine Auktionsquellen"}
+            text={
+              market.countries.includes("DE")
+                ? "Hier erscheinen nur echte Insolvenz- und Justizauktionen, nie erfundene Verfahren."
+                : "Die angebundenen Auktionsportale liefern bisher nur Deutschland. Wähle Deutschland dazu, um die laufenden Auktionen zu sehen."
+            }
             sources={market.sources.filter((s) => s.id === "justiz" || s.id === "netbid")}
           />
         </div>

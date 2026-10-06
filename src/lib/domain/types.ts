@@ -77,6 +77,8 @@ export interface Deal {
   releaseDate?: string;
   limited: boolean;
   detectedAt: string;
+  /** Land des Angebots; fehlt bei Beispieldaten (= Deutschland). */
+  country?: "DE" | "AT" | "CH";
 }
 
 export type LotType = "Warenlager" | "Maschinen" | "Fahrzeuge" | "Büro & IT" | "Marken & Domains";
@@ -158,4 +160,5 @@ export interface AuctionLink {
   platform: string;
   /** Letzte Änderung laut Anbieter (ISO); null, wenn unbekannt. */
   updatedAt: string | null;
+  country?: "DE" | "AT" | "CH";
 }

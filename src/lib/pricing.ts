@@ -136,3 +136,20 @@ export function marketplaceLimit(plan: PlanId | null | undefined, addons: AddonI
 }
 
 export const GUARANTEE_DAYS = 14;
+
+export type Country = "DE" | "AT" | "CH";
+export const COUNTRIES: readonly { id: Country; name: string }[] = [
+  { id: "DE", name: "Deutschland" },
+  { id: "AT", name: "Österreich" },
+  { id: "CH", name: "Schweiz" },
+];
+
+export function isCountry(v: unknown): v is Country {
+  return v === "DE" || v === "AT" || v === "CH";
+}
+
+/** Deutschland in jedem Tarif; Österreich und die Schweiz im Business-Tarif. */
+export function countriesAllowed(plan: PlanId | null | undefined): Country[] {
+  if (!getPlan(plan)) return [];
+  return plan === "business" ? ["DE", "AT", "CH"] : ["DE"];
+}

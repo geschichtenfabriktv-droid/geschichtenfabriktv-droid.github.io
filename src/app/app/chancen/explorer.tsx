@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { CategoryChips } from "@/components/market/category-chips";
+import { CountryPicker } from "@/components/market/country-picker";
 import { DealCard } from "@/components/market/deal-card";
 import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
@@ -86,6 +87,8 @@ export function DealExplorer() {
       <PageHeader eyebrow="Arbitrage-Chancen" title={heading}>
         <ScanStatus scannedAt={market?.scannedAt} scanning={scanning} onRefresh={refresh} />
       </PageHeader>
+
+      {routes.mode === "app" && market && !market.demo && <CountryPicker />}
 
       {category !== "alle" && <p className="-mt-5 mb-6 max-w-2xl text-[15px] text-ink-2">{getCategory(category).claim}.</p>}
 

@@ -1,6 +1,8 @@
 import "server-only";
 import type { Comparable, Deal } from "@/lib/domain/types";
+import type { Country } from "@/lib/pricing";
 import { env } from "./env";
+import { toEur } from "./fx";
 import { WATCHLIST, type WatchItem } from "./watchlist";
 
 /**
@@ -32,6 +34,7 @@ interface Listing {
   createdAt?: string;
 }
 
+/** Schlüssel: Land und Suchbegriff. */
 const cache = new Map<string, { at: number; deals: Deal[]; stats: Stats | null }>();
 let appToken: { value: string; until: number } | null = null;
 
@@ -137,45 +140,64 @@ interface BrowseItem {
   itemCreationDate?: string;
 }
 
-async function scanItem(item: WatchItem, now: Date): Promise<{ deals: Deal[]; stats: Stats | null }> {
-  const hit = cache.get(item.query);
+export const EBAY_MARKETS = {
+  DE: { marketplace: "EBAY_DE", currency: "EUR", platform: "eBay.de" },
+  AT: { marketplace: "EBAY_AT", currency: "EUR", platform: "eBay.at" },
+  CH: { marketplace: "EBAY_CH", currency: "CHF", platform: "eBay.ch" },
+} as const satisfies Record<Country, { marketplace: string; currency: string; platform: string }>;
+
+async function scanItem(item: WatchItem, country: Country, now: Date): Promise<{ deals: Deal[]; stats: Stats | null }> {
+  const key = `${country}:${item.query}`;
+  const hit = cache.get(key);
   if (hit && Date.now() - hit.at < TTL) return hit;
+  const market = EBAY_MARKETS[country];
+  const eur = await toEur(market.currency);
   const url = new URL(`${apiHost()}/buy/browse/v1/item_summary/search`);
   url.searchParams.set("q", item.query);
-  url.searchParams.set("filter", "conditions:{NEW},buyingOptions:{FIXED_PRICE},itemLocationCountry:DE,priceCurrency:EUR");
+  url.searchParams.set("filter", `conditions:{NEW},buyingOptions:{FIXED_PRICE},itemLocationCountry:${country},priceCurrency:${market.currency}`);
   url.searchParams.set("limit", "100");
   const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${await getAppToken()}`, "X-EBAY-C-MARKETPLACE-ID": "EBAY_DE" },
+    headers: { Authorization: `Bearer ${await getAppToken()}`, "X-EBAY-C-MARKETPLACE-ID": market.marketplace },
     cache: "no-store",
   });
   if (!res.ok) throw new Error(`eBay-Suche ${res.status}`);
   const data = (await res.json()) as { total?: number; itemSummaries?: BrowseItem[] };
   const listings: Listing[] = (data.itemSummaries ?? []).flatMap((i) => {
     const price = Number(i.price?.value);
-    if (!i.itemId || !i.title || !i.itemWebUrl || !Number.isFinite(price) || i.price?.currency !== "EUR") return [];
+    if (!i.itemId || !i.title || !i.itemWebUrl || !Number.isFinite(price) || i.price?.currency !== market.currency) return [];
     const shipping = Number(i.shippingOptions?.[0]?.shippingCost?.value ?? 0);
-    return [{ itemId: i.itemId, title: i.title, price, shipping: Number.isFinite(shipping) ? shipping : 0, url: i.itemWebUrl, createdAt: i.itemCreationDate }];
+    return [{ itemId: i.itemId, title: i.title, price: eur(price), shipping: Number.isFinite(shipping) ? eur(shipping) : 0, url: i.itemWebUrl, createdAt: i.itemCreationDate }];
   });
-  const entry = { at: Date.now(), deals: findDeals(item, listings, data.total, now), stats: marketStats(item, listings, data.total) };
-  cache.set(item.query, entry);
+  const deals = findDeals(item, listings, data.total, now).map((d) => ({
+    ...d,
+    id: country === "DE" ? d.id : `${d.id}-${country.toLowerCase()}`,
+    country,
+    source: { ...d.source, platform: market.platform },
+    target: { ...d.target, platform: market.platform },
+  }));
+  const entry = { at: Date.now(), deals, stats: marketStats(item, listings, data.total) };
+  cache.set(key, entry);
   return entry;
 }
 
 export interface EbayScan {
   deals: Deal[];
-  /** Produkte, deren Abfrage fehlgeschlagen ist. */
-  failed: number;
-  /** eBay-Marktpreis je Produkt der Beobachtungsliste (Schlüssel: query). */
+  /** Abfragen, die fehlgeschlagen sind, je Land. */
+  failed: Partial<Record<Country, number>>;
+  /** eBay.de-Marktpreis je Produkt der Beobachtungsliste (Schlüssel: query), Grundlage für Händler-Feeds. */
   stats: Map<string, Stats>;
 }
 
-export async function scanEbay(now: Date): Promise<EbayScan> {
-  const results = await Promise.allSettled(WATCHLIST.map((item) => scanItem(item, now)));
+export async function scanEbay(now: Date, countries: readonly Country[] = ["DE"]): Promise<EbayScan> {
+  const jobs = countries.flatMap((country) => WATCHLIST.map((item) => ({ country, item })));
+  const results = await Promise.allSettled(jobs.map((j) => scanItem(j.item, j.country, now)));
   const deals = results.flatMap((r) => (r.status === "fulfilled" ? r.value.deals : []));
-  const failed = results.filter((r) => r.status === "rejected").length;
+  const failed: Partial<Record<Country, number>> = {};
   const stats = new Map<string, Stats>();
   results.forEach((r, i) => {
-    if (r.status === "fulfilled" && r.value.stats) stats.set(WATCHLIST[i]!.query, r.value.stats);
+    const job = jobs[i]!;
+    if (r.status === "rejected") failed[job.country] = (failed[job.country] ?? 0) + 1;
+    else if (job.country === "DE" && r.value.stats) stats.set(job.item.query, r.value.stats);
   });
   return { stats, deals, failed };
 }

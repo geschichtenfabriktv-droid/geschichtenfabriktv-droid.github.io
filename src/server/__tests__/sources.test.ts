@@ -58,3 +58,19 @@ describe("NetBid", () => {
     ]);
   });
 });
+
+describe("Länder", () => {
+  it("erlaubt Österreich und Schweiz nur im Business-Tarif", async () => {
+    const { countriesAllowed } = await import("@/lib/pricing");
+    expect(countriesAllowed("starter")).toEqual(["DE"]);
+    expect(countriesAllowed("pro")).toEqual(["DE"]);
+    expect(countriesAllowed("business")).toEqual(["DE", "AT", "CH"]);
+    expect(countriesAllowed(null)).toEqual([]);
+  });
+
+  it("liest EZB-Kurse", async () => {
+    const { parseEcb } = await import("@/server/fx");
+    const rates = parseEcb(`<Cube currency='USD' rate='1.0841'/><Cube currency='CHF' rate='0.9412'/>`);
+    expect(rates.get("CHF")).toBe(0.9412);
+  });
+});
