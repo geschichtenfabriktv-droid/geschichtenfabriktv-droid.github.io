@@ -13,7 +13,8 @@ export function RegisterForm() {
   const params = useSearchParams();
   const plan = params.get("plan");
   const interval = params.get("intervall");
-  const chosen = isPlanId(plan) && isInterval(interval) ? `/checkout/?plan=${plan}&intervall=${interval}` : null;
+  const ab = params.get("ab");
+  const chosen = isPlanId(plan) && isInterval(interval) ? `/checkout/?plan=${plan}&intervall=${interval}${ab ? `&ab=${encodeURIComponent(ab)}` : ""}` : null;
   const next = safeNext(params.get("weiter"), chosen ?? "/preise/");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);

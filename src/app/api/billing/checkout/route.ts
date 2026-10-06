@@ -9,5 +9,5 @@ export const POST = handler(async (req) => {
   v.accepted(body.terms, "Bitte akzeptiere die AGB.");
   v.accepted(body.waiver, "Bitte bestätige den sofortigen Beginn der Leistung.");
   if (!isMollieConfigured()) return error("Die Bezahlung ist noch nicht freigeschaltet. Bitte versuche es später erneut.", 503);
-  return json(await startCheckout(user, { plan: body.plan, interval: body.interval, addons: body.addons }));
+  return json(await startCheckout(user, { plan: body.plan, interval: body.interval, addons: body.addons, ab: body.ab }));
 });

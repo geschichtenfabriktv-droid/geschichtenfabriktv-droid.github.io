@@ -22,6 +22,14 @@ export default function DatenschutzPage() {
         Analyse-Cookies, kein Tracking und keine Social-Media-Plugins ein. Schriften werden von unserem eigenen Server
         geladen, nicht von Google oder anderen Drittanbietern.
       </p>
+      <p>
+        Um Texte auf der Startseite und bei den Tarifen zu verbessern, zeigen wir bei jedem Seitenaufruf per Zufall eine von
+        zwei Textvarianten (A/B-Test). Dabei wird nichts auf deinem Gerät gespeichert und nichts ausgelesen; es gibt keine
+        Cookies und keine Kennung. Unser Server zählt nur Summen je Tag und Variante (Ansichten, Klicks, geöffnete
+        Bestellseiten, Käufe). Die Variante wird bis zur Bestellung als Teil der Adresse (Parameter „ab“) und bei der
+        Zahlung als Vermerk mitgegeben. Rechtsgrundlage ist unser berechtigtes Interesse an einer verständlichen
+        Webseite (Art. 6 Abs. 1 lit. f DSGVO).
+      </p>
 
       <h2>3. Aufruf der Webseite und Server-Protokolle</h2>
       <p>

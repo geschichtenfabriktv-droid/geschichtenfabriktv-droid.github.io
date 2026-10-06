@@ -11,7 +11,7 @@ import { api, ApiError } from "@/lib/client/api";
 import { eur } from "@/lib/format";
 import { ADDONS, GUARANTEE_DAYS, isInterval, isPlanId, PLANS, priceFor, type AddonId, type BillingInterval, type PlanId } from "@/lib/pricing";
 
-export function CheckoutForm({ initialPlan, initialInterval, email, paymentsReady }: { initialPlan?: string; initialInterval?: string; email: string; paymentsReady: boolean }) {
+export function CheckoutForm({ ab, initialPlan, initialInterval, email, paymentsReady }: { ab?: string; initialPlan?: string; initialInterval?: string; email: string; paymentsReady: boolean }) {
   const [plan, setPlan] = useState<PlanId>(isPlanId(initialPlan) ? initialPlan : "pro");
   const [interval, setInterval] = useState<BillingInterval>(isInterval(initialInterval) ? initialInterval : "jahr");
   const [addons, setAddons] = useState<AddonId[]>([]);
@@ -29,7 +29,7 @@ export function CheckoutForm({ initialPlan, initialInterval, email, paymentsRead
     setBusy(true);
     setError(null);
     try {
-      const { checkoutUrl } = await api<{ checkoutUrl: string }>("/api/billing/checkout/", { body: { plan, interval, addons: selected, terms, waiver } });
+      const { checkoutUrl } = await api<{ checkoutUrl: string }>("/api/billing/checkout/", { body: { plan, interval, addons: selected, terms, waiver, ab } });
       window.location.assign(checkoutUrl);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : "Die Bezahlung konnte nicht gestartet werden.");

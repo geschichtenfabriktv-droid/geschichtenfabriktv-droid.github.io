@@ -81,6 +81,14 @@ create table if not exists cancellations (
   user_id uuid,
   created_at timestamptz not null default now()
 );
+create table if not exists ab_counts (
+  day date not null,
+  experiment text not null,
+  variant text not null,
+  event text not null,
+  count integer not null default 0,
+  primary key (day, experiment, variant, event)
+);
 `;
 
 let instance: Promise<Db> | null = null;

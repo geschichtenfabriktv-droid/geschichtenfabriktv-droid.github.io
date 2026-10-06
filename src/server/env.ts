@@ -69,6 +69,13 @@ export const env = {
       return optional("AMAZON_LWA_CLIENT_SECRET");
     },
   },
+  /** Konten, die die Auswertung der A/B-Tests sehen dürfen (kommagetrennt). */
+  get adminEmails() {
+    return (optional("ADMIN_EMAILS") ?? "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+  },
   get isProduction() {
     return process.env.NODE_ENV === "production";
   },

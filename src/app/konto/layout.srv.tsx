@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AppShell } from "@/components/shell/app-shell";
 import { DashboardModeProvider } from "@/lib/client/dashboard-mode";
 import { UserProvider } from "@/lib/client/user-context";
+import { isAdmin } from "@/server/experiments";
 import { requirePageUser, toSessionUser } from "@/server/page-guards";
 import { KontoTabs } from "./konto-tabs";
 
@@ -14,7 +15,7 @@ export default async function KontoLayout({ children }: { children: React.ReactN
     <UserProvider user={toSessionUser(user)}>
       <DashboardModeProvider mode="app">
         <AppShell>
-          <KontoTabs />
+          <KontoTabs admin={isAdmin(user)} />
           {children}
         </AppShell>
       </DashboardModeProvider>

@@ -9,14 +9,14 @@ const TABS = [
   { href: "/konto/daten/", label: "Profil & Datenschutz" },
 ];
 
-export function KontoTabs() {
+export function KontoTabs({ admin = false }: { admin?: boolean }) {
   const path = usePathname() ?? "";
   const normalized = path.endsWith("/") ? path : `${path}/`;
   return (
     <div className="mb-8">
       <h1 className="font-display text-[28px] leading-tight md:text-[36px]">Kundenkonto</h1>
       <nav className="no-scrollbar -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 md:mx-0 md:px-0" aria-label="Kundenkonto">
-        {TABS.map((t) => (
+        {[...TABS, ...(admin ? [{ href: "/konto/experimente/", label: "A/B-Tests" }] : [])].map((t) => (
           <Link
             key={t.href}
             href={t.href}

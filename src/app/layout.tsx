@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AbTracker } from "@/components/site/ab-tracker";
+import { AB_CSS, AB_HEAD_SCRIPT } from "@/lib/experiments";
 import { SITE_URL } from "@/lib/site";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -47,8 +49,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={archivo.variable}>
-      <body>{children}</body>
+    <html lang="de" className={archivo.variable} suppressHydrationWarning>
+      <head>
+        {/* A/B-Tests: Variante pro Seitenaufruf, vor dem ersten Zeichnen; ohne Cookies und ohne Speicher. */}
+        <script dangerouslySetInnerHTML={{ __html: AB_HEAD_SCRIPT }} />
+        <style dangerouslySetInnerHTML={{ __html: AB_CSS }} />
+      </head>
+      <body>
+        {children}
+        <AbTracker />
+      </body>
     </html>
   );
 }

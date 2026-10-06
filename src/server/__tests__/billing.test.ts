@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { cancelSubscription, changePlan, processPayment, startCheckout } from "@/server/billing";
 import { resetDbForTests } from "@/server/db";
+import { abStats } from "@/server/experiments";
 import type { MollieClient, MolliePayment } from "@/server/mollie";
 import { createUser, findUserById, hasAccess } from "@/server/users";
 
@@ -94,6 +95,22 @@ describe("Abrechnung mit Mollie", () => {
     const sub = [...m.subscriptions.values()][0]!;
     expect(sub).toMatchObject({ amount: "128.00", startDate: "2026-11-05" });
     expect(hasAccess(after, now)).toBe(true);
+  });
+
+  it("ordnet einen Kauf der A/B-Variante zu, genau einmal", async () => {
+    const m = fakeMollie();
+    const user = await createUser(`ab${Date.now()}@test.de`, "x", "Test");
+    await startCheckout(user, { plan: "starter", interval: "jahr", addons: [], ab: "start.b~karten.a~fremd.x" }, m.client);
+    const payment = [...m.payments.values()][0]!;
+    expect(payment.metadata).toMatchObject({ ab: "start.b~karten.a" });
+    payment.status = "paid";
+    await processPayment(payment.id, m.client);
+    await processPayment(payment.id, m.client);
+    const stats = await abStats();
+    const kauf = (exp: string, v: string) => stats.find((e) => e.id === exp)!.variants.find((x) => x.variant === v)!.counts.kauf;
+    expect(kauf("start", "b")).toBe(1);
+    expect(kauf("start", "a")).toBe(0);
+    expect(kauf("karten", "a")).toBe(1);
   });
 
   it("setzt bei fehlgeschlagener Erstzahlung zurück", async () => {

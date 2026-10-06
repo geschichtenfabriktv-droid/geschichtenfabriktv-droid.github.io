@@ -96,15 +96,19 @@ export default async function Home() {
       {/* Hero: Aussage links, Preisschild rechts */}
       <section>
         <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-14 px-4 pt-12 pb-24 sm:px-6 md:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-10 lg:pt-24 lg:pb-32">
-          <div>
-            <h1 className="font-display text-[40px] leading-[1.03] sm:text-[58px] lg:text-[68px]">Gewinne finden, bevor der Markt sie sieht.</h1>
+          <div data-ab-exp="start">
+            <h1 className="font-display text-[40px] leading-[1.03] sm:text-[58px] lg:text-[68px]">
+              <span className="ab-start-a">Gewinne finden, bevor der Markt sie sieht.</span>
+              <span className="ab-start-b">Wisse vor dem Einkauf, ob sich ein Deal lohnt.</span>
+            </h1>
             <p className="mt-6 max-w-[34rem] text-[17px] leading-relaxed text-ink-2 md:text-[18px]">
               Arbitrage Radar vergleicht Händlerpreise mit den Marktpreisen auf eBay und Amazon, rechnet alle Gebühren ein und zeigt dir für jede Chance, wie
               wahrscheinlich sie sich lohnt.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <LinkButton href="/demo/" size="lg">
-                Test-Dashboard öffnen
+              <LinkButton href="/demo/" size="lg" data-ab-goal="start">
+                <span className="ab-start-a">Test-Dashboard öffnen</span>
+                <span className="ab-start-b">Gewinnchancen kostenlos ansehen</span>
               </LinkButton>
               <LinkButton href="/preise/" variant="secondary" size="lg">
                 Tarife ansehen

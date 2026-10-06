@@ -1,7 +1,9 @@
 import "server-only";
 import { getPlan, isInterval, isPlanId, priceFor, sanitizeAddons, type AddonId, type BillingInterval, type PlanId } from "@/lib/pricing";
 import { getDb } from "./db";
+import { formatAbTag, parseAbTag } from "@/lib/experiments";
 import { env } from "./env";
+import { recordAb } from "./experiments";
 import { sendMail } from "./mail";
 import { HttpError } from "./http";
 import { amount, mollie as defaultClient, type MollieClient, type MolliePayment } from "./mollie";
@@ -71,7 +73,7 @@ async function confirmPaid(user: User, payment: MolliePayment, extra = "") {
 
 export async function startCheckout(
   user: User,
-  input: { plan: unknown; interval: unknown; addons: unknown },
+  input: { plan: unknown; interval: unknown; addons: unknown; ab?: unknown },
   client: MollieClient = defaultClient,
 ): Promise<{ checkoutUrl: string }> {
   if (!isPlanId(input.plan) || !isInterval(input.interval)) throw new HttpError(400, "Bitte wähle einen gültigen Tarif.");
@@ -81,6 +83,7 @@ export async function startCheckout(
   const interval = input.interval;
   const addons = sanitizeAddons(plan, input.addons);
   const total = priceFor(plan, interval, addons);
+  const ab = formatAbTag(parseAbTag(input.ab));
 
   let customerId = user.mollieCustomerId;
   if (!customerId) {
@@ -95,7 +98,7 @@ export async function startCheckout(
     sequenceType: "first",
     redirectUrl: `${env.appUrl}/konto/?checkout=zurueck`,
     webhookUrl: webhookUrl(),
-    metadata: { userId: user.id, plan, interval, addons },
+    metadata: { userId: user.id, plan, interval, addons, ...(ab ? { ab } : {}) },
     locale: "de_DE",
   });
   await claimStatus(user.id, payment, payment.status);
@@ -112,7 +115,7 @@ export async function startCheckout(
  */
 export async function processPayment(paymentId: string, client: MollieClient = defaultClient, now = new Date()): Promise<void> {
   const payment = await client.getPayment(paymentId);
-  const meta = (payment.metadata ?? {}) as { userId?: string; plan?: string; interval?: string; addons?: unknown; kind?: string };
+  const meta = (payment.metadata ?? {}) as { userId?: string; plan?: string; interval?: string; addons?: unknown; kind?: string; ab?: string };
   const user =
     (meta.userId ? await findUserById(meta.userId) : null) ?? (payment.customerId ? await findUserByMollieCustomer(payment.customerId) : null);
   if (!user) return;
@@ -132,7 +135,7 @@ async function applyPayment(
   user: User,
   payment: MolliePayment,
   status: string,
-  meta: { plan?: string; interval?: string; addons?: unknown; kind?: string },
+  meta: { plan?: string; interval?: string; addons?: unknown; kind?: string; ab?: string },
   client: MollieClient,
   now: Date,
 ) {
@@ -181,6 +184,7 @@ async function applyPayment(
         pendingAddons: null,
       });
       await confirmPaid(user, payment, `Dein Abo läuft bis ${periodEnd.toLocaleDateString("de-DE", { timeZone: "Europe/Berlin" })} und verlängert sich automatisch.\n`);
+      await recordAb(parseAbTag(meta.ab), "kauf", now).catch((e) => console.error(e));
     } else if (["failed", "canceled", "expired"].includes(status) && user.status === "pending") {
       await updateUser(user.id, { status: "none" });
     }

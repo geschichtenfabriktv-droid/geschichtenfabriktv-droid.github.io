@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { formatAbTag, parseAbTag } from "@/lib/experiments";
+import { recordAb } from "@/server/experiments";
 import { isMollieConfigured } from "@/server/mollie";
 import { getCurrentUser } from "@/server/session";
 import { hasAccess } from "@/server/users";
@@ -14,5 +16,7 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
   const user = await getCurrentUser();
   if (!user) redirect(`/registrieren/?weiter=${encodeURIComponent(`/checkout/${qs ? `?${qs}` : ""}`)}`);
   if (hasAccess(user) && user.status === "active") redirect("/konto/");
-  return <CheckoutForm initialPlan={sp.plan} initialInterval={sp.intervall} email={user.email} paymentsReady={isMollieConfigured()} />;
+  const ab = parseAbTag(sp.ab);
+  await recordAb(ab, "checkout").catch(() => {});
+  return <CheckoutForm ab={formatAbTag(ab)} initialPlan={sp.plan} initialInterval={sp.intervall} email={user.email} paymentsReady={isMollieConfigured()} />;
 }

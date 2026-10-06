@@ -31,7 +31,7 @@ export function PricingCards({ compact = false, headingLevel = 3 }: { compact?: 
   const Heading = headingLevel === 2 ? "h2" : "h3";
   const [interval, setInterval] = useState<BillingInterval>("jahr");
   return (
-    <div>
+    <div data-ab-exp="karten">
       <div className="flex">
         <IntervalToggle value={interval} onChange={setInterval} />
       </div>
@@ -58,9 +58,12 @@ export function PricingCards({ compact = false, headingLevel = 3 }: { compact?: 
               <Link
                 href={BACKEND ? `/checkout/?plan=${p.id}&intervall=${interval}` : `/registrieren/?plan=${p.id}&intervall=${interval}`}
                 className={buttonClass(p.highlight ? "primary" : "secondary", "lg", "mt-7 w-full")}
+                data-ab-goal="karten"
               >
-                {p.name} wählen
+                <span className="ab-karten-a">{p.name} wählen</span>
+                <span className="ab-karten-b">{p.name} risikofrei starten</span>
               </Link>
+              <p className="ab-karten-b mt-2.5 text-center text-[13px] text-muted">{GUARANTEE_DAYS} Tage Geld-zurück-Garantie</p>
               {!compact && (
                 <ul className="mt-8 space-y-3 border-t border-line pt-6 text-[15px]">
                   {p.bullets.map((b) => (
