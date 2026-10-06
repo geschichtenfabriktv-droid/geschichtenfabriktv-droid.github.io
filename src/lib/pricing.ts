@@ -155,10 +155,10 @@ export function countriesAllowed(plan: PlanId | null | undefined): Country[] {
 }
 
 /** Werbetext für Österreich und die Schweiz; nur zeigen, wenn diese Länder Daten liefern (env.countriesLive). */
-export const COUNTRY_BULLET = "Auch Österreich und Schweiz (eBay.at, eBay.ch)";
+export const COUNTRY_BULLET = "Auch Marktpreise aus Österreich und der Schweiz";
 export const COUNTRY_FAQ = {
   q: "Für welche Länder gibt es Daten?",
-  a: "Deutschland ist in jedem Tarif dabei. Im Business-Tarif kannst du im Dashboard zusätzlich Österreich und die Schweiz zuschalten. Dann kommen Marktpreise und Chancen von eBay.at und eBay.ch dazu, Schweizer Preise umgerechnet in Euro zum Referenzkurs der Europäischen Zentralbank. Amazon, Händler-Feeds und Auktionsportale liefern bisher nur Deutschland.",
+  a: "Deutschland ist in jedem Tarif dabei. Im Business-Tarif kannst du im Dashboard zusätzlich Österreich und die Schweiz zuschalten. Dann kommen Marktpreise und Chancen aus diesen Ländern dazu, Schweizer Preise umgerechnet in Euro. Händlerpreise und Auktionen gibt es bisher nur für Deutschland.",
 };
 
 /** Tarif-Stichpunkte, mit den Ländern im Business-Tarif, sobald diese live sind. */

@@ -46,7 +46,7 @@ export function DealDetail({ id }: { id: string }) {
       <div className="mx-auto max-w-xl py-10">
         <UpsellCard
           title={demo ? "Diese Chance ist im Tarif enthalten" : "Diese Chance ist nicht mehr verfügbar"}
-          text={demo ? "Im Test-Dashboard siehst du die drei besten Chancen je Kategorie. Mit einem Tarif bekommst du alle Treffer, Live-Marktpreise von eBay und die Aktionen." : "Der Markt hat sich bewegt. Sieh dir die aktuellen Chancen an."}
+          text={demo ? "Im Test-Dashboard siehst du die drei besten Chancen je Kategorie. Mit einem Tarif bekommst du alle Treffer, Live-Marktpreise und die Aktionen." : "Der Markt hat sich bewegt. Sieh dir die aktuellen Chancen an."}
           href={demo ? "/preise/" : routes.list}
           cta={demo ? "Tarife ansehen" : "Zu den Chancen"}
         />
@@ -98,7 +98,7 @@ export function DealDetail({ id }: { id: string }) {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <h2 id="chart" className="text-[13px] font-medium text-muted">
-                  {m.history.length ? "Marktpreis, 90 Tage" : m.live ? "Marktpreis (Median der aktuellen eBay-Angebote)" : "Marktpreis"}
+                  {m.history.length ? "Marktpreis, 90 Tage" : m.live ? "Marktpreis (Median der aktuellen Angebote)" : "Marktpreis"}
                 </h2>
                 <p className="tabular mt-1 text-3xl font-semibold tracking-tight">{eur(m.medianPrice)}</p>
               </div>
@@ -140,7 +140,7 @@ export function DealDetail({ id }: { id: string }) {
 
           <section className="rounded-[var(--radius-card)] bg-white p-5 ring-1 ring-line md:p-6" aria-labelledby="comps">
             <h2 id="comps" className="mb-4 text-lg font-semibold tracking-tight">
-              {m.live ? "Aktuelle Vergleichsangebote auf eBay" : "Vergleichsverkäufe"}
+              {m.live ? "Aktuelle Vergleichsangebote" : "Vergleichsverkäufe"}
             </h2>
             <div>
               <table className="w-full text-[13px] md:text-sm">
@@ -216,7 +216,7 @@ export function DealDetail({ id }: { id: string }) {
             <p className="mt-3 text-center text-[11px] text-muted">
               {demo ? "Test-Dashboard: Aktionen sind im Tarif freigeschaltet." : `Empfohlener Verkaufspreis ${eur(a.recommendedPrice)}`}
             </p>
-            {m.live && <p className="mt-1 text-center text-[11px] font-medium text-good">Live-Marktpreise von eBay.de</p>}
+            {m.live && <p className="mt-1 text-center text-[11px] font-medium text-good">Live-Marktpreise</p>}
           </div>
         </aside>
       </div>

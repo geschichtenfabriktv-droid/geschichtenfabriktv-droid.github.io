@@ -81,7 +81,7 @@ export function LotExplorer() {
       {market && !market.demo && market.auctions.length > 0 && (
         <section className="mb-8" aria-labelledby="justiz">
           <h2 id="justiz" className="mb-3 text-xl font-semibold tracking-tight">
-            Laufende Justiz- und Insolvenzauktionen ({market.auctions.length})
+            Laufende Gerichts- und Insolvenzauktionen ({market.auctions.length})
           </h2>
           <AuctionList auctions={market.auctions} filters />
         </section>

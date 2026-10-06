@@ -4,7 +4,10 @@ import type { Country } from "@/lib/pricing";
 import { isAwinConfigured, scanAwin } from "./awin";
 import { AUCTION_FEEDS, listAuctions } from "./court-auctions";
 import { isKeepaConfigured, scanKeepa } from "./keepa";
-import { EBAY_MARKETS, isEbayBrowseConfigured, scanEbay, type Stats } from "./live-market";
+import { isEbayBrowseConfigured, scanEbay, type Stats } from "./live-market";
+
+/** Im Dashboard werden Quellen nur neutral beschrieben, ohne Anbieternamen. */
+const COUNTRY_NAME: Record<Country, string> = { DE: "Deutschland", AT: "Österreich", CH: "Schweiz" };
 
 const NOT_CONNECTED = "Nicht verbunden.";
 
@@ -43,7 +46,7 @@ export async function scanMarket(countries: Country[], now: Date): Promise<Marke
 
   let ebayStats = new Map<string, Stats>();
   for (const country of countries) {
-    const name = `${EBAY_MARKETS[country].platform} (Marktpreise und Angebote${country === "CH" ? ", in Euro umgerechnet zum EZB-Kurs" : ""})`;
+    const name = `Marktpreise und Angebote ${COUNTRY_NAME[country]}${country === "CH" ? " (in Euro umgerechnet)" : ""}`;
     const id = `ebay-${country.toLowerCase()}`;
     if (ebay.status === "fulfilled" && ebay.value) {
       sources.push({ id, name, live: true, note: failedNote(ebay.value.failed[country] ?? 0) });
@@ -56,7 +59,7 @@ export async function scanMarket(countries: Country[], now: Date): Promise<Marke
     ebayStats = ebay.value.stats;
   }
 
-  const keepaName = "Amazon.de über Keepa (Preise und Preisverlauf)";
+  const keepaName = "Online-Marktplatz mit Preisverlauf";
   if (keepa.status === "fulfilled" && keepa.value) {
     deals.push(...keepa.value.deals);
     sources.push({ id: "keepa", name: keepaName, live: true, note: failedNote(keepa.value.failed) });
@@ -64,14 +67,14 @@ export async function scanMarket(countries: Country[], now: Date): Promise<Marke
     sources.push({ id: "keepa", name: keepaName, live: false, note: keepa.status === "rejected" ? "Antwortet gerade nicht." : NOT_CONNECTED });
   }
 
-  const awinName = "Händler-Feeds über Awin (MediaMarkt, Saturn, Otto u. a.)";
+  const awinName = "Händlerpreise aus Partner-Feeds";
   if (isAwinConfigured() && de) {
     try {
       const awin = await scanAwin(ebayStats, now);
       deals.push(...awin.deals);
-      sources.push({ id: "awin", name: awinName, live: true, note: ebayStats.size ? `${awin.offers} Händlerangebote geprüft.` : "Bewertung braucht eBay als Marktpreis." });
-    } catch (e) {
-      sources.push({ id: "awin", name: awinName, live: false, note: e instanceof Error ? e.message : "Feed nicht lesbar." });
+      sources.push({ id: "awin", name: awinName, live: true, note: ebayStats.size ? `${awin.offers} Händlerangebote geprüft.` : "Bewertung braucht die Marktpreise." });
+    } catch {
+      sources.push({ id: "awin", name: awinName, live: false, note: "Gerade nicht lesbar." });
     }
   } else if (de) {
     sources.push({ id: "awin", name: awinName, live: false, note: NOT_CONNECTED });

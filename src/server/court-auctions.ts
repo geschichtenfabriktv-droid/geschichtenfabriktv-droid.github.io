@@ -28,7 +28,7 @@ export function parseSitemap(xml: string): AuctionLink[] {
     const slug = /^https:\/\/www\.justiz-auktion\.de\/([^/?#]+)$/.exec(loc)?.[1];
     const id = slug && /-(\d+)$/.exec(slug)?.[1];
     const title = slug ? words(slug.replace(/-\d+$/, "")) : "";
-    return id && title ? [{ id: `ja-${id}`, title, url: loc, platform: "Justiz-Auktion", updatedAt: lastmod }] : [];
+    return id && title ? [{ id: `ja-${id}`, title, url: loc, platform: "Gerichtsauktion", updatedAt: lastmod }] : [];
   });
 }
 
@@ -38,13 +38,13 @@ export function parseNetbid(xml: string, now: Date): AuctionLink[] {
     const m = /^https:\/\/www\.netbid\.com\/de\/auktionen\/(\d+)-\d+-([^/?#]+)$/.exec(loc);
     if (!m || !lastmod || !(Date.parse(lastmod) >= since)) return [];
     const title = words(m[2]!);
-    return title ? [{ id: `nb-${m[1]}`, title: title[0]!.toUpperCase() + title.slice(1), url: loc, platform: "NetBid", updatedAt: lastmod }] : [];
+    return title ? [{ id: `nb-${m[1]}`, title: title[0]!.toUpperCase() + title.slice(1), url: loc, platform: "Industrieauktion", updatedAt: lastmod }] : [];
   });
 }
 
 export const AUCTION_FEEDS: readonly AuctionFeed[] = [
-  { id: "justiz", name: "Justiz-Auktion (Gerichte, Insolvenzverwalter)", sitemap: "https://www.justiz-auktion.de/sitemap-auktionen.php", parse: (xml) => parseSitemap(xml) },
-  { id: "netbid", name: "NetBid (Industrie- und Insolvenzauktionen)", sitemap: "https://www.netbid.com/sitemap/sitemap-de-auctions.xml", parse: parseNetbid },
+  { id: "justiz", name: "Gerichts- und Insolvenzauktionen", sitemap: "https://www.justiz-auktion.de/sitemap-auktionen.php", parse: (xml) => parseSitemap(xml) },
+  { id: "netbid", name: "Industrie- und Insolvenzauktionen", sitemap: "https://www.netbid.com/sitemap/sitemap-de-auctions.xml", parse: parseNetbid },
 ];
 
 const cache = new Map<string, { at: number; links: AuctionLink[] }>();

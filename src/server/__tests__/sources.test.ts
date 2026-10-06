@@ -55,7 +55,7 @@ describe("NetBid", () => {
   it("nimmt nur kürzlich geänderte Auktionen", () => {
     const xml = `<urlset><url><loc>https://www.netbid.com/de/auktionen/29134342-28532743-metallbearbeitungsmaschinen</loc><lastmod>2026-10-05</lastmod></url><url><loc>https://www.netbid.com/de/auktionen/1-2-alt</loc><lastmod>2025-06-01</lastmod></url></urlset>`;
     expect(parseNetbid(xml, now)).toEqual([
-      { id: "nb-29134342", title: "Metallbearbeitungsmaschinen", url: "https://www.netbid.com/de/auktionen/29134342-28532743-metallbearbeitungsmaschinen", platform: "NetBid", updatedAt: "2026-10-05" },
+      { id: "nb-29134342", title: "Metallbearbeitungsmaschinen", url: "https://www.netbid.com/de/auktionen/29134342-28532743-metallbearbeitungsmaschinen", platform: "Industrieauktion", updatedAt: "2026-10-05" },
     ]);
   });
 });

@@ -71,13 +71,13 @@ export function AuctionList({ auctions, limit, filters = false }: { auctions: Au
             </label>
             <div className="flex gap-2">
               <label className="relative min-w-0 flex-1 md:flex-none">
-                <span className="sr-only">Anbieter</span>
+                <span className="sr-only">Auktionsart</span>
                 <select
                   value={platform}
                   onChange={(e) => setPlatform(e.target.value)}
                   className="h-11 w-full appearance-none rounded-[10px] bg-white pr-9 pl-4 text-[13px] font-medium ring-1 ring-line outline-none focus:ring-ink"
                 >
-                  <option value="Alle">Alle Anbieter</option>
+                  <option value="Alle">Gericht und Industrie</option>
                   {platforms.map((p) => (
                     <option key={p} value={p}>
                       {p}
@@ -107,7 +107,7 @@ export function AuctionList({ auctions, limit, filters = false }: { auctions: Au
               </label>
             </div>
           </div>
-          <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0" role="toolbar" aria-label="Art">
+          <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0" role="toolbar" aria-label="Warenart">
             <button type="button" aria-pressed={kind === "Alle"} onClick={() => setKind("Alle")} className={chip(kind === "Alle")}>
               Alle
             </button>
@@ -147,8 +147,8 @@ export function AuctionList({ auctions, limit, filters = false }: { auctions: Au
         {shown.length === 0 && <li className="px-4 py-6 text-sm text-muted">Keine Auktion passt zu den Filtern.</li>}
       </ul>
       <p className="mt-2 text-[12px] leading-relaxed text-muted">
-        Quellen: justiz-auktion.de (Versteigerungsplattform der Justiz für Gerichte, Staatsanwaltschaften und Insolvenzverwalter) und netbid.com
-        (Industrie- und Insolvenzauktionen). Die Art ist aus dem Titel abgeleitet. Gebote, Fotos und Bedingungen stehen beim Anbieter.
+        Öffentliche Gerichts-, Insolvenz- und Industrieauktionen. Die Warenart ist aus dem Titel abgeleitet. Gebote, Fotos und Bedingungen stehen beim
+        Auktionshaus.
       </p>
     </div>
   );

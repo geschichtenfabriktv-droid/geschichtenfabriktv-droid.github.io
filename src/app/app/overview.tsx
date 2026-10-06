@@ -77,7 +77,7 @@ export function Overview() {
         <section className="mt-12" aria-labelledby="justiz">
           <div className="mb-4 flex items-end justify-between">
             <h2 id="justiz" className="text-xl font-semibold tracking-tight">
-              Neu bei Justiz- und Insolvenzauktionen
+              Neu bei Gerichts- und Insolvenzauktionen
             </h2>
             <Link href={routes.lots} className="text-sm font-medium text-ink-2 hover:text-ink">
               Alle {market.auctions.length} ansehen
