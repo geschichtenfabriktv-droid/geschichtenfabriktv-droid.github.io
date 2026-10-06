@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { DealCard } from "@/components/market/deal-card";
 import { LotCard } from "@/components/market/lot-card";
+import { AuctionList } from "@/components/market/auction-list";
 import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
@@ -69,12 +70,26 @@ export function Overview() {
         ))}
       </section>
 
-      {routes.mode === "app" && deals.length + lots.length === 0 && (
+      {!market.demo && market.auctions.length > 0 && (
+        <section className="mt-12" aria-labelledby="justiz">
+          <div className="mb-4 flex items-end justify-between">
+            <h2 id="justiz" className="text-xl font-semibold tracking-tight">
+              Neu bei Justiz- und Insolvenzauktionen
+            </h2>
+            <Link href={routes.lots} className="text-sm font-medium text-ink-2 hover:text-ink">
+              Alle {market.auctions.length} ansehen
+            </Link>
+          </div>
+          <AuctionList auctions={market.auctions} limit={6} />
+        </section>
+      )}
+
+      {!market.demo && deals.length === 0 && (
         <section className="mt-6">
           <EmptyMarket
-            title="Gerade keine geprüften Chancen"
-            text="Hier erscheinen nur echte Angebote aus angebundenen Quellen, nie Beispieldaten. Sobald eine Quelle ein Angebot unter dem Marktpreis findet, steht es hier."
-            sources={market.sources}
+            title="Noch keine Produkt-Chancen"
+            text="Produkt-Chancen erscheinen nur aus echten Marktpreisen, nie aus Beispieldaten. Sobald eBay angebunden ist und ein Angebot deutlich unter dem Marktpreis liegt, steht es hier."
+            sources={market.sources.filter((s) => s.id === "ebay")}
           />
         </section>
       )}

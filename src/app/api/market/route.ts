@@ -1,5 +1,6 @@
 import { categoryAllowed } from "@/lib/pricing";
-import type { MarketSource } from "@/lib/domain/types";
+import type { AuctionLink, MarketSource } from "@/lib/domain/types";
+import { listCourtAuctions } from "@/server/court-auctions";
 import { error, handler, json, requireUser } from "@/server/http";
 import { isEbayBrowseConfigured, scanEbay } from "@/server/live-market";
 import { hasAccess } from "@/server/users";
@@ -26,7 +27,14 @@ export const GET = handler(async () => {
   } else {
     sources.push({ id: "ebay", name: "eBay.de", live: false, note: "Noch nicht angebunden." });
   }
-  sources.push({ id: "insolvenz", name: "Insolvenz- und Justizauktionen", live: false, note: "Noch nicht angebunden." });
+  let auctions: AuctionLink[] = [];
+  const auctionsAllowed = categoryAllowed(user.plan, user.addons, "insolvenz");
+  try {
+    auctions = await listCourtAuctions();
+    sources.push({ id: "insolvenz", name: "Justiz-Auktion (Gerichte, Insolvenzverwalter)", live: true, note: `${auctions.length} laufende Auktionen` });
+  } catch {
+    sources.push({ id: "insolvenz", name: "Justiz-Auktion (Gerichte, Insolvenzverwalter)", live: false, note: "Gerade nicht erreichbar." });
+  }
 
   const lots: never[] = [];
   const allowedDeals = deals.filter((d) => categoryAllowed(user.plan, user.addons, d.categoryId));
@@ -34,7 +42,8 @@ export const GET = handler(async () => {
     scannedAt: now.toISOString(),
     deals: allowedDeals,
     lots,
-    locked: { deals: deals.length - allowedDeals.length, lots: 0 },
+    auctions: auctionsAllowed ? auctions : [],
+    locked: { deals: deals.length - allowedDeals.length, lots: auctionsAllowed ? 0 : auctions.length },
     sources,
   });
 });

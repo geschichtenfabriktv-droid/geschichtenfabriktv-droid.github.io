@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LotCard } from "@/components/market/lot-card";
+import { AuctionList } from "@/components/market/auction-list";
 import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
@@ -22,6 +23,8 @@ export function LotExplorer() {
   const lots = useMemo(() => (market ? market.lots.filter((l) => type === "Alle" || l.lotType === type) : []), [market, type]);
   const totalAppraised = lots.reduce((s, l) => s + l.appraisedValue, 0);
   const totalBids = lots.reduce((s, l) => s + l.currentBid, 0);
+  // Bewertete Verfahren (Gebot, Gutachterwert) gibt es bisher nur im Test-Dashboard.
+  const analyzed = !market || market.demo || market.lots.length > 0;
 
   return (
     <>
@@ -34,6 +37,7 @@ export function LotExplorer() {
         Kauf noch lohnt.{market?.demo && " Die angezeigten Verfahren sind Beispieldaten."}
       </p>
 
+      {analyzed && (
       <div className="no-scrollbar -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0" role="toolbar" aria-label="Art der Masse">
         {TYPES.map((t) => (
           <button
@@ -47,8 +51,9 @@ export function LotExplorer() {
           </button>
         ))}
       </div>
+      )}
 
-      {market && (
+      {market && analyzed && (
         <div className="mb-6 grid grid-cols-3 gap-3">
           {[
             { k: "Verfahren", v: String(lots.length) },
@@ -70,11 +75,19 @@ export function LotExplorer() {
           <Link href="/konto/" className="mt-5 inline-flex h-10 items-center rounded-[10px] bg-white px-5 text-sm font-medium text-ink">Im Konto hinzubuchen</Link>
         </div>
       )}
-      {market && !market.demo && market.lots.length === 0 && market.locked.lots === 0 && (
+      {market && !market.demo && market.auctions.length > 0 && (
+        <section className="mb-8" aria-labelledby="justiz">
+          <h2 id="justiz" className="mb-3 text-xl font-semibold tracking-tight">
+            Laufende Justiz- und Insolvenzauktionen ({market.auctions.length})
+          </h2>
+          <AuctionList auctions={market.auctions} search />
+        </section>
+      )}
+      {market && !market.demo && market.lots.length === 0 && market.auctions.length === 0 && market.locked.lots === 0 && (
         <div className="mb-6">
           <EmptyMarket
-            title="Noch keine Verfahren aus echten Quellen"
-            text="Hier erscheinen nur echte Insolvenz- und Justizauktionen. Die Auktionsplattformen sind noch nicht angebunden; bis dahin zeigen wir lieber nichts als erfundene Verfahren."
+            title="Gerade keine Auktionen abrufbar"
+            text="Hier erscheinen nur echte Insolvenz- und Justizauktionen, nie erfundene Verfahren."
             sources={market.sources.filter((s) => s.id === "insolvenz")}
           />
         </div>

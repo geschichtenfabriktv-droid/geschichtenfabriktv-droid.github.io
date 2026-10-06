@@ -149,3 +149,13 @@ export interface MarketSource {
   live: boolean;
   note: string | null;
 }
+
+/** Laufende Auktion bei einem externen Anbieter: nur Titel und Link, Details stehen beim Anbieter. */
+export interface AuctionLink {
+  id: string;
+  title: string;
+  url: string;
+  platform: string;
+  /** Letzte Änderung laut Anbieter (ISO); null, wenn unbekannt. */
+  updatedAt: string | null;
+}
