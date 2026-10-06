@@ -16,7 +16,7 @@ Keepa) per OAuth.
 |---|---|---|
 | Wo | Vercel, Region `fra1` | GitHub Pages unter `/arbitrage` |
 | Inhalt | alles: Konto, Checkout, Dashboard `/app`, API | Webseite, Preise, `/demo`, Rechtstexte |
-| Dateien | `*.srv.ts(x)` werden mitgebaut | `*.srv.ts(x)` werden ignoriert |
+| Dateien | `*.srv.tsx` und `src/app/api` werden mitgebaut | `*.srv.tsx` werden ignoriert, `src/app/api` legt das Skript beiseite |
 
 ## Tarife
 
@@ -62,7 +62,7 @@ src/lib/pricing.ts    Tarife, Add-ons, Freischaltung von Funktionen
 src/lib/engine        Analyse: Break-even, Zielpreis, Gewinnwahrscheinlichkeit
 src/lib/data          DataSource, modellierter Katalog
 src/server            Datenbank, Auth, Mollie, Abrechnung, Verbindungen (OAuth), Live-Marktdaten
-src/app/api           API-Routen (*.srv.ts)
+src/app/api           API-Routen (route.ts, nur Server)
 src/app/app           Dashboard für Abonnenten (*.srv.tsx)
 src/app/demo          Test-Dashboard
 src/app/konto         Kundenkonto: Abo, Verbindungen, Daten

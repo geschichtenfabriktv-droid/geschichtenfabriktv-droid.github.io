@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 /**
  * Zwei Betriebsarten:
  * - Server (Standard, z. B. Vercel): Konten, Zahlungen, Marktplatz-Verbindungen, Dashboard.
- *   Dateien mit der Endung `.srv.ts(x)` (API-Routen, Dashboard) werden nur hier gebaut.
+ *   Seiten mit der Endung `.srv.tsx` (Dashboard, Konto) werden nur hier gebaut. Die API-Routen in
+ *   src/app/api heißen route.ts (Vercel braucht das) und legt scripts/deploy-pages.sh beim Export beiseite.
  * - STATIC_EXPORT=1 (GitHub Pages): Verkaufsseite, Preise, Test-Dashboard und Rechtstexte als
  *   statische Vorschau unter BASE_PATH (Standard /arbitrage).
  */
