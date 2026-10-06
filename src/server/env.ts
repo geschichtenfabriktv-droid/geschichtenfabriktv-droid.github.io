@@ -70,6 +70,10 @@ export const env = {
     },
   },
   /** Konten, die die Auswertung der A/B-Tests sehen dürfen (kommagetrennt). */
+  /** SALES_PAUSED=1: neue Abos vorübergehend nicht buchbar (bestehende Konten bleiben unberührt). */
+  get salesPaused() {
+    return optional("SALES_PAUSED") === "1";
+  },
   get adminEmails() {
     return (optional("ADMIN_EMAILS") ?? "")
       .split(",")

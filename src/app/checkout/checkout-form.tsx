@@ -11,7 +11,7 @@ import { api, ApiError } from "@/lib/client/api";
 import { eur } from "@/lib/format";
 import { ADDONS, GUARANTEE_DAYS, isInterval, isPlanId, PLANS, priceFor, type AddonId, type BillingInterval, type PlanId } from "@/lib/pricing";
 
-export function CheckoutForm({ ab, initialPlan, initialInterval, email, paymentsReady }: { ab?: string; initialPlan?: string; initialInterval?: string; email: string; paymentsReady: boolean }) {
+export function CheckoutForm({ ab, initialPlan, initialInterval, email, paymentsReady, paused = false }: { ab?: string; initialPlan?: string; initialInterval?: string; email: string; paymentsReady: boolean; paused?: boolean }) {
   const [plan, setPlan] = useState<PlanId>(isPlanId(initialPlan) ? initialPlan : "pro");
   const [interval, setInterval] = useState<BillingInterval>(isInterval(initialInterval) ? initialInterval : "jahr");
   const [addons, setAddons] = useState<AddonId[]>([]);
@@ -137,7 +137,7 @@ export function CheckoutForm({ ab, initialPlan, initialInterval, email, payments
                 ).
               </Checkbox>
             </div>
-            {!paymentsReady && <div className="mt-4"><FormMessage>Die Bezahlung wird gerade freigeschaltet. Bitte versuche es in Kürze erneut.</FormMessage></div>}
+            {!paymentsReady && <div className="mt-4"><FormMessage>{paused ? "Neue Abos sind gerade pausiert, bis alle Datenquellen live sind. Wir starten in Kürze." : "Die Bezahlung wird gerade freigeschaltet. Bitte versuche es in Kürze erneut."}</FormMessage></div>}
             {error && <div className="mt-4"><FormMessage>{error}</FormMessage></div>}
             <Button size="lg" className="mt-6 w-full" disabled={!terms || !waiver || busy || !paymentsReady} onClick={pay}>
               {busy ? "Weiter zu Mollie …" : "Zahlungspflichtig abonnieren"}
