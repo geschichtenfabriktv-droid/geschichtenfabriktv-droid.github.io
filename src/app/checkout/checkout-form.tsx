@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
 import { IconCheck, IconLock } from "@/components/ui/icons";
 import { api, ApiError } from "@/lib/client/api";
 import { eur } from "@/lib/format";
-import { ADDONS, GUARANTEE_DAYS, isInterval, isPlanId, PLANS, priceFor, type AddonId, type BillingInterval, type PlanId } from "@/lib/pricing";
+import { ADDONS, GUARANTEE_DAYS, isInterval, isPlanId, planBullets, PLANS, priceFor, type AddonId, type BillingInterval, type PlanId } from "@/lib/pricing";
 
-export function CheckoutForm({ ab, initialPlan, initialInterval, email, paymentsReady, paused = false }: { ab?: string; initialPlan?: string; initialInterval?: string; email: string; paymentsReady: boolean; paused?: boolean }) {
+export function CheckoutForm({ ab, initialPlan, initialInterval, email, paymentsReady, paused = false, countriesLive = false }: { ab?: string; initialPlan?: string; initialInterval?: string; email: string; paymentsReady: boolean; paused?: boolean; countriesLive?: boolean }) {
   const [plan, setPlan] = useState<PlanId>(isPlanId(initialPlan) ? initialPlan : "pro");
   const [interval, setInterval] = useState<BillingInterval>(isInterval(initialInterval) ? initialInterval : "jahr");
   const [addons, setAddons] = useState<AddonId[]>([]);
@@ -68,7 +68,7 @@ export function CheckoutForm({ ab, initialPlan, initialInterval, email, payments
             ))}
           </div>
           <ul className="grid gap-2 rounded-[20px] bg-white p-5 text-[14px] ring-1 ring-line sm:grid-cols-2">
-            {p.bullets.map((b) => (
+            {planBullets(p, countriesLive).map((b) => (
               <li key={b} className="flex gap-2">
                 <IconCheck size={16} className="mt-0.5 shrink-0 text-good" /> {b}
               </li>

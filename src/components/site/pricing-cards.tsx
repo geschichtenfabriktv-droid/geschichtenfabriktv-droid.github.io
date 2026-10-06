@@ -6,7 +6,7 @@ import { buttonClass } from "@/components/ui/button";
 import { IconCheck } from "@/components/ui/icons";
 import { BACKEND } from "@/lib/client/api";
 import { eur } from "@/lib/format";
-import { GUARANTEE_DAYS, PLANS, type BillingInterval } from "@/lib/pricing";
+import { GUARANTEE_DAYS, PLANS, planBullets, type BillingInterval } from "@/lib/pricing";
 
 export function IntervalToggle({ value, onChange }: { value: BillingInterval; onChange: (v: BillingInterval) => void }) {
   return (
@@ -27,7 +27,16 @@ export function IntervalToggle({ value, onChange }: { value: BillingInterval; on
   );
 }
 
-export function PricingCards({ compact = false, headingLevel = 3 }: { compact?: boolean; headingLevel?: 2 | 3 }) {
+export function PricingCards({
+  compact = false,
+  headingLevel = 3,
+  countriesLive = false,
+}: {
+  compact?: boolean;
+  headingLevel?: 2 | 3;
+  /** Österreich und Schweiz im Business-Tarif bewerben (nur wenn diese Länder Daten liefern). */
+  countriesLive?: boolean;
+}) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
   const [interval, setInterval] = useState<BillingInterval>("jahr");
   return (
@@ -66,7 +75,7 @@ export function PricingCards({ compact = false, headingLevel = 3 }: { compact?: 
               <p className="ab-karten-b mt-2.5 text-center text-[13px] text-muted">{GUARANTEE_DAYS} Tage Geld-zurück-Garantie</p>
               {!compact && (
                 <ul className="mt-8 space-y-3 border-t border-line pt-6 text-[15px]">
-                  {p.bullets.map((b) => (
+                  {planBullets(p, countriesLive).map((b) => (
                     <li key={b} className="flex gap-2.5">
                       <IconCheck size={17} className="mt-0.5 shrink-0 text-good" />
                       <span className="text-ink-2">{b}</span>

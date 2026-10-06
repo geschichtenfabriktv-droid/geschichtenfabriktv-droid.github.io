@@ -4,6 +4,8 @@ import { faqLd, graph, organizationLd, pageMetadata, softwareLd, websiteLd } fro
 import Link from "next/link";
 import { PriceTag } from "@/components/site/price-tag";
 import { PricingCards } from "@/components/site/pricing-cards";
+import { COUNTRY_FAQ } from "@/lib/pricing";
+import { env } from "@/server/env";
 import { SiteLayout } from "@/components/site/site-layout";
 import { LinkButton } from "@/components/ui/button";
 import { IconArrowUpRight } from "@/components/ui/icons";
@@ -47,7 +49,7 @@ const STEPS = [
   { n: "3", title: "Handeln", text: "Ein Klick öffnet das Händlerangebot, ein zweiter stellt die Ware auf eBay ein. Den Kauf beim Händler schließt du selbst ab." },
 ];
 
-const FAQ = [
+const BASE_FAQ = [
   {
     q: "Wie wird die Gewinnwahrscheinlichkeit berechnet?",
     a: "Die erzielbaren Verkaufspreise werden als Verteilung um den Marktmedian modelliert und um den Trend bis zum voraussichtlichen Verkauf korrigiert. Daraus ergibt sich die Wahrscheinlichkeit, nach allen Gebühren mindestens 5 € oder 5 % Gewinn (der höhere Wert) zu erzielen, gewichtet mit der Chance, innerhalb von 30 Tagen einen Käufer zu finden.",
@@ -75,6 +77,8 @@ const FAQ = [
 ];
 
 export default async function Home() {
+  const countriesLive = env.countriesLive;
+  const FAQ = countriesLive ? [...BASE_FAQ, COUNTRY_FAQ] : BASE_FAQ;
   const now = new Date();
   const [deals, lots] = await Promise.all([getAnalyzedDeals(now), getAnalyzedLots(now)]);
   const categories = summarizeCategories(deals, lots);
@@ -91,7 +95,7 @@ export default async function Home() {
 
   return (
     <SiteLayout>
-      <JsonLd data={graph(organizationLd(), websiteLd(), softwareLd(), faqLd(FAQ))} />
+      <JsonLd data={graph(organizationLd(), websiteLd(), softwareLd(countriesLive), faqLd(FAQ))} />
 
       {/* Hero: Aussage links, Preisschild rechts */}
       <section>
@@ -228,7 +232,7 @@ export default async function Home() {
         <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
           <h2 className="max-w-3xl font-display text-[34px] leading-[1.05] md:text-[48px]">Ein guter Deal zahlt den Monat</h2>
           <div className="mt-12">
-            <PricingCards />
+            <PricingCards countriesLive={countriesLive} />
           </div>
           <p className="mt-8">
             <Link href="/preise/" className="text-[15px] font-semibold text-ink underline decoration-line-strong decoration-2 hover:decoration-ink">

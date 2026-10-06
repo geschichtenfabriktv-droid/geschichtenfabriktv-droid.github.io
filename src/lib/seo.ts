@@ -76,7 +76,7 @@ export function websiteLd(): Json {
   };
 }
 
-export function softwareLd(): Json {
+export function softwareLd(countriesLive = false): Json {
   return {
     "@type": "SoftwareApplication",
     "@id": absoluteUrl("/#software"),
@@ -95,6 +95,7 @@ export function softwareLd(): Json {
       "Vorbestell-Radar",
       "Insolvenz-Finder mit Maximalgebot",
       "Autopilot: Angebot öffnen und einstellen",
+      ...(countriesLive ? ["Marktpreise aus Deutschland, Österreich und der Schweiz"] : []),
     ],
     publisher: { "@id": absoluteUrl("/#organisation") },
     offers: PLANS.map((p) => ({

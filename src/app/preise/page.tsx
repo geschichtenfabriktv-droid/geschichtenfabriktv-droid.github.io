@@ -6,7 +6,8 @@ import { PageIntro, SiteLayout } from "@/components/site/site-layout";
 import { LinkButton } from "@/components/ui/button";
 import { IconCheck, IconMinus } from "@/components/ui/icons";
 import { eur } from "@/lib/format";
-import { ADDONS, GUARANTEE_DAYS, PLANS } from "@/lib/pricing";
+import { ADDONS, COUNTRY_FAQ, GUARANTEE_DAYS, PLANS } from "@/lib/pricing";
+import { env } from "@/server/env";
 
 export const metadata: Metadata = pageMetadata({
   path: "/preise/",
@@ -14,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
   description: "Starter, Pro mit Autopilot oder Business mit Insolvenz-Finder: monatlich kündbar, 14 Tage Geld-zurück-Garantie. Jetzt Tarif wählen.",
 });
 
-const ROWS: { label: string; values: (string | boolean)[] }[] = [
+const ROWS: { label: string; values: (string | boolean)[]; countries?: boolean }[] = [
   { label: "Gewinnwahrscheinlichkeit & Marktanalyse", values: [true, true, true] },
   { label: "Produkt-Kategorien", values: ["7", "8 inkl. Vorbestellungen", "alle 9"] },
   { label: "Kaufen & Einstellen auf Knopfdruck", values: [true, true, true] },
@@ -23,10 +24,11 @@ const ROWS: { label: string; values: (string | boolean)[] }[] = [
   { label: "Insolvenz-Finder mit Maximalgebot", values: ["Erweiterung", "Erweiterung", true] },
   { label: "Verbundene Marktplätze", values: ["1", "3", "unbegrenzt"] },
   { label: "Live-Marktpreise von eBay", values: [true, true, true] },
+  { label: "Länder", values: ["Deutschland", "Deutschland", "Deutschland, Österreich, Schweiz"], countries: true },
   { label: "Support", values: ["E-Mail", "E-Mail", "E-Mail, bevorzugt"] },
 ];
 
-const FAQ = [
+const BASE_FAQ: [string, string][] = [
   ["Kann ich jederzeit kündigen?", "Ja. Monatsabos sind monatlich kündbar, Jahresabos zum Ende der Laufzeit. Hat sich dein Jahresabo bereits verlängert, kannst du es als Verbraucher jederzeit mit einer Frist von einem Monat kündigen. Das geht im Kundenkonto oder über „Verträge hier kündigen“. Dein Zugang bleibt bis zum Ende der bezahlten Laufzeit bestehen."],
   ["Wie funktioniert die Geld-zurück-Garantie?", `Schreib uns innerhalb von ${GUARANTEE_DAYS} Tagen nach dem ersten Kauf – dann bekommst du den vollen Betrag zurück.`],
   ["Welche Zahlungsarten gibt es?", "Kreditkarte, PayPal und SEPA-Lastschrift. Die Zahlung wird sicher über Mollie abgewickelt."],
@@ -53,15 +55,18 @@ function Cell({ v }: { v: string | boolean }) {
 }
 
 export default function PreisePage() {
+  const countriesLive = env.countriesLive;
+  const rows = ROWS.filter((r) => !r.countries || countriesLive);
+  const FAQ: [string, string][] = countriesLive ? [...BASE_FAQ, [COUNTRY_FAQ.q, COUNTRY_FAQ.a]] : BASE_FAQ;
   return (
     <SiteLayout>
-      <JsonLd data={graph(softwareLd(), faqLd(FAQ), breadcrumbLd([{ name: "Start", path: "/" }, { name: "Preise", path: "/preise/" }]))} />
+      <JsonLd data={graph(softwareLd(countriesLive), faqLd(FAQ), breadcrumbLd([{ name: "Start", path: "/" }, { name: "Preise", path: "/preise/" }]))} />
       <PageIntro eyebrow="Preise" title="Drei Tarife, monatlich kündbar">
         Ein einziger guter Deal deckt den Monatspreis. Starte mit dem Tarif, der zu deinem Volumen passt, und wechsle jederzeit.
       </PageIntro>
 
       <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-10">
-        <PricingCards headingLevel={2} />
+        <PricingCards headingLevel={2} countriesLive={countriesLive} />
       </section>
 
       <section className="border-t border-line bg-canvas">
@@ -99,7 +104,7 @@ export default function PreisePage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              {ROWS.map((r) => (
+              {rows.map((r) => (
                 <tr key={r.label}>
                   <td className="p-4 text-ink-2">{r.label}</td>
                   {r.values.map((v, i) => (

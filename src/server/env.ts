@@ -70,6 +70,14 @@ export const env = {
     },
   },
   /** Konten, die die Auswertung der A/B-Tests sehen dürfen (kommagetrennt). */
+  /**
+   * Österreich und Schweiz werden auf der Website erst beworben, wenn sie Daten liefern: Quelle ist bisher
+   * nur eBay.at/eBay.ch, also erst mit eBay-Zugang. COUNTRIES_LIVE=0 blendet die Werbung trotzdem aus.
+   * Wird beim Build gelesen; nach einer Änderung neu bereitstellen.
+   */
+  get countriesLive() {
+    return Boolean(optional("EBAY_CLIENT_ID") && optional("EBAY_CLIENT_SECRET")) && optional("COUNTRIES_LIVE") !== "0";
+  },
   /** SALES_PAUSED=1: neue Abos vorübergehend nicht buchbar (bestehende Konten bleiben unberührt). */
   get salesPaused() {
     return optional("SALES_PAUSED") === "1";

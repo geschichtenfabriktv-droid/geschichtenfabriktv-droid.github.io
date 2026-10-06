@@ -19,5 +19,5 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
   if (hasAccess(user) && user.status === "active") redirect("/konto/");
   const ab = parseAbTag(sp.ab);
   await recordAb(ab, "checkout").catch(() => {});
-  return <CheckoutForm ab={formatAbTag(ab)} initialPlan={sp.plan} initialInterval={sp.intervall} email={user.email} paymentsReady={isMollieConfigured() && !env.salesPaused} paused={env.salesPaused} />;
+  return <CheckoutForm ab={formatAbTag(ab)} initialPlan={sp.plan} initialInterval={sp.intervall} email={user.email} paymentsReady={isMollieConfigured() && !env.salesPaused} paused={env.salesPaused} countriesLive={env.countriesLive} />;
 }
