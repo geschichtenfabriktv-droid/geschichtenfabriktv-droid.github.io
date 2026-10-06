@@ -33,7 +33,7 @@ export default function DatenschutzPage() {
       <h2>4. Kundenkonto</h2>
       <p>
         Für das Kundenkonto speichern wir E-Mail-Adresse, Name, ein mit scrypt gehashtes Passwort (nie im Klartext),
-        gewählten Tarif, Add-ons, Abo-Status sowie deine Einstellungen und dein Portfolio im Dashboard. Rechtsgrundlage ist
+        gewählten Tarif, Erweiterungen (Add-ons), Abo-Status sowie deine Einstellungen und dein Portfolio im Dashboard. Rechtsgrundlage ist
         Art. 6 Abs. 1 lit. b DSGVO (Vertrag). Die Daten werden gelöscht, sobald du dein Konto löschst; gesetzliche
         Aufbewahrungspflichten für Rechnungsdaten (§ 147 AO, § 257 HGB: bis zu 10 Jahre) bleiben unberührt.
       </p>
@@ -68,13 +68,13 @@ export default function DatenschutzPage() {
           lit. b DSGVO).
         </li>
         <li>
-          Wir speichern nur Zugriffs- und Aktualisierungs-Token, den Kontonamen bzw. die Händler-ID, die erteilten
-          Berechtigungen und den Verbindungsstatus. Token werden mit AES-256-GCM verschlüsselt gespeichert und nur auf dem
+          Wir speichern nur Zugriffs- und Aktualisierungs-Token bzw. deinen Keepa-API-Schlüssel, den Kontonamen bzw. die
+          Händler-ID, die erteilten Berechtigungen und den Verbindungsstatus. Token und Schlüssel werden mit AES-256-GCM verschlüsselt gespeichert und nur auf dem
           Server verwendet, nie im Browser.
         </li>
         <li>
-          Zweck ist ausschließlich das Einstellen und Verwalten von Angeboten, die du selbst auslöst oder per Autopilot
-          freigibst. Keine Weitergabe, kein Verkauf, keine Auswertung zu anderen Zwecken.
+          Zweck ist ausschließlich das Einstellen und Verwalten von Angeboten, die du selbst auslöst (auch über den
+          Autopiloten). Keine Weitergabe, kein Verkauf, keine Auswertung zu anderen Zwecken.
         </li>
         <li>
           Du kannst eine Verbindung jederzeit unter „Verbindungen“ trennen; die Token werden dann sofort gelöscht. Zusätzlich
@@ -117,9 +117,9 @@ export default function DatenschutzPage() {
       <h2>11. Deine Rechte</h2>
       <p>Du hast das Recht auf</p>
       <ul>
-        <li>Auskunft (Art. 15 DSGVO) – im Kundenkonto unter „Daten“ als JSON-Export jederzeit selbst abrufbar,</li>
+        <li>Auskunft (Art. 15 DSGVO) – im Kundenkonto unter „Profil & Datenschutz“ als JSON-Export jederzeit selbst abrufbar,</li>
         <li>Berichtigung (Art. 16 DSGVO),</li>
-        <li>Löschung (Art. 17 DSGVO) – im Kundenkonto unter „Daten“ mit einem Klick,</li>
+        <li>Löschung (Art. 17 DSGVO) – im Kundenkonto unter „Profil & Datenschutz“ mit einem Klick,</li>
         <li>Einschränkung der Verarbeitung (Art. 18 DSGVO),</li>
         <li>Datenübertragbarkeit (Art. 20 DSGVO),</li>
         <li>Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (Art. 21 DSGVO),</li>

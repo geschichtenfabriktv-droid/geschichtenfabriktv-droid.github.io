@@ -87,14 +87,14 @@ export function softwareLd(): Json {
     operatingSystem: "Web, iOS, Android (Browser)",
     inLanguage: "de-DE",
     description:
-      "Software für Online-Arbitrage und Reselling: findet Preisgefälle, Vorbestell-Chancen und Insolvenzmassen, berechnet Break-even und Gewinnwahrscheinlichkeit und stellt Angebote auf Knopfdruck ein.",
+      "Software für Online-Arbitrage und Reselling: bewertet Preisgefälle, Vorbestellungen und Insolvenzmasse-Posten, berechnet Break-even und Gewinnwahrscheinlichkeit und stellt Angebote mit einem Klick auf eBay ein.",
     featureList: [
       "Gewinnwahrscheinlichkeit je Chance",
       "Live-Marktpreise über die eBay-API",
       "Einstellen auf eBay per Knopfdruck",
       "Vorbestell-Radar",
       "Insolvenz-Finder mit Maximalgebot",
-      "Autopilot und Preisautomatik",
+      "Autopilot: Angebot öffnen und einstellen",
     ],
     publisher: { "@id": absoluteUrl("/#organisation") },
     offers: PLANS.map((p) => ({

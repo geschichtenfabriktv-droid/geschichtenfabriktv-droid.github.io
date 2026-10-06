@@ -29,8 +29,8 @@ export function LotExplorer() {
       </PageHeader>
 
       <p className="-mt-4 mb-6 max-w-2xl text-[15px] leading-relaxed text-ink-2">
-        Der Scanner liest Insolvenzbekanntmachungen und Verwerter-Auktionen, ordnet die Massen nach Art und berechnet, bis zu welchem Gebot sich ein Kauf
-        noch lohnt.
+        Der Insolvenz-Finder bewertet Insolvenzmasse-Posten mit Maximalgebot: Er ordnet die Massen nach Art und berechnet, bis zu welchem Gebot sich ein
+        Kauf noch lohnt. Die angezeigten Verfahren sind Beispieldaten.
       </p>
 
       <div className="no-scrollbar -mx-4 mb-6 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0" role="toolbar" aria-label="Art der Masse">
@@ -65,7 +65,7 @@ export function LotExplorer() {
       {market && routes.mode === "app" && market.lots.length === 0 && market.locked.lots > 0 && (
         <div className="mb-6 rounded-[var(--radius-card)] bg-ink p-6 text-white">
           <p className="font-display text-3xl">Insolvenz-Finder freischalten</p>
-          <p className="mt-2 text-sm text-white/70">{market.locked.lots} Verfahren warten. Im Tarif Business enthalten oder als Add-on zu Starter und Pro buchbar.</p>
+          <p className="mt-2 text-sm text-white/70">{market.locked.lots === 1 ? "1 Verfahren wartet" : `${market.locked.lots} Verfahren warten`}. Im Tarif Business enthalten oder als Erweiterung zu Starter und Pro buchbar.</p>
           <Link href="/konto/" className="mt-5 inline-flex h-10 items-center rounded-full bg-white px-5 text-sm font-medium text-ink">Im Konto hinzubuchen</Link>
         </div>
       )}
@@ -80,8 +80,7 @@ export function LotExplorer() {
       )}
 
       <p className="mt-8 text-[12px] leading-relaxed text-muted">
-        Beispieldaten: Schuldner und Aktenzeichen sind fiktiv. Im Live-Betrieb stammen Verfahren aus insolvenzbekanntmachungen.de und den angebundenen
-        Verwertungsplattformen.
+        Beispieldaten: Alle Verfahren, Schuldner und Aktenzeichen sind fiktiv und dienen nur zur Veranschaulichung des Insolvenz-Finders.
       </p>
     </>
   );

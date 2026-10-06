@@ -59,7 +59,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
         <div className="mt-auto rounded-2xl bg-canvas p-4">
           <p className="flex items-center gap-2 text-[13px] font-semibold">
-            <span className="size-2 rounded-full bg-good animate-pulse-dot" aria-hidden /> Scanner aktiv
+            <span className="size-2 rounded-full bg-good animate-pulse-dot" aria-hidden /> Dashboard aktiv
           </p>
           {user ? (
             <p className="mt-1 truncate text-[12px] leading-relaxed text-muted">
@@ -75,7 +75,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-line bg-white/85 px-4 backdrop-blur-xl lg:hidden">
         <Brand href="/" />
         <span className="flex items-center gap-1.5 rounded-full bg-canvas px-2.5 py-1 text-[11px] font-semibold text-ink-2">
-          <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {getPlan(user?.plan)?.name ?? "Live"}
+          <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {getPlan(user?.plan)?.name ?? "Konto"}
         </span>
       </header>
 

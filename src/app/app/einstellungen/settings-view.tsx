@@ -92,8 +92,8 @@ export function SettingsView() {
 
           <label className="mt-6 flex cursor-pointer items-center justify-between gap-4 rounded-2xl ring-1 ring-line p-4">
             <span>
-              <span className="block text-sm font-medium">Preisautomatik standardmäßig an</span>
-              <span className="block text-[12px] text-muted">Neue Inserate folgen dem Markt, nie unter Break-even.</span>
+              <span className="block text-sm font-medium">Preisuntergrenze standardmäßig merken</span>
+              <span className="block text-[12px] text-muted">Neue Inserate speichern den Break-even als Untergrenze. Preise werden nicht automatisch angepasst.</span>
             </span>
             <input type="checkbox" className="peer sr-only" checked={settings.autoRepricing} onChange={(e) => portfolio.updateSettings({ autoRepricing: e.target.checked })} />
             <span aria-hidden className="relative h-7 w-12 shrink-0 rounded-full bg-line-strong transition peer-checked:bg-ink peer-focus-visible:outline-2 peer-focus-visible:outline-ink after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition peer-checked:after:translate-x-5" />

@@ -19,45 +19,45 @@ export const metadata: Metadata = pageMetadata({
   description: "Finde Arbitrage-Deals, Vorbestell-Chancen und Insolvenzmassen mit Gewinnwahrscheinlichkeit in Prozent. Kostenlos im Test-Dashboard ansehen.",
 });
 
-const SOURCES = ["eBay", "Amazon", "StockX", "Cardmarket", "Kleinanzeigen", "Vinted", "Händler-Feeds", "Keepa", "Insolvenzbekanntmachungen", "Verwerter-Auktionen"];
+const SOURCES = ["eBay", "Amazon"];
 
 const FEATURES = [
   {
     icon: IconRadar,
-    title: "Arbitrage-Scanner",
-    text: "Vergleicht laufend Einkaufspreise mit realen Verkaufspreisen auf allen großen Marktplätzen, inklusive Gebühren und Versand.",
+    title: "Arbitrage-Finder",
+    text: "Vergleicht Händlerpreise mit den Marktpreisen auf eBay und Amazon und rechnet Gebühren und Versand direkt ein.",
   },
   {
     icon: IconCalendar,
     title: "Vorbestell-Radar",
-    text: "Findet limitierte Releases, die heute zum Normalpreis vorbestellbar sind und auf dem Zweitmarkt zum doppelten Preis gehandelt werden.",
+    text: "Zeigt limitierte Releases, die zum Normalpreis vorbestellbar sind, und schätzt, ob sie auf dem Zweitmarkt mehr erzielen – manche bis zum doppelten Preis.",
   },
   {
     icon: IconGavel,
     title: "Insolvenz-Finder",
-    text: "Liest Insolvenzverfahren und Verwerter-Auktionen und berechnet das Maximalgebot, bis zu dem sich eine Masse lohnt.",
+    text: "Bewertet Insolvenzmasse-Posten mit Maximalgebot – also bis zu welchem Gebot sich ein Los noch lohnt.",
   },
   {
     icon: IconBolt,
     title: "Autopilot",
-    text: "Kauft auf Knopfdruck und stellt die Ware direkt mit Preisautomatik auf den passenden Marktplätzen ein.",
+    text: "Öffnet das Händlerangebot und stellt die Ware mit einem Klick auf eBay ein.",
   },
 ];
 
 const STEPS = [
-  { n: "01", title: "Scannen", text: "Tausende Angebote, Vorverkäufe und Verfahren werden fortlaufend erfasst und Produkten eindeutig zugeordnet." },
+  { n: "01", title: "Erfassen", text: "Händlerangebote, Vorbestellungen und Insolvenzposten werden Produkten eindeutig zugeordnet und mit Marktpreisen verknüpft." },
   { n: "02", title: "Bewerten", text: "Für jede Chance entsteht eine Marktanalyse: Preisverteilung, Nachfrage, Konkurrenz, Trend und alle Gebühren." },
-  { n: "03", title: "Handeln", text: "Ein Klick kauft, ein zweiter stellt ein. Der Autopilot erledigt beides und hält den Preis über dem Break-even." },
+  { n: "03", title: "Handeln", text: "Ein Klick öffnet das Händlerangebot, ein zweiter stellt die Ware auf eBay ein. Den Kauf beim Händler schließt du selbst ab." },
 ];
 
 const FAQ = [
   {
     q: "Wie wird die Gewinnwahrscheinlichkeit berechnet?",
-    a: "Die erzielbaren Verkaufspreise werden als Verteilung um den Marktmedian modelliert und um den Trend bis zum voraussichtlichen Verkauf korrigiert. Daraus ergibt sich die Wahrscheinlichkeit, nach allen Gebühren mindestens 5 % Gewinn zu erzielen, gewichtet mit der Chance, innerhalb von 30 Tagen einen Käufer zu finden.",
+    a: "Die erzielbaren Verkaufspreise werden als Verteilung um den Marktmedian modelliert und um den Trend bis zum voraussichtlichen Verkauf korrigiert. Daraus ergibt sich die Wahrscheinlichkeit, nach allen Gebühren mindestens 5 € oder 5 % Gewinn (der höhere Wert) zu erzielen, gewichtet mit der Chance, innerhalb von 30 Tagen einen Käufer zu finden.",
   },
   {
-    q: "Wird wirklich automatisch gekauft und verkauft?",
-    a: "Du verbindest dein eigenes eBay- oder Amazon-Verkäuferkonto über die offizielle Freigabe des Marktplatzes, ohne uns dein Passwort zu geben. Danach stellt Arbitrage Radar Angebote in deinem Namen ein und hält den Preis über deinem Break-even. Eingekauft wird mit einem Klick beim Händler; jede Aktion löst du selbst aus oder gibst sie für den Autopiloten frei.",
+    q: "Wird automatisch gekauft und verkauft?",
+    a: "Nein, gekauft wird nie automatisch. Du verbindest dein eigenes eBay-Verkäuferkonto über die offizielle Freigabe des Marktplatzes, ohne uns dein Passwort zu geben. Danach stellt Arbitrage Radar Angebote auf Knopfdruck in deinem Namen ein. Das Händlerangebot öffnest du mit einem Klick, den Kauf schließt du dort selbst ab. Jede Aktion löst du selbst aus.",
   },
   {
     q: "Was sind Insolvenzmassen?",
@@ -65,7 +65,7 @@ const FAQ = [
   },
   {
     q: "Was kostet Arbitrage Radar und wie kündige ich?",
-    a: "Ab 29 € im Monat oder 24,17 € im Monat bei jährlicher Zahlung. Du kannst jederzeit zum Ende der Laufzeit kündigen, im Kundenkonto oder über „Verträge hier kündigen“ im Footer. In den ersten 14 Tagen gibt es dein Geld ohne Angabe von Gründen zurück.",
+    a: "Ab 29 € im Monat oder 24,17 € im Monat bei jährlicher Zahlung. Du kannst jederzeit zum Ende der Laufzeit kündigen, im Kundenkonto oder über „Verträge hier kündigen“ im Footer. Ein bereits verlängertes Jahresabo kannst du als Verbraucher jederzeit mit einer Frist von einem Monat kündigen. In den ersten 14 Tagen gibt es dein Geld ohne Angabe von Gründen zurück.",
   },
   {
     q: "Sind meine Daten sicher?",
@@ -96,7 +96,7 @@ export default async function Home() {
         <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-14 px-4 pt-10 pb-32 sm:px-6 md:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-10 lg:px-10 lg:pt-20 lg:pb-32">
           <div className="animate-rise">
             <Badge tone="outline" className="!px-3 !py-1.5">
-              <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {deals.length + lots.length} Chancen gerade im Scan
+              <span className="size-1.5 rounded-full bg-good animate-pulse-dot" aria-hidden /> {deals.length + lots.length} Chancen im Test-Dashboard
             </Badge>
             <h1 className="mt-6 font-display text-[54px] leading-[0.95] tracking-[-0.02em] sm:text-[76px] lg:text-[104px]">
               Gewinne finden, <span className="italic text-muted">bevor der Markt sie sieht.</span>
@@ -146,7 +146,7 @@ export default async function Home() {
                 </div>
                 <ProbabilityBar probability={hero.analysis.probability} size="md" className="mt-5" />
                 <div className="mt-6 flex items-center justify-center gap-2 rounded-full bg-ink py-3.5 text-sm font-medium text-white">
-                  <IconBolt size={16} /> Autopilot: kaufen & einstellen
+                  <IconBolt size={16} /> Autopilot: Angebot öffnen & einstellen
                 </div>
               </div>
 
@@ -157,7 +157,7 @@ export default async function Home() {
                   </span>
                   Auf {hero.target.platform} eingestellt
                 </p>
-                <p className="mt-0.5 pl-8 text-[11px] text-muted">Preisautomatik aktiv</p>
+                <p className="mt-0.5 pl-8 text-[11px] text-muted">Beispiel aus dem Test-Dashboard</p>
               </div>
 
               {preorder && (
@@ -175,9 +175,9 @@ export default async function Home() {
       </section>
 
       {/* Quellen-Laufband */}
-      <section aria-label="Angebundene Quellen" className="border-y border-line bg-canvas py-5">
+      <section aria-label="Marktpreis-Quellen" className="border-y border-line bg-canvas py-5">
         <div className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-center gap-x-8 gap-y-2 px-4 text-[13px] font-medium text-muted sm:px-6 lg:px-10">
-          <span className="text-ink">Scannt</span>
+          <span className="text-ink">Vergleicht Händlerpreise mit den Marktpreisen auf</span>
           {SOURCES.map((s) => (
             <span key={s}>{s}</span>
           ))}
@@ -218,7 +218,7 @@ export default async function Home() {
               Von Rot bis Grün. <span className="italic text-muted">Auf einen Blick.</span>
             </h2>
             <p className="mt-6 max-w-lg text-[16px] leading-relaxed text-ink-2">
-              Jede Chance bekommt eine Gewinnwahrscheinlichkeit in Prozent. Dahinter stehen echte Marktmechanik und keine Bauchgefühle: wie breit die
+              Jede Chance bekommt eine Gewinnwahrscheinlichkeit in Prozent. Dahinter stehen nachvollziehbare Marktmechanik und keine Bauchgefühle: wie breit die
               Verkaufspreise streuen, wie schnell Ware abverkauft wird, wie viel Konkurrenz es gibt, wohin der Trend zeigt und was Gebühren und Versand
               kosten.
             </p>
@@ -293,7 +293,7 @@ export default async function Home() {
           <Reveal>
             <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-muted">Ablauf</p>
             <h2 className="mt-4 max-w-3xl font-display text-[44px] leading-[1] tracking-tight md:text-[64px]">
-              Scannen. Bewerten. <span className="italic text-muted">Handeln.</span>
+              Erfassen. Bewerten. <span className="italic text-muted">Handeln.</span>
             </h2>
           </Reveal>
           <ol className="mt-16 grid gap-10 md:grid-cols-3 md:gap-8">
@@ -314,8 +314,8 @@ export default async function Home() {
       <section className="bg-canvas">
         <div className="mx-auto grid max-w-[1320px] grid-cols-1 gap-8 px-4 py-20 sm:px-6 md:grid-cols-3 lg:px-10">
           {[
-            ["Budget-Grenzen", "Der Autopilot kauft nie über dein freies Budget hinaus."],
-            ["Break-even-Schutz", "Die Preisautomatik geht nie unter den Punkt, an dem du Geld verlierst."],
+            ["Keine automatischen Käufe", "Gekauft wird nur, wenn du selbst beim Händler bestellst – auch mit Autopilot."],
+            ["Break-even im Blick", "Jede Chance zeigt den Preis, ab dem du nach Gebühren und Versand im Plus bist."],
             ["Volle Transparenz", "Jede Bewertung zeigt die Faktoren, die für und gegen den Kauf sprechen."],
           ].map(([t, d]) => (
             <Reveal key={t}>
@@ -345,7 +345,7 @@ export default async function Home() {
           </div>
           <p className="mt-8 text-center">
             <Link href="/preise/" className="text-sm font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
-              Alle Funktionen und Add-ons vergleichen
+              Alle Funktionen und Erweiterungen vergleichen
             </Link>
           </p>
         </div>
@@ -380,7 +380,7 @@ export default async function Home() {
           <h2 className="mx-auto max-w-4xl font-display text-[48px] leading-[0.98] tracking-tight md:text-[88px]">
             Der nächste Deal <span className="italic text-white/50">läuft schon.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-lg text-[16px] text-white/65">Sieh dir kostenlos an, was der Scanner heute gefunden hat, und starte, wenn du überzeugt bist.</p>
+          <p className="mx-auto mt-6 max-w-lg text-[16px] text-white/65">Sieh dir im Test-Dashboard kostenlos an, wie Arbitrage Radar Chancen bewertet, und starte, wenn du überzeugt bist.</p>
           <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
             <LinkButton href="/demo/" variant="inverse" size="lg">
               Test-Dashboard öffnen <IconArrowRight size={17} />

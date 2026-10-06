@@ -46,7 +46,7 @@ export function DealDetail({ id }: { id: string }) {
       <div className="mx-auto max-w-xl py-10">
         <UpsellCard
           title={demo ? "Diese Chance ist im Tarif enthalten" : "Diese Chance ist nicht mehr verfügbar"}
-          text={demo ? "Im Test-Dashboard siehst du die drei besten Chancen je Kategorie. Mit einem Tarif bekommst du alle Treffer, Live-Preise und die Aktionen." : "Der Markt hat sich bewegt. Sieh dir die aktuellen Chancen an."}
+          text={demo ? "Im Test-Dashboard siehst du die drei besten Chancen je Kategorie. Mit einem Tarif bekommst du alle Treffer, Live-Marktpreise von eBay und die Aktionen." : "Der Markt hat sich bewegt. Sieh dir die aktuellen Chancen an."}
           href={demo ? "/preise/" : routes.list}
           cta={demo ? "Tarife ansehen" : "Zu den Chancen"}
         />
@@ -163,7 +163,7 @@ export function DealDetail({ id }: { id: string }) {
             <p className="text-[13px] font-medium text-muted">Gewinnwahrscheinlichkeit</p>
             <ProbabilityBar probability={a.probability} size="lg" className="mt-2" />
             <p className="mt-3 text-[12px] leading-relaxed text-muted">
-              Chance, innerhalb von {Math.max(30, a.estimatedDaysToSell)} Tagen mit mindestens 5 % Gewinn nach allen Gebühren zu verkaufen.
+              Chance, innerhalb von {Math.max(30, a.estimatedDaysToSell)} Tagen mit mindestens 5 € oder 5 % Gewinn (der höhere Wert) nach allen Gebühren zu verkaufen.
             </p>
 
             <dl className="mt-6 space-y-2.5 border-t border-line pt-5 text-sm">
@@ -183,7 +183,7 @@ export function DealDetail({ id }: { id: string }) {
 
             <div className="mt-6 grid gap-2">
               <Button size="lg" onClick={() => setMode("autopilot")}>
-                <IconBolt size={17} /> {canAutopilot ? "Autopilot: kaufen & einstellen" : "Autopilot ab Tarif Pro"}
+                <IconBolt size={17} /> {canAutopilot ? "Autopilot: Angebot öffnen & einstellen" : "Autopilot ab Tarif Pro"}
               </Button>
               <div className="grid grid-cols-2 gap-2">
                 <Button variant="secondary" onClick={() => setMode("kauf")}>

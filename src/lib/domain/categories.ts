@@ -7,7 +7,7 @@ export const CATEGORIES: readonly Category[] = [
   { id: "sammler", name: "Sammlerstücke", claim: "Trading Cards, LEGO und Figuren mit Wertsteigerung" },
   { id: "haushalt", name: "Haushalt", claim: "Markengeräte aus Abverkäufen und Retouren" },
   { id: "werkzeug", name: "Werkzeug", claim: "Profi-Werkzeug aus Aktionen und Sets zum Aufteilen" },
-  { id: "vorbestellung", name: "Vorbestellungen", claim: "Vorbestellbar heute, später oft zum doppelten Preis handelbar" },
+  { id: "vorbestellung", name: "Vorbestellungen", claim: "Limitierte Releases, die später teils deutlich über Preis gehandelt werden" },
   { id: "dienstleistung", name: "Dienstleistungen", claim: "Leistungen günstig einkaufen und veredelt weiterverkaufen" },
   { id: "insolvenz", name: "Insolvenzmassen", claim: "Warenlager, Maschinen und Rechte aus Insolvenzverfahren" },
 ] as const;

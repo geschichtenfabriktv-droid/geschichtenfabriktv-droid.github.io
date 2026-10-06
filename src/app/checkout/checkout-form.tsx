@@ -126,7 +126,7 @@ export function CheckoutForm({ initialPlan, initialInterval, email, paymentsRead
                 <Link href="/datenschutz/" target="_blank" className="underline">
                   Datenschutzerklärung
                 </Link>{" "}
-                gelesen.
+                zur Kenntnis genommen.
               </Checkbox>
               <Checkbox checked={waiver} onChange={(e) => setWaiver(e.target.checked)}>
                 Ich verlange ausdrücklich, dass ihr vor Ablauf der Widerrufsfrist mit der Leistung beginnt. Mir ist bekannt, dass ich bei einem Widerruf einen

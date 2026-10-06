@@ -136,7 +136,7 @@ export function DealExplorer() {
       {market && market.locked.deals > 0 && (
         <Link href="/konto/" className="mb-4 flex items-center justify-between gap-3 rounded-2xl bg-white p-4 text-sm ring-1 ring-line hover:ring-ink">
           <span>
-            <strong>{market.locked.deals} weitere Chancen</strong> in Kategorien, die dein Tarif nicht enthält.
+            <strong>{market.locked.deals === 1 ? "1 weitere Chance" : `${market.locked.deals} weitere Chancen`}</strong> in Kategorien, die dein Tarif nicht enthält.
           </span>
           <span className="shrink-0 font-medium underline underline-offset-4">Tarif erweitern</span>
         </Link>

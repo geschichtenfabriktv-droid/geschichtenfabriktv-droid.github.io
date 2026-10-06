@@ -35,22 +35,26 @@ export default function AgbPage() {
       <p>
         Die Darstellung der Tarife ist kein bindendes Angebot. Mit Klick auf „Zahlungspflichtig abonnieren“ gibst du ein
         verbindliches Angebot ab. Der Vertrag kommt zustande, wenn die erste Zahlung über unseren Zahlungsdienstleister
-        Mollie erfolgreich ist und wir den Zugang freischalten; du erhältst eine Bestätigung per E-Mail. Der Vertragstext wird
-        gespeichert und ist in deinem Kundenkonto einsehbar. Vertragssprache ist Deutsch.
+        Mollie erfolgreich ist und wir den Zugang freischalten. Nach der Zahlung erhältst du eine Zahlungsbestätigung per
+        E-Mail. Der Vertragstext (diese AGB) ist jederzeit unter <Link href="/agb/">/agb/</Link> abrufbar und kann dort
+        gespeichert oder ausgedruckt werden; in deinem Kundenkonto wird er nicht gesondert gespeichert. Vertragssprache ist
+        Deutsch.
       </p>
 
       <h2>§ 4 Preise, Zahlung und Laufzeit</h2>
       <ul>
         <li>Es gelten die bei Bestellung angezeigten Preise. Sie sind Endpreise inklusive gesetzlicher Umsatzsteuer, soweit diese anfällt.</li>
-        <li>Abos werden monatlich oder jährlich im Voraus abgerechnet und per Lastschrift (SEPA) oder Karte über Mollie eingezogen.</li>
+        <li>Abos werden monatlich oder jährlich im Voraus abgerechnet und per SEPA-Lastschrift, Kreditkarte oder PayPal über Mollie bezahlt.</li>
         <li>
           Monatsabos verlängern sich jeweils um einen Monat, Jahresabos um ein Jahr, wenn sie nicht vor Ablauf gekündigt
           werden. Verbraucher können ein verlängertes Jahresabo nach Ablauf der ersten Laufzeit jederzeit mit einer Frist von
           einem Monat kündigen.
         </li>
-        <li>Add-ons laufen mit dem gewählten Tarif und werden mit ihm abgerechnet und gekündigt.</li>
+        <li>Erweiterungen (Add-ons) laufen mit dem gewählten Tarif und werden mit ihm abgerechnet und gekündigt.</li>
         <li>
-          Tarifwechsel sind im Kundenkonto jederzeit möglich und gelten ab der nächsten Abrechnungsperiode.
+          Tarifwechsel sind im Kundenkonto jederzeit möglich. Ein Wechsel in einen höheren Tarif gilt sofort; den Differenzbetrag
+          für die laufende Abrechnungsperiode berechnen wir anteilig. Ein Wechsel in einen günstigeren Tarif gilt ab dem
+          nächsten Abrechnungsdatum.
         </li>
         <li>
           Schlägt eine Zahlung fehl, bleibt der Zugang 7 Tage erhalten. Danach können wir den Zugang sperren, bis die Zahlung
@@ -73,13 +77,14 @@ export default function AgbPage() {
       <p>
         Du kannst im Kundenkonto oder ohne Anmeldung über{" "}
         <Link href="/kuendigen/">Verträge hier kündigen</Link> kündigen (§ 312k BGB) sowie in Textform per E-Mail. Der Zugang
-        bleibt bis zum Ende der bezahlten Laufzeit bestehen. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund
+        bleibt bis zum Ende der bezahlten Laufzeit bestehen; eine anteilige Erstattung erfolgt nicht. Erstattungen gibt es nur
+        im Rahmen der Geld-zurück-Garantie (§ 5) oder bei einem wirksamen Widerruf. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund
         bleibt unberührt.
       </p>
 
       <h2>§ 7 Pflichten der Nutzer</h2>
       <ul>
-        <li>Zugangsdaten sind geheim zu halten; ein Konto darf nur von der berechtigten Person bzw. den gebuchten Team-Nutzern verwendet werden.</li>
+        <li>Zugangsdaten sind geheim zu halten; ein Konto darf nur von der berechtigten Person verwendet werden.</li>
         <li>Die Software darf nicht missbräuchlich genutzt werden, insbesondere nicht für automatisierte Massenabfragen außerhalb der vorgesehenen Funktionen, zum Weiterverkauf der Daten oder für rechtswidrige Angebote.</li>
         <li>Verbundene Marktplatz-Konten müssen dir gehören oder du musst zur Nutzung berechtigt sein.</li>
       </ul>

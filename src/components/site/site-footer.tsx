@@ -63,7 +63,7 @@ export function SiteFooter() {
           </p>
           <p className="mt-6 flex flex-wrap gap-2 text-[12px] text-muted">
             <span className="rounded-full ring-1 ring-line px-2.5 py-1">Hosting in der EU</span>
-            <span className="rounded-full ring-1 ring-line px-2.5 py-1">DSGVO-konform</span>
+            <span className="rounded-full ring-1 ring-line px-2.5 py-1">Datenschutz nach DSGVO</span>
             <span className="rounded-full ring-1 ring-line px-2.5 py-1">Zahlung über Mollie</span>
           </p>
         </div>

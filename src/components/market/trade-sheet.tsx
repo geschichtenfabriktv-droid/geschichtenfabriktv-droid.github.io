@@ -29,9 +29,9 @@ interface Props {
 }
 
 const TITLES: Record<TradeMode, [string, string]> = {
-  kauf: ["Auf Knopfdruck kaufen", "Bestellung beim günstigsten Händler auslösen"],
-  inserat: ["Automatisch einstellen", "Inserat mit Preisautomatik auf Marktplätzen anlegen"],
-  autopilot: ["Autopilot", "Kaufen und sofort zum empfohlenen Preis einstellen"],
+  kauf: ["Kauf vorbereiten", "Händlerangebot suchen und Kauf im Portfolio vermerken"],
+  inserat: ["Einstellen", "Inserat zum empfohlenen Preis anlegen, bei eBay mit einem Klick"],
+  autopilot: ["Autopilot", "Händlerangebot öffnen und die Ware mit einem Klick einstellen"],
 };
 
 export function TradeSheet({ deal, mode, onClose }: Props) {
@@ -125,6 +125,12 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
 
   if (!mode) return null;
   const [title, subtitle] = TITLES[mode];
+  // Automatisch veröffentlichen geht bisher nur bei eBay; andere Marktplätze werden im Portfolio vermerkt.
+  const live = BACKEND && platforms.includes("eBay");
+  const manual = platforms.filter((p) => !(live && p === "eBay"));
+  const listingHint = live
+    ? `Das eBay-Inserat wird live in deinem Konto veröffentlicht.${manual.length ? ` ${manual.join(", ")}: im Portfolio vermerkt, dort stellst du selbst ein.` : ""}`
+    : `Wird im Portfolio vermerkt. Auf ${platforms.join(", ") || "dem Marktplatz"} stellst du das Inserat selbst ein; automatisch geht das bisher nur bei eBay.`;
 
   return (
     <Sheet open={mode !== null} onClose={close} title={done ? "Erledigt" : title} subtitle={done ? undefined : subtitle}>
@@ -134,9 +140,9 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
             <IconCheck size={26} />
           </div>
           <p className="mt-4 text-[15px] leading-relaxed text-ink-2">
-            {done === "kauf" && <>Der Kauf von {qty} × „{deal.title}“ ist in deinem Portfolio vermerkt. Das Angebot ist in einem neuen Tab geöffnet.</>}
-            {done === "inserat" && <>Inserat für {platforms.join(", ")} angelegt{repricing ? ", die Preisautomatik ist aktiv" : ""}.</>}
-            {done === "autopilot" && <>Kauf vermerkt und Inserat für {platforms.join(", ")} zu {eur(numericPrice)} angelegt.</>}
+            {done === "kauf" && <>Der Kauf von {qty} × „{deal.title}“ ist in deinem Portfolio vermerkt. Die Suche nach dem Händlerangebot ist in einem neuen Tab geöffnet – den Kauf schließt du dort selbst ab.</>}
+            {done === "inserat" && <>{ebayListingId ? "Das eBay-Inserat ist veröffentlicht" : `Inserat für ${platforms.join(", ")} im Portfolio vermerkt`}{repricing ? ", die Preisuntergrenze ist gespeichert" : ""}.</>}
+            {done === "autopilot" && <>Kauf vermerkt und Inserat für {platforms.join(", ")} zu {eur(numericPrice)} {ebayListingId ? "auf eBay veröffentlicht" : "im Portfolio vermerkt"}.</>}
           </p>
           <p className="mt-2 text-[13px] text-muted">
             {ebayListingId
@@ -229,8 +235,10 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
 
               <label className="flex cursor-pointer items-center justify-between gap-4 rounded-2xl ring-1 ring-line p-4">
                 <span>
-                  <span className="block text-sm font-medium">Preisautomatik</span>
-                  <span className="block text-[12px] text-muted">Passt den Preis an den Markt an, nie unter {eur(Math.ceil(a.breakEvenPrice))}.</span>
+                  <span className="block text-sm font-medium">Preisuntergrenze merken</span>
+                  <span className="block text-[12px] text-muted">
+                    Speichert {eur(Math.ceil(a.breakEvenPrice))} als Untergrenze im Portfolio. Der Preis wird nicht automatisch angepasst.
+                  </span>
                 </span>
                 <input type="checkbox" className="peer sr-only" checked={repricing} onChange={(e) => setRepricing(e.target.checked)} />
                 <span aria-hidden className="relative h-7 w-12 shrink-0 rounded-full bg-line-strong transition peer-checked:bg-ink peer-focus-visible:outline-2 peer-focus-visible:outline-ink after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition peer-checked:after:translate-x-5" />
@@ -255,12 +263,12 @@ export function TradeSheet({ deal, mode, onClose }: Props) {
           )}
           <Button size="lg" className="w-full" disabled={!canSubmit || busy} onClick={submit}>
             {busy && "Wird veröffentlicht …"}
-            {!busy && mode === "kauf" && `Beim Händler kaufen · ${eur(total)}`}
-            {!busy && mode === "inserat" && "Inserat veröffentlichen"}
-            {!busy && mode === "autopilot" && `Kaufen & einstellen · ${eur(total)}`}
+            {!busy && mode === "kauf" && `Händlerangebot öffnen · ${eur(total)}`}
+            {!busy && mode === "inserat" && (live ? "Auf eBay veröffentlichen" : "Im Portfolio vermerken")}
+            {!busy && mode === "autopilot" && `Angebot öffnen & einstellen · ${eur(total)}`}
           </Button>
           <p className="-mt-3 text-center text-[11px] text-muted">
-            {needsListing && platforms.includes("eBay") && BACKEND ? "Das eBay-Inserat wird live in deinem Konto veröffentlicht." : "Der Kauf erfolgt beim Händler in einem neuen Tab."}
+            {mode === "inserat" ? listingHint : mode === "autopilot" ? `Das Händlerangebot öffnet sich in einem neuen Tab. ${listingHint}` : "Das Händlerangebot öffnet sich in einem neuen Tab; den Kauf schließt du dort selbst ab."}
           </p>
         </div>
       )}

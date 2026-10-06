@@ -69,7 +69,7 @@ export const ARTICLES: Article[] = [
       },
       {
         type: "p",
-        text: "Eine hilfreiche Kennzahl ist die **Sell-Through-Rate**: verkaufte Einheiten im Verhältnis zu angebotenen Einheiten in einem Zeitraum, etwa 30 Tagen. Liegt sie niedrig, konkurrierst du mit vielen Anbietern um wenige Käufer – und landest schnell in einem Preiskampf.",
+        text: "Eine hilfreiche Kennzahl ist die **Abverkaufsquote (Sell-Through)**: verkaufte Einheiten im Verhältnis zu angebotenen Einheiten in einem Zeitraum, etwa 30 Tagen. Liegt sie niedrig, konkurrierst du mit vielen Anbietern um wenige Käufer – und landest schnell in einem Preiskampf.",
       },
       { type: "h2", text: "Schritt 3: Gewinn und Break-even kalkulieren" },
       {
@@ -155,12 +155,12 @@ export const ARTICLES: Article[] = [
       },
       {
         type: "p",
-        text: "Willst du sehen, wie das in der Praxis aussieht? Im kostenlosen [Test-Dashboard](/demo/) zeigt Arbitrage Radar ohne Anmeldung die drei besten aktuellen Chancen pro Kategorie – inklusive Break-even und Gewinnwahrscheinlichkeit. Die Tarife findest du unter [Preise](/preise/).",
+        text: "Willst du sehen, wie das in der Praxis aussieht? Im kostenlosen [Test-Dashboard](/demo/) zeigt Arbitrage Radar ohne Anmeldung anhand von Beispieldaten die drei besten Chancen pro Kategorie – inklusive Break-even und Gewinnwahrscheinlichkeit. Die Tarife findest du unter [Preise](/preise/).",
       },
       {
         type: "cta",
         title: "Preisdifferenzen finden, ohne stundenlang zu vergleichen",
-        text: "Arbitrage Radar durchsucht Händler und Marktplätze in 9 Kategorien, rechnet den Break-even inklusive Gebühren, Versand und Steuern und zeigt dir die Gewinnwahrscheinlichkeit als Balken von Rot bis Grün.",
+        text: "Arbitrage Radar vergleicht Händlerpreise in 9 Kategorien mit den Marktpreisen auf eBay und Amazon, rechnet den Break-even inklusive Gebühren und Versand und zeigt dir die Gewinnwahrscheinlichkeit als Balken von Rot bis Grün.",
       },
     ],
     faq: [
@@ -327,13 +327,9 @@ export const ARTICLES: Article[] = [
         text: "Für eine saubere Kalkulation pro Artikel – inklusive Umsatzsteuer, wenn du regelbesteuert bist – hilft der Ratgeber [Reselling-Gewinn berechnen](/ratgeber/reselling-gewinn-berechnen/). Wie sich die Marktplatzgebühren zusammensetzen, erklärt der Artikel zu [eBay-Gebühren für gewerbliche Verkäufer](/ratgeber/ebay-gebuehren-reselling/). Und wer Insolvenzware einkauft, findet die Besonderheiten zu Aufgeld und Umsatzsteuer im Ratgeber [Insolvenzversteigerung](/ratgeber/insolvenzversteigerung-ablauf/).",
       },
       {
-        type: "p",
-        text: "Arbitrage Radar berücksichtigt deinen Steuerstatus (Kleinunternehmer oder regelbesteuert) direkt im Break-even jedes Deals. Wie das aussieht, kannst du im [Test-Dashboard](/demo/) ohne Anmeldung ansehen; mehr über die Funktionen steht auf der Seite [Reselling-Tool](/reselling-tool/).",
-      },
-      {
         type: "cta",
-        title: "Steuern im Deal schon mitrechnen",
-        text: "Arbitrage Radar zeigt dir für jede Chance den Break-even inklusive Gebühren, Versand und Steuern – passend zu deinem Steuerstatus. So siehst du vor dem Einkauf, was wirklich übrig bleibt.",
+        title: "Kosten im Deal schon mitrechnen",
+        text: "Arbitrage Radar zeigt dir für jede Chance den Break-even inklusive Gebühren und Versand. So siehst du vor dem Einkauf, was vor Steuern übrig bleibt. Wie das aussieht, kannst du im [Test-Dashboard](/demo/) ohne Anmeldung ansehen.",
       },
     ],
     faq: [
@@ -398,7 +394,7 @@ export const ARTICLES: Article[] = [
           "**insolvenzbekanntmachungen.de** ist die offizielle Plattform der Länder für Bekanntmachungen der Insolvenzgerichte. Dort siehst du eröffnete Verfahren samt Insolvenzverwalter – die Auktionen selbst stehen dort nicht.",
           "**Websites der Verwerter und Auktionshäuser**, die im Auftrag von Insolvenzverwaltern versteigern, meist mit Online-Bietsystem.",
           "**Kanzlei-Websites von Insolvenzverwaltern**, die teilweise Verkaufsangebote oder Ansprechpartner nennen.",
-          "**Spezialisierte Suchdienste**, die Auktionen mehrerer Verwerter bündeln – etwa die Insolvenz-Kategorie von [Arbitrage Radar](/insolvenzmasse-kaufen/).",
+          "**Spezialisierte Suchdienste**, die Auktionen mehrerer Verwerter bündeln. Zur Bewertung einzelner Posten mit Maximalgebot gibt es außerdem den [Insolvenz-Finder von Arbitrage Radar](/insolvenzmasse-kaufen/).",
         ],
       },
       { type: "h2", text: "Ablauf einer Online-Insolvenzauktion" },
@@ -529,12 +525,12 @@ export const ARTICLES: Article[] = [
       },
       {
         type: "p",
-        text: "Wer regelmäßig Insolvenzware kauft und weiterverkauft, ist gewerblich tätig. Was das steuerlich bedeutet, erklärt der Ratgeber [Reselling: Gewerbe und Steuern](/ratgeber/reselling-gewerbe-steuern/). Im kostenlosen [Test-Dashboard](/demo/) siehst du ohne Anmeldung, wie Arbitrage Radar aktuelle Insolvenzlose mit Maximalgebot und Gewinnwahrscheinlichkeit bewertet; die Tarife stehen unter [Preise](/preise/).",
+        text: "Wer regelmäßig Insolvenzware kauft und weiterverkauft, ist gewerblich tätig. Was das steuerlich bedeutet, erklärt der Ratgeber [Reselling: Gewerbe und Steuern](/ratgeber/reselling-gewerbe-steuern/). Im kostenlosen [Test-Dashboard](/demo/) siehst du ohne Anmeldung an fiktiven Beispiel-Losen, wie Arbitrage Radar Insolvenzmasse-Posten mit Maximalgebot und Gewinnwahrscheinlichkeit bewertet; die Tarife stehen unter [Preise](/preise/).",
       },
       {
         type: "cta",
         title: "Insolvenzmassen finden – mit Maximalgebot",
-        text: "Arbitrage Radar sammelt Insolvenzauktionen, schätzt den Wiederverkaufswert aus Live-Marktdaten und empfiehlt dir ein Maximalgebot mit rund 20 % Marge. So bietest du mit klarer Grenze statt aus dem Bauch.",
+        text: "Arbitrage Radar bewertet Insolvenzmasse-Posten mit Maximalgebot: Das Tool schätzt den Wiederverkaufswert anhand von Marktpreisen und empfiehlt dir ein Gebotslimit mit rund 20 % Marge. So bietest du mit klarer Grenze statt aus dem Bauch.",
       },
     ],
     faq: [
@@ -646,7 +642,7 @@ export const ARTICLES: Article[] = [
       {
         type: "tip",
         title: "Mindestgewinn statt nur Break-even",
-        text: "Break-even heißt: Du arbeitest umsonst. Lege eine feste Untergrenze fest, zum Beispiel den höheren Wert aus 5 € oder 5 % des Preises. So deckst du auch Zeitaufwand und kleine Ausfälle ab.",
+        text: "Break-even heißt: Du arbeitest umsonst. Lege eine feste Untergrenze fest, zum Beispiel den höheren Wert aus 5 € oder 5 % des Einkaufs. So deckst du auch Zeitaufwand und kleine Ausfälle ab.",
       },
       { type: "h2", text: "Mit Umsatzsteuer rechnen: Kleinunternehmer vs. Regelbesteuerung" },
       {
@@ -701,7 +697,7 @@ export const ARTICLES: Article[] = [
       { type: "h3", text: "Sensitivität: Was passiert, wenn der Preis fällt?" },
       {
         type: "p",
-        text: "Mit dem Beispiel von oben (Einkauf 40 €, Break-even 51,62 €) siehst du, wie empfindlich der Gewinn auf den Verkaufspreis reagiert – jeder Euro weniger kostet dich wegen der Provision nur 0,89 € Gewinn, aber er kostet ihn trotzdem:",
+        text: "Mit dem Beispiel von oben (Einkauf 40 €, Break-even 51,62 €) siehst du, wie empfindlich der Gewinn auf den Verkaufspreis reagiert – jeder Euro weniger kostet dich wegen der Provision zwar nur 0,89 € Gewinn – das summiert sich aber schnell:",
       },
       {
         type: "table",
@@ -716,16 +712,16 @@ export const ARTICLES: Article[] = [
       { type: "h2", text: "Von der Rechnung zur Wahrscheinlichkeit" },
       {
         type: "p",
-        text: "Eine einzelne Gewinnzahl täuscht Sicherheit vor. Marktpreise streuen, und nicht jeder Artikel verkauft zum Durchschnittspreis. Arbitrage Radar rechnet deshalb nicht nur den Break-even inklusive Gebühren, Versand und Steuern, sondern schätzt aus aktuellen Marktangeboten die **Wahrscheinlichkeit**, dass du mindestens den Break-even plus einen Mindestgewinn von 5 € bzw. 5 % (der höhere Wert zählt) erzielst. Gewichtet wird mit der Sell-Through-Rate der letzten 30 Tage; angezeigt wird das Ergebnis als Prozentwert zwischen 1 und 97 % auf einem Balken von Rot bis Grün.",
+        text: "Eine einzelne Gewinnzahl täuscht Sicherheit vor. Marktpreise streuen, und nicht jeder Artikel verkauft zum Durchschnittspreis. Arbitrage Radar rechnet deshalb nicht nur den Break-even inklusive Gebühren und Versand, sondern schätzt aus aktuellen Marktangeboten die **Wahrscheinlichkeit**, dass du mindestens den Break-even plus einen Mindestgewinn von 5 € bzw. 5 % (der höhere Wert zählt) erzielst. Gewichtet wird mit der Abverkaufsquote der letzten 30 Tage; angezeigt wird das Ergebnis als Prozentwert zwischen 1 und 97 % auf einem Balken von Rot bis Grün.",
       },
       {
         type: "p",
-        text: "So siehst du auf einen Blick, ob ein Deal solide oder nur auf dem Papier gut ist. Probier es im [Test-Dashboard](/demo/) mit den Top-3-Chancen jeder Kategorie aus – ohne Anmeldung. Mehr zur Kalkulation steht auf der Seite [Reselling-Tool](/reselling-tool/), einen Überblick über alle Funktionen bietet die Seite [Arbitrage-Software](/arbitrage-software/).",
+        text: "So siehst du auf einen Blick, ob ein Deal solide oder nur auf dem Papier gut ist. Probier es im [Test-Dashboard](/demo/) mit den Top-3-Chancen jeder Kategorie aus – mit Beispieldaten und ohne Anmeldung. Mehr zur Kalkulation steht auf der Seite [Reselling-Tool](/reselling-tool/), einen Überblick über alle Funktionen bietet die Seite [Arbitrage-Software](/arbitrage-software/).",
       },
       {
         type: "cta",
         title: "Break-even und Gewinnchance für jeden Deal",
-        text: "Arbitrage Radar rechnet Gebühren, Versand und Steuern automatisch ein, ermittelt den Zielpreis aus Live-Marktangeboten und zeigt dir die Gewinnwahrscheinlichkeit in Prozent – bevor du einkaufst.",
+        text: "Arbitrage Radar rechnet Gebühren und Versand automatisch ein, ermittelt den Zielpreis aus Live-Marktpreisen von eBay und zeigt dir die Gewinnwahrscheinlichkeit in Prozent – bevor du einkaufst.",
       },
     ],
     faq: [
@@ -875,17 +871,17 @@ export const ARTICLES: Article[] = [
           "Den Verkaufszeitpunkt vorher festlegen und Hype-Phasen nicht aussitzen.",
           "Stückzahlen klein halten, solange unklar ist, ob ein Restock kommt.",
           "Echtheit und Zustand dokumentieren: Fotos, Rechnung, Originalverpackung.",
-          "Preisentwicklung und Sell-Through regelmäßig beobachten statt nach Bauchgefühl zu entscheiden.",
+          "Preisentwicklung und Abverkaufsquote regelmäßig beobachten statt nach Bauchgefühl zu entscheiden.",
         ],
       },
       {
         type: "p",
-        text: "Arbitrage Radar zeigt Vorbestellungs-Chancen mit Zielpreis aus aktuellen Marktangeboten, Break-even und einer Gewinnwahrscheinlichkeit, die mit der Sell-Through-Rate der letzten 30 Tage gewichtet ist. Im [Test-Dashboard](/demo/) siehst du die drei besten Chancen jeder Kategorie ohne Anmeldung.",
+        text: "Arbitrage Radar zeigt Vorbestellungs-Chancen mit Zielpreis aus aktuellen Marktangeboten, Break-even und einer Gewinnwahrscheinlichkeit, die mit der Abverkaufsquote der letzten 30 Tage gewichtet ist. Im [Test-Dashboard](/demo/) siehst du anhand von Beispieldaten die drei besten Chancen jeder Kategorie ohne Anmeldung.",
       },
       {
         type: "cta",
         title: "Vorbestellungen mit Gewinnchance erkennen",
-        text: "Arbitrage Radar vergleicht Vorbestellpreise mit dem Live-Markt und zeigt dir für jede Chance Break-even, Zielpreis und die Wahrscheinlichkeit, mit Gewinn zu verkaufen – von Rot bis Grün.",
+        text: "Arbitrage Radar vergleicht Vorbestellpreise mit den aktuellen Marktpreisen und zeigt dir für jede Chance Break-even, Zielpreis und die Wahrscheinlichkeit, mit Gewinn zu verkaufen – von Rot bis Grün.",
       },
     ],
     faq: [
@@ -1064,12 +1060,12 @@ export const ARTICLES: Article[] = [
       },
       {
         type: "p",
-        text: "Arbitrage Radar rechnet Marktplatzgebühren, Versand und Steuern automatisch in den Break-even jeder Chance ein. Du verbindest dein eigenes eBay-Konto über die offizielle eBay-Anmeldung (OAuth) und stellst Angebote mit einem Klick ein. Im [Test-Dashboard](/demo/) siehst du ohne Anmeldung, wie das aussieht; ein Konto legst du unter [Registrieren](/registrieren/) an.",
+        text: "Arbitrage Radar rechnet Marktplatzgebühren und Versand automatisch in den Break-even jeder Chance ein. Du verbindest dein eigenes eBay-Konto über die offizielle eBay-Anmeldung (OAuth) und stellst Angebote mit einem Klick ein. Im [Test-Dashboard](/demo/) siehst du ohne Anmeldung, wie das aussieht; ein Konto legst du unter [Registrieren](/registrieren/) an.",
       },
       {
         type: "cta",
         title: "Gebühren nie wieder vergessen",
-        text: "Arbitrage Radar kalkuliert jeden Deal inklusive Provision, Versand und Steuern, zeigt dir die Gewinnwahrscheinlichkeit und stellt Angebote per Klick in dein eigenes eBay-Konto ein.",
+        text: "Arbitrage Radar kalkuliert jeden Deal inklusive Provision und Versand, zeigt dir die Gewinnwahrscheinlichkeit und stellt Angebote per Klick in dein eigenes eBay-Konto ein.",
       },
     ],
     faq: [

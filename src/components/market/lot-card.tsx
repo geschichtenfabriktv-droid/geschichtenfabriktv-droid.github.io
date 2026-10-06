@@ -33,7 +33,7 @@ export function LotCard({ lot, now, index = 0, href }: { lot: AnalyzedLot; now: 
           <dd className="tabular mt-0.5 text-[15px] font-semibold">{eur(lot.currentBid)}</dd>
         </div>
         <div>
-          <dt className="text-[11px] text-muted">Schätzwert</dt>
+          <dt className="text-[11px] text-muted">Gutachterwert</dt>
           <dd className="tabular mt-0.5 text-[15px] font-semibold">{eur(lot.appraisedValue)}</dd>
         </div>
         <div>

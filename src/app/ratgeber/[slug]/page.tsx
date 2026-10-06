@@ -71,8 +71,8 @@ export default async function ArticleRoute({ params }: Props) {
             <div className="sticky top-28 space-y-4">
               <Toc blocks={a.sections} />
               <div className="rounded-[24px] p-6 ring-1 ring-line">
-                <p className="font-semibold">Chancen live ansehen</p>
-                <p className="mt-2 text-[14px] leading-relaxed text-ink-2">Gewinnwahrscheinlichkeit, Break-even und Zielpreis für echte Produkte, kostenlos im Test-Dashboard.</p>
+                <p className="font-semibold">Chancen ansehen</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-ink-2">Gewinnwahrscheinlichkeit, Break-even und Zielpreis an Beispieldaten, kostenlos im Test-Dashboard.</p>
                 <LinkButton href="/demo/" className="mt-4 w-full">
                   Test-Dashboard öffnen
                 </LinkButton>

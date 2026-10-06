@@ -24,7 +24,7 @@ export function Overview() {
   if (!market) {
     return (
       <>
-        <PageHeader eyebrow="Übersicht" title={error ? "Daten nicht verfügbar" : "Märkte werden gescannt …"} />
+        <PageHeader eyebrow="Übersicht" title={error ? "Daten nicht verfügbar" : "Chancen werden geladen …"} />
         {error && <p className="mb-6 text-sm text-bad">{error}</p>}
         <CardSkeleton />
       </>
@@ -50,7 +50,18 @@ export function Overview() {
         eyebrow={scannedAt.toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" })}
         title={
           <>
-            {greeting(scannedAt)}. <span className="italic text-muted">{strong.length} starke Chancen</span> warten.
+            {greeting(scannedAt)}.{" "}
+            {strong.length === 0 ? (
+              <span className="italic text-muted">Gerade keine starken Chancen.</span>
+            ) : strong.length === 1 ? (
+              <>
+                <span className="italic text-muted">1 starke Chance</span> wartet.
+              </>
+            ) : (
+              <>
+                <span className="italic text-muted">{strong.length} starke Chancen</span> warten.
+              </>
+            )}
           </>
         }
       >
@@ -125,9 +136,12 @@ export function Overview() {
 
       <section className="mt-12" aria-labelledby="ins">
         <div className="mb-4 flex items-end justify-between">
-          <h2 id="ins" className="text-xl font-semibold tracking-tight">
-            Insolvenzmassen
-          </h2>
+          <div>
+            <h2 id="ins" className="text-xl font-semibold tracking-tight">
+              Insolvenzmassen
+            </h2>
+            <p className="mt-0.5 text-[12px] text-muted">Beispieldaten – alle Verfahren sind fiktiv.</p>
+          </div>
           <Link href={routes.lots} className="text-sm font-medium text-ink-2 hover:text-ink">
             Alle Verfahren
           </Link>

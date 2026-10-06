@@ -23,7 +23,7 @@ export function DemoShell({ children }: { children: ReactNode }) {
           <div className="mx-auto flex max-w-[1240px] flex-col gap-3 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-10">
             <div>
               <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-muted">Test-Dashboard</p>
-              <p className="mt-1 text-[14px] text-ink-2">Die drei besten Chancen je Kategorie mit Beispieldaten. Im Tarif: alle Treffer, Live-Preise, Kaufen & Einstellen.</p>
+              <p className="mt-1 text-[14px] text-ink-2">Die drei besten Chancen je Kategorie mit Beispieldaten. Im Tarif: alle Treffer, Live-Marktpreise von eBay, Einstellen mit einem Klick.</p>
             </div>
             <LinkButton href="/preise/" size="sm" className="self-start md:self-auto">
               Vollzugang freischalten

@@ -31,7 +31,7 @@ export function LotDetail({ id }: { id: string }) {
       <div className="mx-auto max-w-xl py-10">
         <UpsellCard
           title={routes.mode === "demo" ? "Dieses Verfahren ist im Tarif enthalten" : "Dieses Verfahren ist nicht verfügbar"}
-          text="Der Insolvenz-Finder ist im Tarif Business enthalten oder als Add-on buchbar."
+          text="Der Insolvenz-Finder ist im Tarif Business enthalten oder als Erweiterung buchbar."
         />
       </div>
     );
@@ -73,6 +73,7 @@ export function LotDetail({ id }: { id: string }) {
             <div className="flex flex-wrap gap-2">
               <Badge tone="outline">{lot.lotType}</Badge>
               <Badge tone="warn">{countdown(lot.auctionEnd, market.scannedAt)}</Badge>
+              <Badge tone="neutral">Beispieldaten (fiktiv)</Badge>
             </div>
             <h1 className="mt-4 font-display text-[38px] leading-[1.04] tracking-tight md:text-[54px]">{lot.title}</h1>
             <p className="mt-3 text-[15px] text-ink-2">
@@ -150,7 +151,7 @@ export function LotDetail({ id }: { id: string }) {
             <div className="grid size-14 place-items-center rounded-full bg-good-soft text-good">
               <IconCheck size={26} />
             </div>
-            <p className="mt-4 text-[15px] text-ink-2">Dein Bietlimit von {eur(bidValue, { cents: false })} ist gespeichert. Gib dein Gebot beim Auktionshaus ab; wir zeigen dir das Limit und erinnern dich vor Auktionsende.</p>
+            <p className="mt-4 text-[15px] text-ink-2">Dein Bietlimit von {eur(bidValue, { cents: false })} ist gespeichert. Gib dein Gebot beim Auktionshaus ab; wir zeigen dir das Limit.</p>
             <Link href="/app/portfolio/" className={buttonClass("primary", "md", "mt-6 w-full")} onClick={close}>
               Zum Portfolio
             </Link>

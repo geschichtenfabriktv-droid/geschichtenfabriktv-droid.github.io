@@ -35,7 +35,7 @@ export function SiteHeader() {
   return (
     <>
       <div className="bg-ink px-4 py-2 text-center text-[12px] font-medium text-white/80">
-        <span className="text-white">Neu:</span> Vorbestell-Radar findet Releases mit 2×-Potenzial.{" "}
+        <span className="text-white">Neu:</span> Vorbestell-Radar zeigt Releases mit Wiederverkaufspotenzial.{" "}
         <Link href="/demo/" className="underline decoration-white/40 underline-offset-2 hover:text-white">
           Kostenlos ansehen
         </Link>

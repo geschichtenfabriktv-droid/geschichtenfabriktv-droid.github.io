@@ -18,28 +18,37 @@ const ROWS: { label: string; values: (string | boolean)[] }[] = [
   { label: "Gewinnwahrscheinlichkeit & Marktanalyse", values: [true, true, true] },
   { label: "Produkt-Kategorien", values: ["7", "8 inkl. Vorbestellungen", "alle 9"] },
   { label: "Kaufen & Einstellen auf Knopfdruck", values: [true, true, true] },
-  { label: "Autopilot (kaufen & sofort einstellen)", values: [false, true, true] },
-  { label: "Preisautomatik mit Break-even-Schutz", values: [false, true, true] },
+  { label: "Autopilot (Händlerangebot öffnen & mit einem Klick einstellen)", values: [false, true, true] },
   { label: "Vorbestell-Radar mit 2×-Kandidaten", values: [false, true, true] },
-  { label: "Insolvenz-Finder mit Maximalgebot", values: ["Add-on", "Add-on", true] },
+  { label: "Insolvenz-Finder mit Maximalgebot", values: ["Erweiterung", "Erweiterung", true] },
   { label: "Verbundene Marktplätze", values: ["1", "3", "unbegrenzt"] },
-  { label: "Nutzer", values: ["1", "1", "5"] },
-  { label: "Live-Marktpreise", values: [true, true, true] },
-  { label: "API-Zugriff", values: [false, false, true] },
-  { label: "Support", values: ["E-Mail", "E-Mail, 24 h", "Priorität"] },
+  { label: "Live-Marktpreise von eBay", values: [true, true, true] },
+  { label: "Support", values: ["E-Mail", "E-Mail", "E-Mail, bevorzugt"] },
 ];
 
 const FAQ = [
-  ["Kann ich jederzeit kündigen?", "Ja. Monatsabos sind monatlich, Jahresabos jährlich zum Laufzeitende kündbar, im Kundenkonto oder über „Verträge hier kündigen“."],
-  ["Wie funktioniert die Geld-zurück-Garantie?", `Schreib uns innerhalb von ${GUARANTEE_DAYS} Tagen nach dem ersten Kauf, du bekommst den vollen Betrag zurück.`],
+  ["Kann ich jederzeit kündigen?", "Ja. Monatsabos sind monatlich kündbar, Jahresabos zum Ende der Laufzeit. Hat sich dein Jahresabo bereits verlängert, kannst du es als Verbraucher jederzeit mit einer Frist von einem Monat kündigen. Das geht im Kundenkonto oder über „Verträge hier kündigen“. Dein Zugang bleibt bis zum Ende der bezahlten Laufzeit bestehen."],
+  ["Wie funktioniert die Geld-zurück-Garantie?", `Schreib uns innerhalb von ${GUARANTEE_DAYS} Tagen nach dem ersten Kauf – dann bekommst du den vollen Betrag zurück.`],
   ["Welche Zahlungsarten gibt es?", "Kreditkarte, PayPal und SEPA-Lastschrift. Die Zahlung wird sicher über Mollie abgewickelt."],
-  ["Kann ich den Tarif wechseln?", "Jederzeit im Kundenkonto. Neue Funktionen sind sofort aktiv, der neue Preis gilt ab der nächsten Abrechnung."],
+  ["Kann ich den Tarif wechseln?", "Jederzeit im Kundenkonto. Ein Wechsel in einen höheren Tarif ist sofort aktiv, den Differenzbetrag berechnen wir anteilig. Ein günstigerer Tarif gilt ab dem nächsten Abrechnungsdatum."],
   ["Brauche ich eigene Marktplatz-Konten?", "Ja. Du verbindest dein eigenes eBay- oder Amazon-Verkäuferkonto, damit Inserate in deinem Namen erscheinen und Erlöse direkt an dich gehen."],
 ];
 
 function Cell({ v }: { v: string | boolean }) {
-  if (v === true) return <IconCheck size={18} className="mx-auto text-good" aria-label="enthalten" />;
-  if (v === false) return <IconMinus size={18} className="mx-auto text-line-strong" aria-label="nicht enthalten" />;
+  if (v === true)
+    return (
+      <>
+        <IconCheck size={18} className="mx-auto text-good" />
+        <span className="sr-only">enthalten</span>
+      </>
+    );
+  if (v === false)
+    return (
+      <>
+        <IconMinus size={18} className="mx-auto text-line-strong" />
+        <span className="sr-only">nicht enthalten</span>
+      </>
+    );
   return <span className="text-[13px] font-medium">{v}</span>;
 }
 
@@ -77,7 +86,7 @@ export default function PreisePage() {
 
       <section className="mx-auto max-w-[1320px] px-4 py-20 sm:px-6 lg:px-10">
         <h2 className="font-display text-[40px] leading-none tracking-tight md:text-[56px]">Alle Funktionen im Vergleich</h2>
-        <div className="mt-10 overflow-x-auto rounded-[24px] ring-1 ring-line">
+        <div className="relative mt-10 overflow-x-auto rounded-[24px] ring-1 ring-line">
           <table className="w-full min-w-[640px] text-left text-[14px]">
             <thead className="bg-canvas">
               <tr>

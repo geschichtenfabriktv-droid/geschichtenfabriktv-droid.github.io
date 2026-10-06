@@ -90,14 +90,14 @@ export function PortfolioView() {
 
         {tab === "inserate" &&
           (listings.length === 0 ? (
-            <Empty text="Noch keine Inserate. Mit „Automatisch einstellen“ legst du eines in Sekunden an." />
+            <Empty text="Noch keine Inserate. Mit „Einstellen“ legst du eines in Sekunden an." />
           ) : (
             listings.map((l) => (
               <article key={l.id} className="flex flex-col gap-4 rounded-2xl bg-white p-5 ring-1 ring-line md:flex-row md:items-center">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge tone={l.status === "verkauft" ? "good" : l.status === "aktiv" ? "ink" : "neutral"}>{LISTING_LABEL[l.status]}</Badge>
-                    {l.autoRepricing && l.status === "aktiv" && <Badge tone="outline">Preisautomatik ab {eur(l.floorPrice, { cents: false })}</Badge>}
+                    {l.autoRepricing && l.status === "aktiv" && <Badge tone="outline">Untergrenze {eur(l.floorPrice, { cents: false })}</Badge>}
                   </div>
                   <h3 className="mt-2 truncate font-semibold">{l.title}</h3>
                   <p className="text-[13px] text-muted">

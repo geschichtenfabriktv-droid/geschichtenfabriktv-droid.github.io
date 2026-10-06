@@ -91,7 +91,10 @@ export function analyzeDeal(deal: Deal, now: Date = new Date()): Analysis {
     factors.push({
       label: "Erscheinungstermin",
       impact: daysToRelease > 90 ? "negativ" : "neutral",
-      detail: daysToRelease > 0 ? `Release in ${daysToRelease} Tagen, Kapital bis dahin gebunden.` : "Bereits erschienen.",
+      detail:
+        daysToRelease > 0
+          ? `Release ${daysToRelease === 1 ? "morgen" : `in ${daysToRelease} Tagen`}, Kapital bis dahin gebunden.`
+          : "Bereits erschienen.",
     });
   }
   if (deal.limited) {
@@ -138,7 +141,7 @@ export function analyzeLot(lot: InsolvencyLot, now: Date = new Date()): Analysis
 
   const factors: Factor[] = [
     {
-      label: "Gebot zum Schätzwert",
+      label: "Gebot zum Gutachterwert",
       impact: lot.currentBid < lot.appraisedValue * 0.4 ? "positiv" : lot.currentBid < lot.appraisedValue * 0.7 ? "neutral" : "negativ",
       detail: `Aktuelles Gebot liegt bei ${Math.round((lot.currentBid / lot.appraisedValue) * 100)} % des Gutachterwerts.`,
     },
@@ -155,7 +158,7 @@ export function analyzeLot(lot: InsolvencyLot, now: Date = new Date()): Analysis
     {
       label: "Auktionsende",
       impact: "neutral",
-      detail: daysLeft > 0 ? `Endet in ${daysLeft} Tagen, Gebote können noch steigen.` : "Endet heute.",
+      detail: daysLeft > 0 ? `Endet ${daysLeft === 1 ? "morgen" : `in ${daysLeft} Tagen`}, Gebote können noch steigen.` : "Endet heute.",
     },
   ];
 

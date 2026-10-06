@@ -17,7 +17,7 @@ export default function AvvPage() {
         Dieser Vertrag nach Art. 28 DSGVO gilt zwischen dir als Unternehmer und Verantwortlichem („Auftraggeber“) und dem im{" "}
         <Link href="/impressum/">Impressum</Link> genannten Anbieter („Auftragnehmer“), soweit wir im Rahmen von Arbitrage Radar
         personenbezogene Daten in deinem Auftrag verarbeiten, z. B. Käufer- und Bestelldaten aus deinen verbundenen
-        Marktplatz-Konten oder Daten deiner Team-Nutzer. Er wird mit Abschluss eines Abos Vertragsbestandteil; eine
+        Marktplatz-Konten. Er wird mit Abschluss eines Abos Vertragsbestandteil; eine
         unterschriebene Fassung erhältst du auf Anfrage an <LegalEmail />.
       </p>
 
@@ -27,8 +27,8 @@ export default function AvvPage() {
         <li>Dauer: Laufzeit des Hauptvertrags.</li>
         <li>Art der Verarbeitung: Speichern, Abrufen, Übermitteln an die vom Auftraggeber verbundenen Marktplätze, Löschen.</li>
         <li>Zweck: Einstellen und Verwalten von Angeboten, Abgleich von Beständen und Bestellungen.</li>
-        <li>Datenarten: Kontaktdaten von Team-Nutzern; Bestell- und Käuferdaten (Name, Lieferanschrift, Bestellinhalt), soweit über verbundene Konten abgerufen.</li>
-        <li>Betroffene: Mitarbeitende des Auftraggebers, Käufer des Auftraggebers.</li>
+        <li>Datenarten: Bestell- und Käuferdaten (Name, Lieferanschrift, Bestellinhalt), soweit über verbundene Konten abgerufen.</li>
+        <li>Betroffene: Käufer des Auftraggebers.</li>
       </ul>
 
       <h2>2. Weisungen</h2>
@@ -86,8 +86,8 @@ export default function AvvPage() {
 
       <h2>7. Löschung und Rückgabe</h2>
       <p>
-        Nach Vertragsende werden alle Daten des Auftraggebers innerhalb von 30 Tagen gelöscht, soweit keine gesetzliche
-        Aufbewahrungspflicht besteht. Vorher kann der Auftraggeber seine Daten im Kundenkonto exportieren.
+        Nach Vertragsende werden alle Daten des Auftraggebers spätestens 30 Tage nach Vertragsende auf Anfrage oder durch
+        Löschung des Kontos gelöscht, soweit keine gesetzliche Aufbewahrungspflicht besteht. Vorher kann der Auftraggeber seine Daten im Kundenkonto exportieren.
       </p>
 
       <h2>8. Kontrollen</h2>

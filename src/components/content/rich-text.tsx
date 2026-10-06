@@ -20,9 +20,15 @@ export function Inline({ text }: { text: string }) {
           {m[2]}
         </Link>,
       );
-    else
+    else if (/^https?:\/\//.test(m[3] ?? ""))
       out.push(
         <a key={i++} href={m[3]} rel="noopener noreferrer" target="_blank">
+          {m[2]}
+        </a>,
+      );
+    else
+      out.push(
+        <a key={i++} href={m[3]}>
           {m[2]}
         </a>,
       );
