@@ -1,20 +1,20 @@
 # Arbitrage Radar
 
-> Software für Online-Arbitrage und Reselling aus Deutschland: findet Preisgefälle zwischen Händlern und Marktplätzen, Vorbestell-Chancen und Insolvenzmassen, berechnet Break-even und Gewinnwahrscheinlichkeit und stellt Angebote per Knopfdruck auf eBay ein.
+> Software für Online-Arbitrage und Reselling aus Deutschland: vergleicht Händlerpreise mit den Marktpreisen auf eBay und Amazon, bewertet Vorbestell-Chancen und Insolvenzmasse-Posten mit Maximalgebot, berechnet Break-even (inklusive Gebühren und Versand) und Gewinnwahrscheinlichkeit und stellt Angebote per Knopfdruck auf eBay ein.
 
 Tarife: Starter 29 € pro Monat, Pro 79 € pro Monat, Business 199 € pro Monat. Monatlich kündbar, 14 Tage Geld-zurück-Garantie. Hosting in der EU.
 
 ## Produkt
 - [Startseite](https://geschichtenfabriktv-droid.github.io/arbitrage/): Funktionen und Überblick
-- [Preise](https://geschichtenfabriktv-droid.github.io/arbitrage/preise/): Tarife, Add-ons, Vergleich
-- [Test-Dashboard](https://geschichtenfabriktv-droid.github.io/arbitrage/demo/): Top-3-Chancen je Kategorie ohne Anmeldung
+- [Preise](https://geschichtenfabriktv-droid.github.io/arbitrage/preise/): Tarife, Erweiterungen, Vergleich
+- [Test-Dashboard](https://geschichtenfabriktv-droid.github.io/arbitrage/demo/): Top-3-Chancen je Kategorie mit Beispieldaten, ohne Anmeldung
 
 ## Lösungen
-- [Arbitrage Software, die Deals findet, bevor andere sie sehen](https://geschichtenfabriktv-droid.github.io/arbitrage/arbitrage-software/): Arbitrage Software, die Preisdifferenzen zwischen Shops und Marktplätzen findet und Gewinn nach Gebühren berechnet. Jetzt kostenlos die Demo testen.
-- [Das Reselling Tool für alle, die mit System weiterverkaufen](https://geschichtenfabriktv-droid.github.io/arbitrage/reselling-tool/): Reselling Tool mit Gewinnwahrscheinlichkeit: Finde Produkte, die sich gewinnbringend weiterverkaufen lassen, und stelle sie per Klick ein. Demo ansehen.
-- [Amazon eBay Arbitrage mit echten Verkaufsdaten](https://geschichtenfabriktv-droid.github.io/arbitrage/amazon-ebay-arbitrage/): Amazon eBay Arbitrage mit Live-Daten: Vergleiche Preise, analysiere eBay-Verkaufspreise und sieh deinen Gewinn nach Gebühren. Jetzt Demo öffnen.
-- [Insolvenzmasse kaufen, ohne blind zu bieten](https://geschichtenfabriktv-droid.github.io/arbitrage/insolvenzmasse-kaufen/): Insolvenzmasse kaufen mit Plan: Finde Warenlager und Maschinen aus Insolvenzauktionen und erhalte ein empfohlenes Maximalgebot. Jetzt Demo ansehen.
-- [Limitierte Vorbestellungen erkennen, bevor der Resell-Preis steigt](https://geschichtenfabriktv-droid.github.io/arbitrage/vorbestellung-arbitrage/): Vorbestellen und teurer verkaufen: Erkenne limitierte Konsolen, Sneaker und LEGO-Sets mit Resell-Potenzial früh und bewerte das Risiko. Demo testen.
+- [Arbitrage Software, die Deals findet, bevor andere sie sehen](https://geschichtenfabriktv-droid.github.io/arbitrage/arbitrage-software/): Arbitrage Software, die Preisdifferenzen zwischen Shops und Marktplätzen findet und Gewinn nach Gebühren berechnet. Jetzt kostenlos das Test-Dashboard ansehen.
+- [Das Reselling Tool für alle, die mit System weiterverkaufen](https://geschichtenfabriktv-droid.github.io/arbitrage/reselling-tool/): Reselling Tool mit Gewinnwahrscheinlichkeit: Finde Produkte, die sich gewinnbringend weiterverkaufen lassen, und stelle sie per Klick ein. Test-Dashboard ansehen.
+- [Amazon eBay Arbitrage mit Live-Marktpreisen von eBay](https://geschichtenfabriktv-droid.github.io/arbitrage/amazon-ebay-arbitrage/): Amazon-eBay-Arbitrage mit Live-Marktpreisen von eBay: Preise vergleichen und den Gewinn nach allen Gebühren sehen. Jetzt das Test-Dashboard öffnen.
+- [Insolvenzmasse kaufen, ohne blind zu bieten](https://geschichtenfabriktv-droid.github.io/arbitrage/insolvenzmasse-kaufen/): Insolvenzmasse kaufen mit Plan: Finde Warenlager und Maschinen aus Insolvenzauktionen und erhalte ein empfohlenes Maximalgebot. Jetzt Test-Dashboard ansehen.
+- [Limitierte Vorbestellungen erkennen, bevor der Resell-Preis steigt](https://geschichtenfabriktv-droid.github.io/arbitrage/vorbestellung-arbitrage/): Vorbestellen und teurer verkaufen: Erkenne limitierte Konsolen, Sneaker und LEGO-Sets mit Resell-Potenzial früh und bewerte das Risiko. Test-Dashboard ansehen.
 
 ## Ratgeber
 - [Online Arbitrage: Die Schritt-für-Schritt-Anleitung für Deutschland](https://geschichtenfabriktv-droid.github.io/arbitrage/ratgeber/online-arbitrage-anleitung/): Online Arbitrage in Deutschland: So findest du Preisdifferenzen, prüfst die Nachfrage, rechnest Gebühren ein und verkaufst mit Gewinn. Mit Rechenbeispiel.
