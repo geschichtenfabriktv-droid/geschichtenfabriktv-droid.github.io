@@ -9,6 +9,7 @@ import { IconClose } from "@/components/ui/icons";
 const LINKS = [
   { href: "/#funktionen", label: "Funktionen" },
   { href: "/demo/", label: "Test-Dashboard" },
+  { href: "/rechner/", label: "Rechner" },
   { href: "/preise/", label: "Preise" },
   { href: "/ratgeber/", label: "Ratgeber" },
   { href: "/#faq", label: "FAQ" },

@@ -19,6 +19,7 @@ export function GET() {
     `- [Startseite](${absoluteUrl("/")}): Funktionen und Überblick`,
     `- [Preise](${absoluteUrl("/preise/")}): Tarife, Erweiterungen, Vergleich`,
     `- [Test-Dashboard](${absoluteUrl("/demo/")}): Top-3-Chancen je Kategorie mit Beispieldaten, ohne Anmeldung`,
+    `- [Reselling-Rechner](${absoluteUrl("/rechner/")}): Gewinn, Marge und Mindest-Verkaufspreis nach Gebühren und Versand, kostenlos`,
     "",
     "## Lösungen",
     ...LANDINGS.map((l) => `- [${l.h1}](${absoluteUrl(landingPath(l.slug))}): ${l.description}`),

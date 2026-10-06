@@ -600,6 +600,11 @@ export const ARTICLES: Article[] = [
           ["Risiko", "Retouren, Beschädigung, Preisverfall", "gebundenes Kapital"],
         ],
       },
+      {
+        type: "tip",
+        title: "Direkt nachrechnen",
+        text: "Der kostenlose [Reselling-Rechner](/rechner/) nimmt dir die Rechnung ab: Gewinn, Marge, Rendite und Mindest-Verkaufspreis nach Gebühren und Versand, ohne Anmeldung.",
+      },
       { type: "h2", text: "Marge und ROI: Zwei Kennzahlen, zwei Fragen" },
       {
         type: "ul",
@@ -987,6 +992,10 @@ export const ARTICLES: Article[] = [
       {
         type: "p",
         text: "Ohne Anzeige wären es 14,32 € bzw. rund 11,3 %. Die Anzeige lohnt sich also nur, wenn sie den Verkauf spürbar beschleunigt oder einen höheren Preis ermöglicht.",
+      },
+      {
+        type: "p",
+        text: "Mit deinen eigenen Zahlen rechnest du das im kostenlosen [Reselling-Rechner](/rechner/) nach: Provision, Fixgebühr und Anzeigensatz eintragen, Gewinn und Mindest-Verkaufspreis ablesen.",
       },
       { type: "h3", text: "Wie die Fixgebühr bei kleinen Preisen wirkt" },
       {

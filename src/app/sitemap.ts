@@ -13,6 +13,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     { url: url("/"), changeFrequency: "weekly", priority: 1 },
     { url: url("/preise/"), changeFrequency: "monthly", priority: 0.9 },
     { url: url("/demo/"), changeFrequency: "daily", priority: 0.8 },
+    { url: url("/rechner/"), changeFrequency: "monthly", priority: 0.8 },
     ...LANDINGS.map((l) => ({ url: url(landingPath(l.slug)), changeFrequency: "monthly" as const, priority: 0.8 })),
     { url: url("/ratgeber/"), changeFrequency: "weekly", priority: 0.6 },
     ...ARTICLES.map((a) => ({ url: url(articlePath(a.slug)), lastModified: a.updated, changeFrequency: "monthly" as const, priority: 0.6 })),

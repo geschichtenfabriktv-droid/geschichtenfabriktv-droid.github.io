@@ -8,6 +8,7 @@ const COLUMNS = [
       { href: "/#funktionen", label: "Funktionen" },
       { href: "/preise/", label: "Preise & Tarife" },
       { href: "/demo/", label: "Test-Dashboard" },
+      { href: "/rechner/", label: "Reselling-Rechner" },
       { href: "/#faq", label: "Häufige Fragen" },
     ],
   },
