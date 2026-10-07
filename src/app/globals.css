@@ -105,6 +105,9 @@ html {
 
 h1, h2, h3 {
   text-wrap: balance;
+  /* Lange deutsche Wörter („Unterhaltungselektronik“) dürfen auf dem Handy nicht über den Rand ragen. */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .tabular {

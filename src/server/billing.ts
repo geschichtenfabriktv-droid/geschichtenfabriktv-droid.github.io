@@ -139,6 +139,12 @@ async function applyPayment(
   client: MollieClient,
   now: Date,
 ) {
+  // Die anteilige Upgrade-Nachberechnung ist nicht das Abo: Erstattung ändert nichts, Rückbuchung ist ein Zahlungsproblem.
+  if (meta.kind === "upgrade" && (status === "charged_back" || status === "refunded")) {
+    if (status === "charged_back") await updateUser(user.id, { status: "past_due" });
+    return;
+  }
+
   // Rückbuchung oder volle Erstattung (z. B. Geld-zurück-Garantie): Abo beenden, Zugang entziehen.
   if (status === "charged_back" || status === "refunded") {
     if (user.mollieCustomerId && user.mollieSubscriptionId) await client.cancelSubscription(user.mollieCustomerId, user.mollieSubscriptionId);

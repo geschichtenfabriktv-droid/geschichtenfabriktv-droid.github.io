@@ -227,6 +227,21 @@ describe("Abrechnung mit Mollie", () => {
     expect(hasAccess(after, new Date("2026-10-11T00:00:00Z"))).toBe(false);
   });
 
+  it("beendet das Abo nicht, wenn nur die Upgrade-Nachberechnung erstattet wird", async () => {
+    const m = fakeMollie();
+    const u = await activeUser(m, "starter", new Date("2026-10-05T12:00:00Z"));
+    await changePlan(u, { plan: "pro", addons: [] }, m.client, new Date("2026-10-21T00:00:00Z"));
+    const upgrade = [...m.payments.values()].at(-1)!;
+    upgrade.status = "paid";
+    await processPayment(upgrade.id, m.client, new Date("2026-10-21T00:00:00Z"));
+    upgrade.amountRefunded = upgrade.amount;
+    await processPayment(upgrade.id, m.client, new Date("2026-10-22T00:00:00Z"));
+    const after = (await findUserById(u.id))!;
+    expect(after.status).toBe("active");
+    expect(after.mollieSubscriptionId).toBe(u.mollieSubscriptionId);
+    expect(m.subscriptions.get(u.mollieSubscriptionId!)!.canceled).toBe(false);
+  });
+
   it("schaltet nicht frei, wenn der Betrag nicht zum Tarif passt", async () => {
     const m = fakeMollie();
     const user = await createUser(`f${Date.now()}@test.de`, "x", "Test");
