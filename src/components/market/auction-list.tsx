@@ -77,7 +77,7 @@ export function AuctionList({ auctions, limit, filters = false }: { auctions: Au
                   onChange={(e) => setPlatform(e.target.value)}
                   className="h-11 w-full appearance-none rounded-[10px] bg-white pr-9 pl-4 text-[13px] font-medium ring-1 ring-line outline-none focus:ring-ink"
                 >
-                  <option value="Alle">Gericht und Industrie</option>
+                  <option value="Alle">Alle Auktionsarten</option>
                   {platforms.map((p) => (
                     <option key={p} value={p}>
                       {p}

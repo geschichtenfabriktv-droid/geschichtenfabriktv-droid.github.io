@@ -168,7 +168,7 @@ export interface NewsItem {
   id: string;
   title: string;
   url: string;
-  topic: "Spiele & Konsolen" | "Technik";
+  topic: "Spiele & Konsolen" | "Technik" | "Sammeln";
   publishedAt: string;
   /** Aus dem Titel gelesener Erscheinungstermin (ISO-Datum), sonst null. */
   releaseDate: string | null;
