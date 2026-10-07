@@ -55,6 +55,7 @@ async function getAppToken(): Promise<string> {
     },
     body: new URLSearchParams({ grant_type: "client_credentials", scope: "https://api.ebay.com/oauth/api_scope" }),
     cache: "no-store",
+    signal: AbortSignal.timeout(10_000),
   });
   if (!res.ok) throw new Error(`eBay App-Token ${res.status}`);
   const t = (await res.json()) as { access_token: string; expires_in: number };
@@ -159,6 +160,7 @@ async function scanItem(item: WatchItem, country: Country, now: Date): Promise<{
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${await getAppToken()}`, "X-EBAY-C-MARKETPLACE-ID": market.marketplace },
     cache: "no-store",
+    signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new Error(`eBay-Suche ${res.status}`);
   const data = (await res.json()) as { total?: number; itemSummaries?: BrowseItem[] };
