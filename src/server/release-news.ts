@@ -14,7 +14,7 @@ export interface NewsFeed {
   id: string;
   url: string;
   topic: NewsItem["topic"];
-  /** Nur Meldungen mit Bezug zu Produkten, Terminen oder Vorbestellungen (Technik-Feeds enthalten viel anderes). */
+  /** Nur Meldungen zu Erscheinen, Vorbestellung oder Marktstart (Technik-Feeds enthalten viel anderes). */
   strict: boolean;
 }
 
@@ -27,7 +27,6 @@ export const NEWS_FEEDS: readonly NewsFeed[] = [
 
 const MONTHS = ["januar", "februar", "märz", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "dezember"];
 const PREORDER = /vorbestell|vorverkauf|pre-?order|erscheint|erscheinen|release|launch|ab sofort|erhältlich|verfügbar|im handel/i;
-const PRODUCT = /iphone|ipad|mac|watch|airpods|galaxy|konsole|controller|edition|bundle|headset|fernseher|tv\b|monitor|tablet|smartphone|notebook|laptop/i;
 
 const decode = (s: string) =>
   s
@@ -72,7 +71,7 @@ export function parseNews(xml: string, feed: NewsFeed, now: Date): NewsItem[] {
     const date = Date.parse(decode(tag(b, "pubDate") ?? tag(b, "updated") ?? tag(b, "published") ?? ""));
     if (!title || !url.startsWith("https://") || !Number.isFinite(date) || date < since) return [];
     const preorder = PREORDER.test(title);
-    if (feed.strict && !(preorder || PRODUCT.test(title))) return [];
+    if (feed.strict && !preorder) return [];
     const published = new Date(date);
     return [
       {
