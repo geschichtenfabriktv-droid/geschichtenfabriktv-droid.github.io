@@ -72,16 +72,20 @@ describe("Erscheinungskalender", () => {
           bindings: [
             b("Q23648408", "Grand Theft Auto VI", "2026-12-01", { platforms: "PlayStation 5, Xbox Series X/S", deArticle: "https://de.wikipedia.org/wiki/Grand_Theft_Auto_VI" }),
             b("Q23648408", "Grand Theft Auto VI", "2026-11-19", { platforms: "PlayStation 5, Xbox Series X/S", deArticle: "https://de.wikipedia.org/wiki/Grand_Theft_Auto_VI" }),
-            b("Q4812026", "Asylum", "2026-10-30"),
-            b("Q999", "Q999", "2026-10-30"),
+            b("Q4812026", "Asylum", "2026-10-30", { platforms: "Nintendo Switch 2", enArticle: "https://en.wikipedia.org/wiki/Asylum" }),
+            b("Q5", "Nur PC", "2026-10-30", { platforms: "Microsoft Windows", enArticle: "https://en.wikipedia.org/wiki/X" }),
+            b("Q6", "Ohne Artikel", "2026-10-30", { platforms: "PlayStation 5" }),
+            b("Q7", "Neue Konsole", "2026-11-01", { kind: "http://www.wikidata.org/entity/Q8076", deArticle: "https://de.wikipedia.org/wiki/K" }),
+            b("Q999", "Q999", "2026-10-30", { platforms: "PlayStation 5", enArticle: "https://en.wikipedia.org/wiki/Y" }),
           ],
         },
       },
       now,
     );
-    expect(items).toHaveLength(2);
-    expect(items[0]).toMatchObject({ id: "cal-Q4812026", url: "https://www.wikidata.org/wiki/Q4812026", releaseDate: "2026-10-30" });
-    expect(items[1]).toMatchObject({
+    expect(items.map((i) => i.id)).toEqual(["cal-Q4812026", "cal-Q7", "cal-Q23648408"]);
+    expect(items[0]).toMatchObject({ url: "https://en.wikipedia.org/wiki/Asylum", releaseDate: "2026-10-30" });
+    expect(items[1]!.title).toBe("Neue Konsole: Erscheinungstermin");
+    expect(items[2]).toMatchObject({
       title: "Grand Theft Auto VI (PlayStation 5, Xbox Series X/S): Erscheinungstermin",
       url: "https://de.wikipedia.org/wiki/Grand_Theft_Auto_VI",
       releaseDate: "2026-11-19",

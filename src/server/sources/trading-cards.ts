@@ -76,7 +76,7 @@ export function cardDeal(card: TcgCard, now: Date): Deal | null {
   const search = encodeURIComponent(card.name);
   return {
     id: `tcg-${card.id}`,
-    title: `${card.name}${card.rarity ? ` (${card.rarity})` : ""}${setName}`,
+    title: `${card.name}${card.rarity && card.rarity !== "None" ? ` (${card.rarity})` : ""}${setName}`,
     brand: "Pokémon",
     categoryId: "sammler",
     kind: "arbitrage",
