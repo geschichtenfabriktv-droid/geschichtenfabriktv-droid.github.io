@@ -78,6 +78,16 @@ export const env = {
   get countriesLive() {
     return Boolean(optional("EBAY_CLIENT_ID") && optional("EBAY_CLIENT_SECRET")) && optional("COUNTRIES_LIVE") !== "0";
   },
+  /**
+   * Einzelne Datenquellen abschalten, kommagetrennt, z. B. SOURCES_OFF=keepa,news.
+   * Kennungen: ebay, keepa, awin, justiz, netbid, news.
+   */
+  sourceOff(id: string) {
+    return (optional("SOURCES_OFF") ?? "")
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .includes(id);
+  },
   /** SALES_PAUSED=1: neue Abos vorübergehend nicht buchbar (bestehende Konten bleiben unberührt). */
   get salesPaused() {
     return optional("SALES_PAUSED") === "1";

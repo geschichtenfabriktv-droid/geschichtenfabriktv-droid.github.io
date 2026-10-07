@@ -9,6 +9,7 @@ interface Coverage {
   sourcesTotal: number;
   deals: number;
   auctions: number;
+  news?: number;
   countries: string[];
 }
 
@@ -37,6 +38,7 @@ export function LiveCoverage({ className = "" }: { className?: string }) {
   const stats = [
     { value: data.sourcesLive, label: data.sourcesLive === 1 ? "Quelle live verbunden" : "Quellen live verbunden" },
     ...(data.auctions > 0 ? [{ value: data.auctions, label: "laufende Auktionen" }] : []),
+    ...((data.news ?? 0) > 0 ? [{ value: data.news!, label: "Neuheiten und Termine" }] : []),
     ...(data.deals > 0 ? [{ value: data.deals, label: data.deals === 1 ? "aktuelle Chance" : "aktuelle Chancen" }] : []),
   ];
   return (
@@ -52,7 +54,7 @@ export function LiveCoverage({ className = "" }: { className?: string }) {
           Unser Ziel ist die größte Trefferzahl, die sich sauber erfassen lässt. Wir binden laufend weitere Quellen an, soweit wir sie rechtlich nutzen dürfen. Doppelte Treffer führen wir
           zusammen. Die Zahlen hier sind live und werden nicht geschätzt.
         </p>
-        <dl className="mt-6 grid gap-4 sm:grid-cols-3">
+        <dl className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s) => (
             <div key={s.label} className="border-t border-line pt-4">
               <dt className="sr-only">{s.label}</dt>

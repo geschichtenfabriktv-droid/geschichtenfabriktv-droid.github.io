@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const now = new Date();
   const countries: Country[] = env.countriesLive ? ["DE", "AT", "CH"] : ["DE"];
-  const { deals, auctions, sources } = await scanMarket(countries, now);
+  const { deals, auctions, sources, news } = await scanMarket(countries, now);
   return NextResponse.json(
     {
       scannedAt: now.toISOString(),
@@ -21,6 +21,7 @@ export async function GET() {
       sourcesTotal: sources.length,
       deals: deals.length,
       auctions: auctions.length,
+      news: news.length,
       countries,
     },
     { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" } },

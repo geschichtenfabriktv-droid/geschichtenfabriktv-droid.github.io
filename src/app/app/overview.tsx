@@ -5,6 +5,7 @@ import { DealCard } from "@/components/market/deal-card";
 import { LotCard } from "@/components/market/lot-card";
 import { AuctionList } from "@/components/market/auction-list";
 import { CountryPicker } from "@/components/market/country-picker";
+import { NewsList } from "@/components/market/news-list";
 import { EmptyMarket, SourceList } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
@@ -84,6 +85,20 @@ export function Overview() {
             </Link>
           </div>
           <AuctionList auctions={market.auctions} limit={6} />
+        </section>
+      )}
+
+      {!market.demo && market.news.length > 0 && (
+        <section className="mt-12" aria-labelledby="neuheiten">
+          <div className="mb-4 flex items-end justify-between">
+            <h2 id="neuheiten" className="text-xl font-semibold tracking-tight">
+              Neuheiten und Termine
+            </h2>
+            <Link href={`${routes.list}#neuheiten`} className="text-sm font-medium text-ink-2 hover:text-ink">
+              Alle {market.news.length} ansehen
+            </Link>
+          </div>
+          <NewsList news={market.news} limit={5} />
         </section>
       )}
 

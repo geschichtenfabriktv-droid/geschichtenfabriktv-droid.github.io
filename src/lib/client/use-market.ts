@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { getAnalyzedDeals, getAnalyzedLots, summarizeCategories, type CategorySummary } from "../data/repository";
-import type { AnalyzedDeal, AnalyzedLot, AuctionLink, MarketSource } from "../domain/types";
+import type { AnalyzedDeal, AnalyzedLot, AuctionLink, MarketSource, NewsItem } from "../domain/types";
 import { api, BACKEND } from "./api";
 import { useCountries } from "./countries";
 
@@ -18,6 +18,8 @@ export interface MarketState {
   sources: MarketSource[];
   /** Laufende Justiz- und Insolvenzauktionen als Links (nur Kunden-Dashboard). */
   auctions: AuctionLink[];
+  /** Neuheiten und Termine aus Hersteller-News (nur Kunden-Dashboard). */
+  news: NewsItem[];
   /** Länder, für die die Daten geladen wurden. */
   countries: string[];
 }
@@ -39,12 +41,12 @@ async function scanLocal(demo: boolean): Promise<MarketState> {
     });
     lots = lots.slice(0, DEMO_PER_CATEGORY);
   }
-  return { deals, lots, categories: summarizeCategories(deals, lots), scannedAt: now, locked: { deals: 0, lots: 0 }, demo: true, sources: [], auctions: [], countries: ["DE"] };
+  return { deals, lots, categories: summarizeCategories(deals, lots), scannedAt: now, locked: { deals: 0, lots: 0 }, demo: true, sources: [], auctions: [], news: [], countries: ["DE"] };
 }
 
 async function scanServer(countries: readonly string[]): Promise<MarketState> {
-  const data = await api<{ scannedAt: string; deals: AnalyzedDeal[]; lots: AnalyzedLot[]; locked: { deals: number; lots: number }; sources: MarketSource[]; auctions: AuctionLink[]; countries: string[] }>(`/api/market/?laender=${countries.join(",")}`);
-  return { ...data, scannedAt: new Date(data.scannedAt), categories: summarizeCategories(data.deals, data.lots), demo: false };
+  const data = await api<{ scannedAt: string; deals: AnalyzedDeal[]; lots: AnalyzedLot[]; locked: { deals: number; lots: number }; sources: MarketSource[]; auctions: AuctionLink[]; news?: NewsItem[]; countries: string[] }>(`/api/market/?laender=${countries.join(",")}`);
+  return { ...data, news: data.news ?? [], scannedAt: new Date(data.scannedAt), categories: summarizeCategories(data.deals, data.lots), demo: false };
 }
 
 /**

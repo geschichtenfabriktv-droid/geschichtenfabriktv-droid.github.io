@@ -162,3 +162,16 @@ export interface AuctionLink {
   updatedAt: string | null;
   country?: "DE" | "AT" | "CH";
 }
+
+/** Neuheit oder Termin aus offiziellen Hersteller-News (Titel und Link, Inhalt bleibt beim Hersteller). */
+export interface NewsItem {
+  id: string;
+  title: string;
+  url: string;
+  topic: "Spiele & Konsolen" | "Technik";
+  publishedAt: string;
+  /** Aus dem Titel gelesener Erscheinungstermin (ISO-Datum), sonst null. */
+  releaseDate: string | null;
+  /** Titel nennt Vorbestellung, Vorverkauf oder Erscheinen. */
+  preorder: boolean;
+}

@@ -19,7 +19,7 @@ export const GET = handler(async (req) => {
   const wanted = (new URL(req.url).searchParams.get("laender") ?? "DE").split(",").filter(isCountry);
   const countries: Country[] = COUNTRIES.map((c) => c.id).filter((c) => wanted.includes(c) && allowed.includes(c));
   if (!countries.length) countries.push("DE");
-  const { deals, auctions, sources } = await scanMarket(countries, now);
+  const { deals, auctions, sources, news } = await scanMarket(countries, now);
 
   const analyzed: AnalyzedDeal[] = deals
     .map((d) => ({ ...d, analysis: analyzeDeal(d, now) }))
@@ -33,6 +33,7 @@ export const GET = handler(async (req) => {
     auctions: auctionsAllowed ? auctions : [],
     locked: { deals: analyzed.length - allowedDeals.length, lots: auctionsAllowed ? 0 : auctions.length },
     sources,
+    news,
     countries,
   });
 });

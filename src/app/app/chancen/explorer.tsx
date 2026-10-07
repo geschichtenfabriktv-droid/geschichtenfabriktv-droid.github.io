@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { CategoryChips } from "@/components/market/category-chips";
 import { CountryPicker } from "@/components/market/country-picker";
 import { DealCard } from "@/components/market/deal-card";
+import { NewsList } from "@/components/market/news-list";
 import { EmptyMarket } from "@/components/market/source-status";
 import { PageHeader } from "@/components/shell/app-shell";
 import { ScanStatus } from "@/components/shell/scan-status";
@@ -214,6 +215,15 @@ export function DealExplorer() {
             ))}
           </div>
         </>
+      )}
+
+      {market && !market.demo && market.news.length > 0 && (
+        <section id="neuheiten" className="mt-12 scroll-mt-20" aria-labelledby="neuheiten-titel">
+          <h2 id="neuheiten-titel" className="mb-3 text-xl font-semibold tracking-tight">
+            Neuheiten und Termine
+          </h2>
+          <NewsList news={market.news} filters />
+        </section>
       )}
 
       <Link
