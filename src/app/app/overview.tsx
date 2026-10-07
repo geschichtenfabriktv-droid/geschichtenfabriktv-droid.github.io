@@ -107,7 +107,7 @@ export function Overview() {
           <EmptyMarket
             title="Noch keine Produkt-Chancen"
             text="Produkt-Chancen erscheinen nur aus echten Marktpreisen, nie aus Beispieldaten. Sobald eine Preisquelle verbunden ist und ein Angebot deutlich unter dem Marktpreis liegt, steht es hier."
-            sources={market.sources.filter((s) => s.id.startsWith("ebay") || s.id === "keepa" || s.id === "awin")}
+            sources={market.sources.filter((s) => s.id.startsWith("ebay") || s.id === "keepa" || s.id === "awin" || s.id === "karten")}
           />
         </section>
       )}

@@ -7,6 +7,7 @@ import { env } from "./env";
 import { isKeepaConfigured, scanKeepa } from "./keepa";
 import { isEbayBrowseConfigured, scanEbay, type Stats } from "./live-market";
 import { scanNews } from "./release-news";
+import { scanOpenSources, type ExtraScan } from "./sources";
 
 /** Im Dashboard werden Quellen nur neutral beschrieben, ohne Anbieternamen. */
 const COUNTRY_NAME: Record<Country, string> = { DE: "Deutschland", AT: "Österreich", CH: "Schweiz" };
@@ -43,6 +44,8 @@ export async function scanMarket(countries: Country[], now: Date): Promise<Marke
 
   const on = (id: string) => !env.sourceOff(id);
   const feeds = AUCTION_FEEDS.filter((f) => on(f.id));
+  // Offene Quellen ohne Schlüssel (src/server/sources) laufen parallel zu den übrigen.
+  const extraScan: Promise<ExtraScan> = scanOpenSources(countries, now, on).catch(() => ({ deals: [], auctions: [], news: [], sources: [] }));
 
   const [ebay, keepa, news, ...auctionResults] = await Promise.allSettled([
     on("ebay") && isEbayBrowseConfigured() ? scanEbay(now, countries) : Promise.resolve(null),
@@ -109,5 +112,14 @@ export async function scanMarket(countries: Country[], now: Date): Promise<Marke
     sources.push({ id: "news", name: newsName, live: false, note: "Gerade nicht erreichbar." });
   }
 
-  return { deals: dedupe(deals, (d) => d.source.url), auctions: dedupe(auctions, (a) => a.url), sources, news: dedupe(newsItems, (n) => n.url) };
+  const extra = await extraScan;
+  sources.push(...extra.sources);
+  auctions.push(...extra.auctions);
+  // Sammelkarten verlinken auf eine Suche (gleiche Adresse, andere Karte): nur nach Kennung zusammenführen.
+  return {
+    deals: dedupe([...dedupe(deals, (d) => d.source.url), ...extra.deals], () => undefined),
+    auctions: dedupe(auctions, (a) => a.url),
+    sources,
+    news: dedupe([...dedupe(newsItems, (n) => n.url), ...extra.news], () => undefined),
+  };
 }

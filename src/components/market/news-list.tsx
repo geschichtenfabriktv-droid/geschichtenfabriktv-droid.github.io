@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import type { NewsItem } from "@/lib/domain/types";
 
 const day = new Intl.DateTimeFormat("de-DE", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-const TOPICS = ["Spiele & Konsolen", "Technik"] as const;
+const TOPICS = ["Spiele & Konsolen", "Technik", "Sammeln"] as const;
 
 type SortKey = "neu" | "termin";
 const chip = (active: boolean) =>
