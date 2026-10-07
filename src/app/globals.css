@@ -19,7 +19,7 @@
   --color-tag-ink: #3d3200;
 
   /* Signalfarben, ausschließlich für Chancen/Risiken reserviert */
-  --color-good: #0e9f5a;
+  --color-good: #097a45; /* 4,5:1 auf Weiß und good-soft (WCAG AA) */
   --color-good-soft: #e5f5ec;
   --color-warn: #d98e04;
   --color-warn-soft: #fdf3dc;
